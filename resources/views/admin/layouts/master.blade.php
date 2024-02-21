@@ -41,11 +41,75 @@
 <div class="wrapper d-flex flex-column min-vh-100 bg-light">
 
      <!-- header -->
-     @yield('header')
+     <header class="header header-sticky mb-4 ">
+        <div class="container-fluid">
+            <button class="header-toggler px-md-0 me-md-3" type="button"
+                onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+                <svg class="icon icon-lg">
+                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-menu') }}"></use>
+                </svg>
+            </button><a class="header-brand d-md-none" href="#">
+                <svg width="118" height="46" alt="CoreUI Logo">
+                    <use xlink:href="{{ asset('admin/assets/brand/coreui.svg#full') }}"></use>
+                </svg></a>
 
+            <ul class="header-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#">
+                        <svg class="icon icon-lg">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-bell')}}"></use>
+                        </svg></a></li>
+                <li class="nav-item"><a class="nav-link" href="#">
+                        <svg class="icon icon-lg">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-list-rich')}}"></use>
+                        </svg></a></li>
+                <li class="nav-item"><a class="nav-link" href="#">
+                        <svg class="icon icon-lg">
+                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-envelope-open')}}"></use>
+                        </svg></a></li>
+            </ul>
+            <ul class="header-nav ms-3">
+                <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#"
+                        role="button" aria-haspopup="true" aria-expanded="false">
+                        <div class="avatar avatar-md"><img class="avatar-img" src="{{ asset('admin/assets/img/avatars/8.jpg') }}"
+                                alt="user@email.com"></div>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-end pt-0">
+                        <div class="dropdown-header bg-light py-2">
+                            <div class="fw-semibold">Account</div>
+                        </div><a class="dropdown-item" href="#">
+
+
+                       <a class="dropdown-item" href="{{ route('admin.profile.index') }}">
+                            <svg class="icon me-2">
+                            </svg> Profile
+                        </a>
+                            <a class="dropdown-item" href="">
+                            <svg class="icon me-2">
+                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-settings')}}"></use>
+                            </svg> Settings
+                        </a>
+                            <a class="dropdown-item" href="#">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <svg class="icon me-2">
+                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked')}}"></use>
+                            </svg> Lock Account
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <svg class="icon me-2">
+                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-account-logout')}}"></use>
+                            </svg> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="header-divider"></div>
+       @yield('breadcrumbs')
+    </header>
+<body>
     <div class="body flex-grow-1 px-3">
         <div class="container-lg">
-
             <!-- Main content -->
             @yield('contents')
         </div>
@@ -64,7 +128,11 @@
 <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script>
 <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
 <script src="{{ asset('admin/js/main.js') }}"></script>
-<script>
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<script>
+
+</script>
+@stack('scripts')
+</body>
 </html>

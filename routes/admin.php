@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
@@ -11,6 +12,8 @@ Route::group([
     'prefix' => 'admin',
     'as' => 'admin.'],
         function(){
-            Route::get('/dashboard',[AdminController::class, 'index']);
+            Route::get('/dashboard',[AdminController::class, 'index'])->name('dashboard.index');
+            /**Profile route */
+            Route::resource('/profile',ProfileController::class);
 
 });
