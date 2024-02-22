@@ -14,6 +14,7 @@ Route::group([
         function(){
             Route::get('/dashboard',[AdminController::class, 'index'])->name('dashboard.index');
             /**Profile route */
-            Route::resource('/profile',ProfileController::class);
-
+           Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+           Route::put('/profile-update', [ProfileController::class, 'update'])->name('profile.update');
+           Route::put('/profile-password_reset', [ProfileController::class, 'password_reset'])->name('profile.password_reset');
 });

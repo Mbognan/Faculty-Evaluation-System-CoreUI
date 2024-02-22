@@ -20,13 +20,17 @@
                 <div class="card-header "><strong>Personal Information</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
+                    <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    @method('PUT')
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <div id="image-preview" class="avatar-preview">
                                     <label for="image-upload" id="image-label">Choose File</label>
                                     <input type="file" name="avatar" id="image-upload" />
-                                    <input type="hidden" name="oldAvatar" value="">
+                                    <input type="hidden" name="oldAvatar" value="{{ $user->avatar }}">
                                 </div>
                             </div>
                         </div>
@@ -34,11 +38,11 @@
                     <div class="row">
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">First Name</label>
-                            <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                            <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control" placeholder="First name" aria-label="First name">
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-                            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                            <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control" placeholder="Last name" aria-label="Last name">
                         </div>
 
                     </div>
@@ -46,18 +50,20 @@
 
                         <label for="exampleFormControlInput1" class="form-label">Change Email address<span
                                 class="small ms-1 text-danger">*</span></label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email">
+                        <input type="email" name="email" class="form-control" value="{{ $user->email }}" id="exampleFormControlInput1" placeholder="Email">
                     </div>
+
+
 
                     <div class="row">
                         <div class="col">
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary me-md-2" type="button">Update</button>
+                                <button class="btn btn-primary me-md-2" type="submit">Update</button>
                             </div>
                         </div>
 
                     </div>
-
+                </form>
                 </div>
             </div>
 
@@ -69,33 +75,35 @@
                 <div class="card-header"><strong>Change Password</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
+                    <form action="{{ route('admin.profile.password_reset') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                     <div class="row">
                         <div class="col">
                         <label for="exampleFormControlInput1" class="form-label text-danger">Old Password</label>
-                        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Email">
+                        <input type="password" name="current_password" class="form-control" id="exampleFormControlInput1" placeholder="Email">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label text-danger">New Password </label>
-                            <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+                            <input type="password" name="password" class="form-control" placeholder="First name" aria-label="First name">
                         </div>
                         <div class="col">
                             <label for="exampleFormControlInput1" class="form-label text-danger">Confirm Password </label>
-                            <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+                            <input type="password" name="password_confirmation" class="form-control" placeholder="Last name" aria-label="Last name">
                         </div>
 
 
                     </div>
-
                     <div class="row">
                         <div class="col">
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-danger me-md-2 mt-3 text-light" type="button">Change Password</button>
+                                <button class="btn btn-danger me-md-2 mt-3 text-light" type="submit">Change Password</button>
                             </div>
                         </div>
                     </div>
-
+                </form>
                 </div>
             </div>
         </div>
@@ -123,12 +131,11 @@
                 background-color: #ffffff;
                 color: #ecf0f1;
                 margin: auto;
-                /* Center the upload preview horizontally */
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 border: 2px solid #9da5b1;
-                /* Add a blue border */
+
             }
 
             #image-preview input {
@@ -148,7 +155,6 @@
                 background-color: #ffffff;
                 color: #ecf0f1;
                 margin: auto;
-                /* Center the upload preview horizontally */
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -165,7 +171,6 @@
                 font-size: 20px;
                 line-height: 50px;
                 text-transform: uppercase;
-                /* Center the label vertically and horizontally */
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
@@ -177,8 +182,6 @@
                 (function($) {
                     $.extend({
                         uploadPreview: function(options) {
-
-                            // Options + Defaults
                             var settings = $.extend({
                                 input_field: ".image-input",
                                 preview_box: ".image-preview",
@@ -188,6 +191,7 @@
                                 no_label: false,
                                 success_callback: null,
                             }, options);
+
 
                             // Check if FileReader is available
                             if (window.File && window.FileList && window.FileReader) {
@@ -260,6 +264,14 @@
                     });
                 })(jQuery);
 
+                $(document).ready(function() {
+                    let avatarUri = "{{ asset($user->avatar) }}"
+                    $('.avatar-preview').css({
+                        'background-image': 'url(' + avatarUri + ')',
+                        'background-size': 'cover',
+                        'background-position': 'center center'
+                    });
+                });
 
                 $(document).ready(function() {
                     $.uploadPreview({
@@ -272,6 +284,8 @@
                     });
 
                 });
+
+
             </script>
         @endpush
     </div>

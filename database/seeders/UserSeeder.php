@@ -17,14 +17,16 @@ class UserSeeder extends Seeder
     {
         User::insert([
             [
-                'name' => 'Admin',
+                'first_name' => 'Admin',
+                'last_name' => 'SuperAdmin',
                 'email' => 'admin@gmail.com',
                 'password' => static::$password ??= Hash::make('password'),
                 'user_type' => 'admin',
 
             ],
             [
-                'name' => 'User',
+                'first_name' => 'User',
+                'last_name' => 'SuperUser',
                 'email' => 'user@gmail.com',
                 'password' => static::$password ??= Hash::make('password'),
                 'user_type' => 'user',

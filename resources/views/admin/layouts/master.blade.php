@@ -24,6 +24,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('admin/assets/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/favicon/favicon-16x16.png')}}">
     <link rel="manifest" href="{{ asset('assets/favicon/manifest.json') }}">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('admin/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
@@ -128,10 +129,18 @@
 <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script>
 <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
 <script src="{{ asset('admin/js/main.js') }}"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <script>
 
+  @if ($errors->any())
+         @foreach ($errors->all() as $error )
+            toastr.error("{{ $error }}")
+         @endforeach
+
+        @endif
 </script>
 @stack('scripts')
 </body>
