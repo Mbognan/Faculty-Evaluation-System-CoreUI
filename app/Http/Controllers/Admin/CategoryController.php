@@ -4,7 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\CategoryDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\CategoryRequest as AdminCategoryRequest;
+
+use App\Models\Category;
+use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -23,18 +28,28 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-    }
+    // public function create():View
+    // {
+    //     return view('admin.category.create');
+    // }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+        public function store(AdminCategoryRequest $request):RedirectResponse
+        {
+
+
+
+            $category = new Category();
+
+            $category->title = $request->title;
+            $category->status = $request->status;
+            $category->save();
+            toastr()->success('Category created successfully');
+            return to_route('admin.category.index');
+
+        }
 
     /**
      * Display the specified resource.
@@ -65,6 +80,9 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $category = Category::findOrFail($id);
+        $category->delete();
+
+        return response(['status' => 'success', 'message' =>'Item deleted successfully!']);
     }
 }

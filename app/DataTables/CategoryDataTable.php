@@ -23,15 +23,15 @@ class CategoryDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
         ->addColumn('action', function($query){
-            $edit = '<a href="'.route('admin.category.edit',$query->id).'" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i></a>';
-            $delete = '<a href="'.route('admin.category.destroy',$query->id).'" class="delete-item btn btn-sm btn-danger ml-2 text-white"><i class="fa fa-trash"></i></a>';
-            return $edit.$delete;
+
+            $delete = '<a href="'.route('admin.category.destroy',$query->id).'" class="delete-item btn btn-sm btn-danger ml-2 text-white"><i class="fas fa-trash"></i></a>';
+            return $delete;
         })
         ->addColumn('status', function($query){
             if($query->status === 1){
-                return '<span class="badge rounded-pill bg-danger  m-b-5">Enable</span>';
+                return '<span class="badge rounded-pill bg-success  m-b-5">Enable</span>';
             }else{
-                return '<span class="badge rounded-pill bg-success  m-b-5">Disable</span>';
+                return '<span class="badge rounded-pill bg-danger  m-b-5">Disable</span>';
             }
         })
             ->rawColumns(['action','status'])
@@ -79,7 +79,6 @@ class CategoryDataTable extends DataTable
             Column::make('id')->width(100),
             Column::make('title')->width(200),
             Column::make('status')->width(200),
-
             Column::computed('action')
             ->exportable(false)
             ->printable(false)

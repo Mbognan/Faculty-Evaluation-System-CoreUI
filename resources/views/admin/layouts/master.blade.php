@@ -24,7 +24,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('admin/assets/favicon/favicon-96x96.png')}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('admin/assets/favicon/favicon-16x16.png')}}">
     <link rel="manifest" href="{{ asset('assets/favicon/manifest.json') }}">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="{{ asset('admin/assets/favicon/ms-icon-144x144.png') }}">
     <meta name="theme-color" content="#ffffff">
@@ -36,11 +36,11 @@
     <!-- We use those styles to show code examples, you should remove them in your application.-->
     <link href="{{ asset('admin/css/examples.css') }}" rel="stylesheet">
     <link href="{{ asset('admin/vendors/@coreui/chartjs/css/coreui-chartjs.css') }}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <link href="https://cdn.datatables.net/2.0.0/css/dataTables.tailwindcss.css" rel="stylesheet">
-
-
 
 </head>
 @include('admin/layouts.sidebar')
@@ -135,9 +135,12 @@
 <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script>
 <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
 <script src="{{ asset('admin/js/main.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
 
@@ -153,8 +156,54 @@
          @foreach ($errors->all() as $error )
             toastr.error("{{ $error }}")
          @endforeach
-
         @endif
+
+
+        $('body').on('click', '.delete-item', function(e) {
+            e.preventDefault();
+            let url = $(this).attr('href');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'DELETE',
+                        url: url,
+                        data: {
+                            _token: "{{ csrf_token() }}"
+                        },
+                        success: function(response) {
+
+                            if (response.status === 'success') {
+                                Swal.fire(
+                                    'Deleted!',
+                                    response.message,
+                                    'success'
+                                );
+
+                            } else if (response.status === 'error') {
+                                Swal.fire(
+                                    'Something wen\'t wrong!',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+                            window.location.reload();
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        });
 </script>
 @stack('scripts')
 </body>

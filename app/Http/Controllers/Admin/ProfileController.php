@@ -37,16 +37,15 @@ class ProfileController extends Controller
 
         $request->validate([
             'current_password' => ['required','current_password'],
-            'password' => ['required','confirmed','min:6'],
-        ]);
+            'password' => ['required', 'min:8', 'confirmed']
+           ]);
 
-        $user =Auth::user();
+           $user = Auth::user();
+           $user->password = bcrypt($request->password);
+           $user->save();
 
-        $user->password = bcrypt($request->password);
-        $user->save();
-
-        toastr()->success('Password reset successfully!');
-        return redirect()->back();
+           toastr()->success('Updated user password successfully!');
+           return redirect()->back();
     }
 
 }

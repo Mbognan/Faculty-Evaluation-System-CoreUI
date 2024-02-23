@@ -20,7 +20,7 @@
                 <div class="card-header "><strong>Personal Information</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
+                 <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
@@ -58,7 +58,8 @@
                     <div class="row">
                         <div class="col">
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-primary me-md-2" type="submit">Update</button>
+                                <button  class="me-md-2 btn btn-outline-primary active" type="submit">Update</button>
+
                             </div>
                         </div>
 
@@ -75,7 +76,7 @@
                 <div class="card-header"><strong>Change Password</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('admin.profile.password_reset') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.profile.password_reset') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                     <div class="row">
@@ -98,8 +99,8 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button class="btn btn-danger me-md-2 mt-3 text-light" type="submit">Change Password</button>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                                <button class="btn btn-outline-danger active me-md-2 mt-3 text-light" type="submit">Change Password</button>
                             </div>
                         </div>
                     </div>
