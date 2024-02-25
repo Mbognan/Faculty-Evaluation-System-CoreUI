@@ -58,8 +58,8 @@
             <ul class="nav-group-items">
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.category.index') }}"><span class="nav-icon"></span>
                         Category</a></li>
-                <li class="nav-item"><a class="nav-link" href=""><span class="nav-icon"></span>
-                        Breadcrumb</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('admin.question.index') }}"><span class="nav-icon"></span>
+                        Questions</a></li>
 
             </ul>
         </li>

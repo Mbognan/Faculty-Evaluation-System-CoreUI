@@ -16,7 +16,7 @@
 
 @section('contents')
     <div class="container">
-        <div class="card">
+        <div class="card mt-4 mb-6">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>Manage Category</span>
                 <a href="" class="btn btn-primary rounded-pill" data-bs-toggle="modal"
@@ -28,9 +28,6 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class="container">
-
     </div>
 
 

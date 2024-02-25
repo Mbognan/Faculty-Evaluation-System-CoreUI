@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
@@ -20,4 +21,8 @@ Route::group([
            Route::put('/profile-password_reset', [ProfileController::class, 'password_reset'])->name('profile.password_reset');
            /**Category route */
            Route::resource('/category', CategoryController::class);
+           /**Question route */
+           Route::get('/question', [QuestionController::class,'index'])->name('question.index');
+
+
 });
