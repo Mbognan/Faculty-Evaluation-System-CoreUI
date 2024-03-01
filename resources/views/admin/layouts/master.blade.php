@@ -111,8 +111,8 @@
                 </li>
             </ul>
         </div>
-        <div class="header-divider"></div>
-       @yield('breadcrumbs')
+        {{-- <div class="header-divider"></div>
+       @yield('breadcrumbs') --}}
     </header>
 <body>
     <div class="body flex-grow-1 px-3">
@@ -143,12 +143,9 @@
 
 
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
 
 
-<script src="https://cdn.tailwindcss.com/"></script>
-<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.0/js/dataTables.tailwindcss.js"></script>
-<script src="https://cdn.tailwindcss.com/"></script>
 
 <script>
 

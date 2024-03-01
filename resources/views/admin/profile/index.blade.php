@@ -20,51 +20,54 @@
                 <div class="card-header "><strong>Personal Information</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
-                 <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT')
+                    <form action="{{ route('admin.profile.update') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
 
-                    <div class="row">
-                        <div class="col">
-                            <div class="form-group">
-                                <div id="image-preview" class="avatar-preview">
-                                    <label for="image-upload" id="image-label">Choose File</label>
-                                    <input type="file" name="avatar" id="image-upload" />
-                                    <input type="hidden" name="oldAvatar" value="{{ $user->avatar }}">
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <div id="image-preview" class="avatar-preview">
+                                        <label for="image-upload" id="image-label">Choose File</label>
+                                        <input type="file" name="avatar" id="image-upload" />
+                                        <input type="hidden" name="oldAvatar" value="{{ $user->avatar }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label">First Name</label>
-                            <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control" placeholder="First name" aria-label="First name">
-                        </div>
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label">Last Name</label>
-                            <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control" placeholder="Last name" aria-label="Last name">
-                        </div>
-
-                    </div>
-                    <div class="mb-3">
-
-                        <label for="exampleFormControlInput1" class="form-label">Change Email address<span
-                                class="small ms-1 text-danger">*</span></label>
-                        <input type="email" name="email" class="form-control" value="{{ $user->email }}" id="exampleFormControlInput1" placeholder="Email">
-                    </div>
-
-
-
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <button  class="me-md-2 btn btn-outline-primary active" type="submit">Update</button>
-
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label">First Name</label>
+                                <input type="text" name="first_name" value="{{ $user->first_name }}" class="form-control"
+                                    placeholder="First name" aria-label="First name">
                             </div>
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label">Last Name</label>
+                                <input type="text" name="last_name" value="{{ $user->last_name }}" class="form-control"
+                                    placeholder="Last name" aria-label="Last name">
+                            </div>
+
+                        </div>
+                        <div class="mb-3">
+
+                            <label for="exampleFormControlInput1" class="form-label">Change Email address<span
+                                    class="small ms-1 text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control" value="{{ $user->email }}"
+                                id="exampleFormControlInput1" placeholder="Email">
                         </div>
 
-                    </div>
-                </form>
+
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="me-md-2 btn btn-outline-primary active" type="submit">Update</button>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -76,35 +79,40 @@
                 <div class="card-header"><strong>Change Password</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
-                <form action="{{ route('admin.profile.password_reset') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('admin.profile.password_reset') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                    <div class="row">
-                        <div class="col">
-                        <label for="exampleFormControlInput1" class="form-label text-danger">Old Password</label>
-                        <input type="password" name="current_password" class="form-control" id="exampleFormControlInput1" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label text-danger">New Password </label>
-                            <input type="password" name="password" class="form-control" placeholder="First name" aria-label="First name">
-                        </div>
-                        <div class="col">
-                            <label for="exampleFormControlInput1" class="form-label text-danger">Confirm Password </label>
-                            <input type="password" name="password_confirmation" class="form-control" placeholder="Last name" aria-label="Last name">
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
-                                <button class="btn btn-outline-danger active me-md-2 mt-3 text-light" type="submit">Change Password</button>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label text-danger">Old Password</label>
+                                <input type="password" name="current_password" class="form-control"
+                                    id="exampleFormControlInput1" placeholder="Email">
                             </div>
                         </div>
-                    </div>
-                </form>
+                        <div class="row">
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label text-danger">New Password </label>
+                                <input type="password" name="password" class="form-control" placeholder="First name"
+                                    aria-label="First name">
+                            </div>
+                            <div class="col">
+                                <label for="exampleFormControlInput1" class="form-label text-danger">Confirm Password
+                                </label>
+                                <input type="password" name="password_confirmation" class="form-control"
+                                    placeholder="Last name" aria-label="Last name">
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end ">
+                                    <button class="btn btn-outline-danger active me-md-2 mt-3 text-light"
+                                        type="submit">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -285,8 +293,6 @@
                     });
 
                 });
-
-
             </script>
         @endpush
     </div>

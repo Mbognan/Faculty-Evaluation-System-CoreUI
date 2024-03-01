@@ -71,5 +71,9 @@
 @endsection
 @push('scripts')
 
+<script src="https://cdn.tailwindcss.com/"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.tailwindcss.js"></script>
+
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 @endpush

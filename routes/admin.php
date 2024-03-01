@@ -23,6 +23,6 @@ Route::group([
            Route::resource('/category', CategoryController::class);
            /**Question route */
            Route::get('/question', [QuestionController::class,'index'])->name('question.index');
-
+           Route::post('/post/post_order_change', [QuestionController::class, 'post_order_change'])->name('post.order_change');
 
 });
