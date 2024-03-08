@@ -15,6 +15,16 @@
 @endsection
 
 @section('contents')
+<div class="fs-2 fw-semibold">Evaluation Category</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item">
+        <!-- if breadcrumb is single--><span>Home</span>
+      </li>
+      <li class="breadcrumb-item active"><span> Category</span></li>
+    </ol>
+  </nav>
+  <hr>
     <div class="container">
         <div class="card mt-4 mb-6">
             <div class="card-header d-flex justify-content-between align-items-center">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Question;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -34,6 +35,24 @@ class QuestionController extends Controller
             'message' => 'Post order changed successfully.',
             'alert-type' => 'success'
         ]);
+    }
+
+    public function store(Request $request):RedirectResponse{
+        $request->validate([
+            'category' => ['required',],
+            'question' => ['required','string']
+        ]);
+        $maxPosition = Question::where('category_id', $request->category)->max('position');
+
+        $question = new Question();
+
+        $question->category_id = $request->category;
+        $question->question = $request->question;
+        $question->position = $maxPosition + 1;
+        $question->save();
+
+        toastr()->success('Created Successfully!');
+        return redirect()->back();
     }
 
 

@@ -14,6 +14,15 @@
 @endsection
 
 @section('contents')
+    <div class="fs-2 fw-semibold">Administrator Profile</div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <!-- if breadcrumb is single--><span>Home</span>
+            </li>
+            <li class="breadcrumb-item active"><span>Dashboard</span></li>
+        </ol>
+    </nav>
     <div class="row">
         <div class="col-md-6">
             <div class="card mb-4">
@@ -185,7 +194,10 @@
                 transform: translate(-50%, -50%);
                 text-align: center;
             }
+
         </style>
+
+        @endsection
         @push('scripts')
             <script>
                 (function($) {
@@ -296,4 +308,4 @@
             </script>
         @endpush
     </div>
-@endsection
+

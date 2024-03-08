@@ -16,10 +16,12 @@ return new class extends Migration
             $table->string('avatar')->default('/default/avatar.png');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('gender')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('user_type',['user','admin'])->default('user');
+            $table->boolean('status')->default(0);
+            $table->enum('user_type',['user','admin','faculty'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

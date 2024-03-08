@@ -40,7 +40,7 @@
                 <svg class="nav-icon">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-speedometer') }}"></use>
                 </svg> Dashboard</a>
-            </li>
+        </li>
         <li class="nav-title">Under Development</li>
         <li class="nav-item"><a class="nav-link" href="colors.html">
                 <svg class="nav-icon">
@@ -52,17 +52,32 @@
                 </svg> Under Develop</a></li>
         <li class="nav-title">Manage Evaluation</li>
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-group') }}"></use>
+            </svg> Faculty</a>
+          <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.faculty.index') }}"><span class="nav-icon"></span>
+                Create Faculty</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.faculty-view') }}"><span class="nav-icon"></span>
+                View Faculty</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
                 <svg class="nav-icon">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
                 </svg> Evaluation Questions</a>
             <ul class="nav-group-items">
-                <li class="nav-item"><a class="nav-link" href="{{ route('admin.category.index') }}"><span class="nav-icon"></span>
+                <li class="nav-item"><a class="nav-link" href="{{ route('admin.category.index') }}"><span
+                            class="nav-icon"></span>
                         Category</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('admin.question.index') }}"><span class="nav-icon"></span>
+                <li class="nav-item"><a class="nav-link" href="{{ route('admin.question.index') }}"><span
+                            class="nav-icon"></span>
                         Questions</a></li>
 
             </ul>
         </li>
+
 
     </ul>
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

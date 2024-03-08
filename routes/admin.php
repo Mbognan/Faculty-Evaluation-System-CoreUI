@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\FacultyView;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\QuestionController;
 use Illuminate\Support\Facades\Route;
@@ -24,5 +26,9 @@ Route::group([
            /**Question route */
            Route::get('/question', [QuestionController::class,'index'])->name('question.index');
            Route::post('/post/post_order_change', [QuestionController::class, 'post_order_change'])->name('post.order_change');
+           Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
+            /**Faculty route */
+            Route::resource('/faculty', FacultyController::class);
+            Route::get('/faculty-view', [FacultyView::class,'index'])->name('faculty-view');
 
 });
