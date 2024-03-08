@@ -78,7 +78,7 @@
 
     <div class="col-md-6">
         <div class="card mb-4">
-            <div class="card-header "><strong>Personal Information</strong><span class="small ms-1 text-danger">*</span>
+            <div class="card-header "><strong>Create Question Section</strong><span class="small ms-1 text-danger">*</span>
             </div>
             <div class="card-body">
     <div class="mb-3">
@@ -101,7 +101,7 @@
 
         <div class="col-md-12">
             <div class="card mb-4">
-                <div class="card-header "><strong>Personal Information</strong><span class="small ms-1 text-danger">*</span>
+                <div class="card-header "><strong>Question Management Area</strong><span class="small ms-1 text-danger">*</span>
                 </div>
                 <div class="card-body">
     @foreach ($categories as $category)
