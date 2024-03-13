@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\FacultyView;
+use App\Http\Controllers\Admin\FacultyViewController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\QuestionController;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,7 @@ Route::group([
            Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
             /**Faculty route */
             Route::resource('/faculty', FacultyController::class);
-            Route::get('/faculty-view', [FacultyView::class,'index'])->name('faculty-view');
+            Route::get('/faculty-view', [FacultyViewController::class,'index'])->name('faculty-view');
+            Route::get('faculty/view-result/{user_id}', [FacultyViewController::class,'view'])->name('faculty.result');
 
 });

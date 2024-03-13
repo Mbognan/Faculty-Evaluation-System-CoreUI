@@ -27,8 +27,6 @@ class ProfileController extends Controller
         $user->last_name  = $request->last_name;
         $user->email = $request->email;
         $user->save();
-
-
         toastr()->success('Updated user successfully!');
         return redirect()->back();
     }

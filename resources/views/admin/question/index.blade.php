@@ -57,10 +57,7 @@
         line-height: 30px;
     }
 
-    .accordion-button {
-        background-color: white !important;
-        color: #fff;
-    }
+
 </style>
 
 @section('contents')
@@ -74,53 +71,51 @@
     </ol>
   </nav>
 <hr>
-    <div class="col-md-12">
-        <div class="card mb-4">
-            <div class="card-header d-flex justify-content-between align-items-center "><strong class="text-primary">Question Management Area</strong>
-                <a href="" class="btn btn-primary rounded-pill" data-bs-toggle="modal"
-                    data-bs-target="#exampleModal"> <i class="fa fa-plus"></i> Create</a>
-            </div>
-            <div class="card-body">
-
+<div class="col-md-12">
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <strong class="">Question Management Area</strong>
+            <a href="" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-plus"></i> Create
+            </a>
+        </div>
+        <div class="card-body">
+            <div class="accordion mb-4" id="accordionExample">
                 @foreach ($categories as $category)
-                    <div class="accordion mb-4" id="accordionExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-coreui-toggle="collapse"
-                                    data-coreui-target="#collapse{{ $category->id }}" aria-expanded="true"
-                                    aria-controls="collapse{{ $category->id }}">
-                                    {{ $category->title }}
-                                </button>
-                            </h2>
-                            <div id="collapse{{ $category->id }}" class="accordion-collapse collapse"
-                                data-coreui-parent="#accordionExample">
-                                <div class="accordion-body">
-                                    <div class="table-responsive">
-
-                                        <table class="table">
-                                            <thead>
-                                              <tr>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button" type="button" data-coreui-toggle="collapse"
+                                data-coreui-target="#collapse{{ $category->id }}">
+                                {{ $category->title }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ $category->id }}" class="accordion-collapse collapse"
+                            data-coreui-parent="#accordionExample">
+                            <div class="accordion-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
                                                 <th scope="col">Order</th>
                                                 <th scope="col">Question</th>
                                                 <th scope="col">Action</th>
-
-                                              </tr>
-                                            </thead>
-                                            <tbody id="post_sortable_{{ $category->id }}" class="post_list_ul">
-                                                @foreach ($questions->where('category_id', $category->id) as $question)
-                                                    <tr class="ui-state-default" data-id="{{ $question->id }}">
-                                                        <td>{{ $loop->index + 1 }}</td>
-                                                        <td>{{ $question->question }}</td>
-                                                        <td>
-                                                            <a href="" class="ml-2"><i
-                                                                    class="fa-solid fa-pen-to-square"></i></a>
-                                                            <a href="" class="ml-2"><i
-                                                                    class="fas fa-trash text-danger"></i></a>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                          </table>
-                                    </div>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="post_sortable_{{ $category->id }}" class="post_list_ul">
+                                            @foreach ($questions->where('category_id', $category->id) as $question)
+                                                <tr class="ui-state-default" data-id="{{ $question->id }}">
+                                                    <td>{{ $loop->index + 1 }}</td>
+                                                    <td>{{ $question->question }}</td>
+                                                    <td>
+                                                        <a href="" class="ml-2"><i
+                                                                class="fa-solid fa-pen-to-square"></i></a>
+                                                        <a href="" class="ml-2"><i
+                                                                class="fas fa-trash text-danger"></i></a>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -129,6 +124,9 @@
             </div>
         </div>
     </div>
+</div>
+
+
 
  <!-- Modal -->
  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

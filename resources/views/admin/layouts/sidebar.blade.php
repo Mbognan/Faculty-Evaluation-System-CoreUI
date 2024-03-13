@@ -66,7 +66,7 @@
         <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
                 <svg class="nav-icon">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-puzzle') }}"></use>
-                </svg> Evaluation Questions</a>
+                </svg>Evaluation Mngt.</a>
             <ul class="nav-group-items">
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.category.index') }}"><span
                             class="nav-icon"></span>
@@ -74,7 +74,9 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.question.index') }}"><span
                             class="nav-icon"></span>
                         Questions</a></li>
-
+                        <li class="nav-item"><a class="nav-link" href=""><span
+                            class="nav-icon"></span>
+                        Evaluation Schedule</a></li>
             </ul>
         </li>
 

@@ -10,16 +10,28 @@
                 <!-- if breadcrumb is single--><span>Home</span>
             </li>
             <li class="breadcrumb-item active"><span> Faculty</span></li>
+            <li class="breadcrumb-item active"><span> View Activity</span></li>
         </ol>
     </nav>
     <hr>
 
-    <div class="container ">
-        <div class="card mt-4 mb-6">
-
-            <div class="card-body mb-6">
-
-                <table class="table border mb-0">
+    <div class="card mb-4">
+        <div class="card-body p-4">
+            <div class="row">
+                <div class="col">
+                    <div class="card-title fs-4 fw-semibold">Faculty</div>
+                    <div class="card-subtitle text-secondary mb-4">{{ $facultyCount }} registered faculty</div>
+                </div>
+                <div class="col-auto ms-auto">
+                    <button class="btn btn-primary">
+                        <svg class="icon me-2">
+                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user-plus"></use>
+                        </svg>Add new Faculty
+                    </button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table border ">
                     <thead class="table-light fw-semibold">
                         <tr class="align-middle">
                             <th class="text-center">
@@ -27,12 +39,12 @@
                                     <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-people"></use>
                                 </svg>
                             </th>
-                            <th>User</th>
-                            <th class="text-center">Progress</th>
-                            <th >Gender</th>
-                            <th class="text-center">Progress</th>
+                            <th>Faculty</th>
+                            <th >Progress</th>
+                            <th class="text-center">Gender</th>
+                            <th class="text-center">Status</th>
                             <th>Activity</th>
-                            <th>Action</th>
+                            <th class="text-center">View Result</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -47,33 +59,43 @@
                                     <div class="small text-medium-emphasis"><span>New</span> | Registered:
                                         {{ $user->created_at->format('M d, Y') }}</div>
                                 </td>
-                                <td class="text-center">
-                                    <div>{{ $user->email }}</div>
+                                <td class=" ">
+
+                                        <div class="clearfix">
+                                          <div class="float-start">
+                                            <div class="fw-semibold">10%</div>
+                                          </div>
+                                          <div class="float-end"><small class="text-medium-emphasis">Jun 11, 2020 - Jul 10,
+                                              2020</small></div>
+                                        </div>
+                                        <div class="progress progress-thin">
+                                          <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+
                                 </td>
-                                <td>
-                                    {{ $user->gender }}
+                                <td class="text-center">
+                                    @if($user->gender === 'male')
+                                    <i class="fas fa-mars text-primary" style="font-size: 24px"></i>
+                                    @else
+                                    <i class="fas fa-venus text-danger" style="font-size: 24px"></i>
+                                    @endif
                                 </td>
                                 <td class="text-center">
-                                    <svg class="icon icon-xl">
-                                        <use xlink:href="vendors/@coreui/icons/svg/brand.svg#cib-cc-mastercard"></use>
-                                    </svg>
+                                    @if($user->status === 1)
+                                    <i class="fas fa-check-circle text-success" style="font-size: 24px;"></i>
+                                    @else
+                                    <i class="fas fa-times-circle text-danger" style="font-size: 24px"></i>
+                                    @endif
+
                                 </td>
                                 <td>
                                     <div class="small text-medium-emphasis">Last login</div>
                                     <div class="fw-semibold">10 sec ago</div>
                                 </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <svg class="icon">
-                                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                            </svg>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
-                                                href="#">Info</a><a class="dropdown-item" href="#">Edit</a><a
-                                                class="dropdown-item text-danger" href="#">Delete</a></div>
-                                    </div>
+                                <td class="text-center">
+
+
+                                       <a href="{{ route('admin.faculty.result',$user->id) }}"> <i class="fas fa-search btn btn-success text-light" style="font-size: 20px"></i>
                                 </td>
                             </tr>
                         @endforeach
@@ -84,4 +106,5 @@
             </div>
         </div>
     </div>
+
 @endsection

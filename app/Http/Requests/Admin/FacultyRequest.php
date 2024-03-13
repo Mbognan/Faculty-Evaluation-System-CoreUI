@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+
 
 class FacultyRequest extends FormRequest
 {
@@ -18,7 +19,13 @@ class FacultyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'avatar' => ['required', 'max:3000', 'image'],
+            'first_name' => ['required', 'max:255'],
+            'last_name' => ['required', 'max:255'],
+            'email' => ['required', 'max:255','email'],
+            'password' => ['required', 'string'],
+            'gender' => ['required'],
+            'status' => ['required'],
         ];
     }
 }

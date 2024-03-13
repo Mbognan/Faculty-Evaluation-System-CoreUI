@@ -30,57 +30,53 @@
             <div class="card-header "><strong>Faculty Account</strong><span class="small ms-1 text-danger">*</span>
             </div>
             <div class="card-body">
-
-                    @csrf
-
-                    <form class="row g-3">
-
-
+                    <form class="row g-3" method="POST" action="{{ route('admin.faculty.store') }}" enctype="multipart/form-data">
+                        @csrf
                                 <div class="form-group">
                                     <div id="image-preview" class="avatar-preview">
                                         <label for="image-upload" id="image-label">Choose File</label>
                                         <input type="file" name="avatar" id="image-upload" />
-                                        <input type="hidden" name="oldAvatar" value="">
                                     </div>
                                 </div>
 
                         <div class="col-md-6">
                           <label for="inputEmail4" class="form-label">First Name</label>
-                          <input type="text" class="form-control" id="inputEmail4">
+                          <input type="text" name="first_name" class="form-control" id="inputEmail4">
                         </div>
                         <div class="col-md-6">
                           <label for="inputPassword4" class="form-label">Last Name</label>
-                          <input type="text" class="form-control" id="inputPassword4">
+                          <input type="text" name="last_name" class="form-control" id="inputPassword4">
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                           <label for="inputAddress" class="form-label">Email</label>
-                          <input type="email" class="form-control" id="inputAddress" placeholder="example@gmail.com">
+                          <input type="email" name="email" class="form-control" id="inputAddress" placeholder="example@gmail.com">
                         </div>
                         <div class="col-6">
                           <label for="inputAddress2" class="form-label">Password</label>
-                          <input type="password" class="form-control" id="inputAddress2" placeholder="*******">
+                          <input type="password" name="password" class="form-control" id="inputAddress2" placeholder="*******">
                         </div>
-                        <div class="col-md-6">
-                          <label for="inputCity" class="form-label">Confirm Password</label>
-                          <input type="password" class="form-control" id="inputCity">
-                        </div>
+
                         <div class="col-md-6">
                             <label for="inputCity" class="form-label">Gender</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="2">Male</option>
-                                <option value="3">Female</option>
+                            <select name="gender" class="form-select" aria-label="Default select example">
+                                <option selected>Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
                               </select>
                           </div>
                           <div class="col-md-6">
                             <label for="inputCity" class="form-label">Status</label>
-                            <select class="form-select" aria-label="Default select example">
-                                <option selected>Open this select menu</option>
-                                <option value="2">Enable</option>
-                                <option value="3">Disable</option>
+                            <select name="status" class="form-select" aria-label="Default select example">
+                                <option selected>Status</option>
+                                <option value="1">Enable</option>
+                                <option value="0">Disable</option>
                               </select>
                           </div>
+                          <input value="faculty" name="user_type" hidden>
 
+                          <div class="col-4">
+                            <button class="btn btn-primary">Submit</button>
+                          </div>
 
                       </form>
 
@@ -126,8 +122,7 @@
             z-index: 10;
         }
 
-        To center the upload preview within its container,
-        you can update the CSS for the #image-preview and #image-preview label as follows: css Copy code #image-preview {
+       #image-preview {
             width: 200px;
             height: 200px;
             position: relative;

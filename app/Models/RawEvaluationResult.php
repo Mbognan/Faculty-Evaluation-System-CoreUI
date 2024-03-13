@@ -5,11 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Category extends Model
+class RawEvaluationResult extends Model
 {
     use HasFactory;
-    public function evaluationResults()
-    {
-        return $this->hasMany(EvaluationResult::class);
-    }
 }
