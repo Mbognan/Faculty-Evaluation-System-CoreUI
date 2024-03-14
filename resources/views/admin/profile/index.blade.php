@@ -70,7 +70,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button class="me-md-2 btn btn-outline-primary active" type="submit">Update</button>
+                                    <button class="me-md-2 btn btn-info text-white active" type="submit">Update</button>
 
                                 </div>
                             </div>

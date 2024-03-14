@@ -3,11 +3,13 @@
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\EvaluationScheduleController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\FacultyView;
 use App\Http\Controllers\Admin\FacultyViewController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\QuestionController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
@@ -32,5 +34,8 @@ Route::group([
             Route::resource('/faculty', FacultyController::class);
             Route::get('/faculty-view', [FacultyViewController::class,'index'])->name('faculty-view');
             Route::get('faculty/view-result/{user_id}', [FacultyViewController::class,'view'])->name('faculty.result');
+            /**EvaluationSchedule route */
+            Route::get('evaluation_schedule', [EvaluationScheduleController::class, 'index'])->name('evaluation_schedule.index');
+            Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');
 
 });

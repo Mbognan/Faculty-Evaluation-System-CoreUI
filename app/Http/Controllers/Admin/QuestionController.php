@@ -39,8 +39,8 @@ class QuestionController extends Controller
 
     public function store(Request $request):RedirectResponse{
         $request->validate([
-            'category' => ['required',],
-            'question' => ['required','string']
+            'category' => ['required','max:255'],
+            'question' => ['required','max:255']
         ]);
         $maxPosition = Question::where('category_id', $request->category)->max('position');
 

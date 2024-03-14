@@ -74,9 +74,9 @@
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.question.index') }}"><span
                             class="nav-icon"></span>
                         Questions</a></li>
-                        <li class="nav-item"><a class="nav-link" href=""><span
+                        <li class="nav-item"><a class="nav-link" href="{{ route('admin.evaluation_schedule.index') }}"><span
                             class="nav-icon"></span>
-                        Evaluation Schedule</a></li>
+                        Academic Year</a></li>
             </ul>
         </li>
 

@@ -13,10 +13,13 @@ return new class extends Migration
     {
         Schema::create('evaluation_schedules', function (Blueprint $table) {
             $table->id();
+            $table->string(('description'));
+            $table->string('academic_year');
+            $table->string('semester');
+            $table->string('evaluation_status');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */

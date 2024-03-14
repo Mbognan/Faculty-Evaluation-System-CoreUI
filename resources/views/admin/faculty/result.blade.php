@@ -179,10 +179,10 @@
                                     : ($percentage <= 60
                                         ? 'Fair'
                                         : ($percentage <= 80
-                                            ? 'Average'
+                                            ? 'Satisfactory'
                                             : ($percentage <= 90
-                                                ? 'Good'
-                                                : 'Excellent')));
+                                                ? 'Very Satisfactory'
+                                                : 'Outstanding')));
                         @endphp
                         <div class="col mb-sm-2 mb-0">
                             <div class="text-medium-emphasis">{{ $cat->title }}</div>

@@ -23,7 +23,7 @@
                     <div class="card-subtitle text-secondary mb-4">{{ $facultyCount }} registered faculty</div>
                 </div>
                 <div class="col-auto ms-auto">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-info text-white">
                         <svg class="icon me-2">
                             <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user-plus"></use>
                         </svg>Add new Faculty

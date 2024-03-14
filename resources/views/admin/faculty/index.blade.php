@@ -30,7 +30,7 @@
         <div class="card mt-4 mb-6">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <span>List Of Faculty</span>
-                <a href="{{ route('admin.faculty.create') }}" class="btn btn-primary rounded-pill"> <i class="fa fa-plus"></i> Create</a>
+                <a href="{{ route('admin.faculty.create') }}" class="btn btn-info text-white rounded-pill"> <i class="fa fa-plus"></i> Create</a>
             </div>
             <div class="card-body">
                 <table id="example" class="uk-table uk-table-hover uk-table-striped" style="width:100%">

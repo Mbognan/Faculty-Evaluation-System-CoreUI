@@ -1,171 +1,184 @@
 @extends('admin.layouts.master')
+
 <style>
-    .post_list_ul {
-        margin: 0px;
-        padding: 5px;
+    .dynamic-col {
+        overflow-wrap: break-word;
     }
 
-    .post_list_ul li {
-        list-style: none;
-        padding: 5px 10px 5px 30px;
-        background: #fff;
-        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.3);
-        margin-bottom: 10px;
-        cursor: move;
-        position: relative;
-        font-size: 16px;
-    }
-
-
-    .post_list_ul li .pos_num {
-        display: inline-block;
-        padding: 2px 5px;
-        /* width: 30px; */
-        height: 20px;
-        line-height: 17px;
-        background: rgb(6, 160, 65);
-        color: #fff;
-        text-align: center;
-        border-radius: 5px;
-        position: absolute;
-        left: -5px;
-        top: 6px;
-    }
-
-    .post_list_ul li:hover {
-        list-style: none;
-        background: #7a49eb;
-        color: #fff;
-    }
-
-    .post_list_ul li.ui-state-highlight {
-        padding: 20px;
-        background-color: #eaecec;
-        border: 1px dotted #ccc;
-        cursor: move;
-        margin-top: 12px;
-    }
-
-    .post_list_ul .btn_move {
-        display: inline-block;
-        cursor: move;
-        background: #ededed;
-        border-radius: 2px;
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        line-height: 30px;
+    .table-gap {
+        margin-bottom: 7rem !important;
     }
 
 
 </style>
 
 @section('contents')
-<div class="fs-2 fw-semibold">Evaluation Questionare</div>
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb mb-4">
-      <li class="breadcrumb-item">
-        <!-- if breadcrumb is single--><span>Home</span>
-      </li>
-      <li class="breadcrumb-item active"><span> Questionare</span></li>
-    </ol>
-  </nav>
-<hr>
-<div class="col-md-12">
-    <div class="card mb-4">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <strong class="">Question Management Area</strong>
-            <a href="" class="btn btn-primary rounded-pill" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="fa fa-plus"></i> Create
-            </a>
-        </div>
-        <div class="card-body">
-            <div class="accordion mb-4" id="accordionExample">
+    <div class="fs-2 fw-semibold mb-4">Evaluation Questionnaire</div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item">
+                <!-- if breadcrumb is single--><span>Home</span>
+            </li>
+            <li class="breadcrumb-item active"><span> Questionnaire</span></li>
+        </ol>
+    </nav>
+    <hr>
+
+    <div class="mb-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div class="mb-8">
+                    </div>
+                    <div class="btn-toolbar d-none d-md-block mb-8" role="toolbar" aria-label="Toolbar with buttons">
+                        <button class="btn btn-info text-white" type="button">Print Evaluation
+                            <svg class="icon">
+                                <use
+                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
+                                </use>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row justify-content-center mb-4">
+                    <div class="col-md-6">
+                        <h4 class="card-title mb-0 text-center">Instrument For Instruction/Teaching Performance</h4>
+                        <div class="small text-medium-emphasis text-center">Rating Period 2022-2023</div>
+                    </div>
+                </div>
+
+                <table class="table table-bordered bordered-dark mt-4 mb-4" style="border-color: #343a40;">
+                    <thead>
+                        <tr>
+                            <th class="text-center" scope="col">SCALE</th>
+                            <th class="text-center" scope="col">DESCRIPTIVE RATING</th>
+                            <th scope="col">QUALITATIVE DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row" class="text-center">5</th>
+                            <td class="text-center">Outstanding</td>
+                            <td>The performance almost exceeds the job requirements. The Faculty is an exceptional role
+                                model</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-center">4</th>
+                            <td class="text-center">Very Satisfactory</td>
+                            <td>The performace meets and often exceeds the job requirements</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-center">3</th>
+                            <td class="text-center">Satisfactory</td>
+                            <td>The performance meets the job requirements</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-center">2</th>
+                            <td class="text-center">Fair</td>
+                            <td>The performance needs some development to meet job requirements</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="text-center">1</th>
+                            <td class="text-center">Poor</td>
+                            <td>The faculty fails to meet the job requirements</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="table-gap"></div>
+
+                <div class="row justify-content-center mb-2">
+                    <div class="col-md-6">
+                        <h4 class="card-title mb-0 text-center">Question</h4>
+                        <div class="small text-medium-emphasis text-center">Rating Period 2022-2023</div>
+                    </div>
+                </div>
                 @foreach ($categories as $category)
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button" type="button" data-coreui-toggle="collapse"
-                                data-coreui-target="#collapse{{ $category->id }}">
-                                {{ $category->title }}
-                            </button>
-                        </h2>
-                        <div id="collapse{{ $category->id }}" class="accordion-collapse collapse"
-                            data-coreui-parent="#accordionExample">
-                            <div class="accordion-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered border-primary">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Order</th>
-                                                <th scope="col">Question</th>
-                                                <th scope="col">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="post_sortable_{{ $category->id }}" class="post_list_ul">
-                                            @foreach ($questions->where('category_id', $category->id) as $question)
-                                                <tr class="ui-state-default" data-id="{{ $question->id }}">
-                                                    <td>{{ $loop->index + 1 }}</td>
-                                                    <td>{{ $question->question }}</td>
-                                                    <td>
-                                                        <a href="" class="ml-2"><i
-                                                                class="fa-solid fa-pen-to-square"></i></a>
-                                                        <a href="" class="ml-2"><i
-                                                                class="fas fa-trash text-danger"></i></a>
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
+
+                    <table class="table table-bordered mt-4 mb-4" style="border-color: #343a40;">
+                        <thead>
+                            <tr>
+
+                                <th scope="col" class="fw-bold">{{ $category->title }}</th>
+                                <th class="text-center" colspan="5" scope="col" >Scale</th>
+                                <th class="text-center" scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="post_sortable_{{ $category->id }}" class="post_list_ul">
+                            @foreach ($questions->where('category_id', $category->id) as $question)
+                                <tr class="ui-state-default" data-id="{{ $question->id }}">
+
+                                    <td>{{ $loop->index + 1 }}. {{ $question->question }}</td>
+                                    <td class="text-center" style="width: 20px;">1</td>
+                                    <td class="text-center" style="width: 20px;">2</td>
+                                    <td class="text-center" style="width: 20px;">3</td>
+                                    <td class="text-center" style="width: 20px;">4</td>
+                                    <td class="text-center" style="width: 20px;">5</td>
+                                    <td style="width: 90px;">
+                                        <div style="display: flex;">
+                                            <a href="" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                            <a href="" class="delete-item btn btn-sm btn-danger ml-2" style="margin-left: 5px;"><i class="fas fa-trash text-white"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                @endforeach
+                <div class="text-end">
+                    <button class="btn btn-info text-white" type="button" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        <i class="fas fa-plus"></i> Add Evaluation Question
+                    </button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
+
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="{{ route('admin.question.store') }}">
+                        @csrf
+                        <div class="form-floating mb-3">
+                            <select name="category" class="form-select form-select-lg mb-3"
+                                aria-label=".form-select-lg example">
+                                <option>Select Evaluation Category</option>
+                                @foreach ($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->title }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-floating">
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Create Questions</label>
+                                <textarea name="question" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                        <button type="button" class="btn btn-outline-secondary active"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-outline-primary active me-auto">Save changes</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+
             </div>
         </div>
     </div>
-</div>
-
-
-
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('admin.question.store') }}">
-                    @csrf
-                    <div class="form-floating mb-3">
-                        <select name="category" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-                            <option>Select Evaluation Category</option>
-                            @foreach ($categories as $category )
-                            <option value="{{ $category->id }}">{{ $category->title }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-floating">
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Create Questions</label>
-                            <textarea name="question" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-                        </div>
-                    </div>
-
-                    <button type="button" class="btn btn-outline-secondary active" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-outline-primary active me-auto">Save changes</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-
-            </div>
-
-        </div>
-    </div>
-</div>
 @endsection
+
 @push('scripts')
     <script>
         $(document).ready(function() {
@@ -174,7 +187,7 @@
                 update: function(event, ui) {
                     var post_order_ids = [];
                     var category_id = $(this).attr('id').split('_')[
-                    2]; // Extract category ID from ID attribute
+                        2]; // Extract category ID from ID attribute
 
                     $(this).find('tr').each(function() {
                         post_order_ids.push($(this).data("id"));

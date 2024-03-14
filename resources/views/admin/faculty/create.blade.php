@@ -75,7 +75,7 @@
                           <input value="faculty" name="user_type" hidden>
 
                           <div class="col-4">
-                            <button class="btn btn-primary">Submit</button>
+                            <button class="btn btn-info text-white">Submit</button>
                           </div>
 
                       </form>
