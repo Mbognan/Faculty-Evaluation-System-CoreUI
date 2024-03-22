@@ -9,5 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Question extends Model
 {
     use HasFactory;
-
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

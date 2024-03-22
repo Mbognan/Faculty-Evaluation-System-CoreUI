@@ -104,11 +104,15 @@
                                 <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-lock-locked')}}"></use>
                             </svg> Lock Account
                         </a>
-                        <a class="dropdown-item" href="#">
-                            <svg class="icon me-2">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-account-logout')}}"></use>
-                            </svg> Logout
-                        </a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button class="dropdown-item" href="{{ route('logout') }}">
+                                <svg class="icon me-2">
+                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-account-logout')}}"></use>
+                                </svg> Logout
+                            </button>
+                        </form>
+
                     </div>
                 </li>
             </ul>
@@ -136,7 +140,7 @@
 <script src="{{ asset('admin/vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/simplebar/js/simplebar.min.js') }}"></script>
 <!-- Plugins and scripts required by this view-->
-<script src="{{ asset('admin/vendors/chart.js/js/chart.min.js') }}"></script>
+
 <script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script>
 <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
 <script src="{{ asset('admin/js/main.js') }}"></script>

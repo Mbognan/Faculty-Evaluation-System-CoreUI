@@ -30,6 +30,10 @@ Route::group([
            Route::get('/question', [QuestionController::class,'index'])->name('question.index');
            Route::post('/post/post_order_change', [QuestionController::class, 'post_order_change'])->name('post.order_change');
            Route::post('/question-store', [QuestionController::class, 'store'])->name('question.store');
+           Route::get('question-edit/{id}', [QuestionController::class, 'edit'])->name('question.edit');
+           Route::put('question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
+           Route::delete('/question-delete/{id}', [QuestionController::class,'destroy'])->name('question.delete');
+
             /**Faculty route */
             Route::resource('/faculty', FacultyController::class);
             Route::get('/faculty-view', [FacultyViewController::class,'index'])->name('faculty-view');

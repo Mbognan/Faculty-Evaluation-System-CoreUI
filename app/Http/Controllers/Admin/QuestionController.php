@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Question;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -54,6 +55,57 @@ class QuestionController extends Controller
         toastr()->success('Created Successfully!');
         return redirect()->back();
     }
+
+    public function edit( string $id):JsonResponse{
+         $questions = Question::findOrFail($id)->load('category');
+
+         if($questions){
+            return response()->json([
+                'status' => '200',
+                'questions' => $questions,
+                'category_title' => $questions->category->title
+            ]);
+         }else{
+            return response()->json([
+                'status' => '404',
+                'message' => 'Question Not Found'
+            ]);
+         }
+
+    }
+
+    public function update(Request $request, string $id){
+        $request->validate([
+            'question' => ['required','string']
+        ]);
+
+        $questions = Question::findOrFail($id)->load('category');
+
+        if($questions){
+            $questions->question = $request->question;
+            $questions->update();
+            toastr()->success('Update Successfuly!');
+           return response()->json([
+               'status' => '200',
+               'questions' => $questions,
+               'category_title' => $questions->category->title
+           ]);
+        }else{
+           return response()->json([
+               'status' => '404',
+               'message' => 'Question Not Found'
+           ]);
+        }
+
+    }
+
+    public function destroy( $id){
+        $question = Question::findOrFail($id);
+        $question->delete();
+        return response(['status' => 'success', 'message' =>'Item deleted successfully!']);
+    }
+
+
 
 
 }
