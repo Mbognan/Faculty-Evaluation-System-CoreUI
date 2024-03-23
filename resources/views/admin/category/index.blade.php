@@ -15,6 +15,7 @@
 @endsection
 
 @section('contents')
+<i class="fal fa-table"></i>
 <div class="fs-2 fw-semibold">Evaluation Category</div>
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb mb-4">

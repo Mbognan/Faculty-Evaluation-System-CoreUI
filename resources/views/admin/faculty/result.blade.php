@@ -197,9 +197,10 @@
                                         <div class="text-medium-emphasis">{{ $cat->title }}</div>
                                         <div class="fw-semibold">{{ $progressRate }} ({{ $result }} %)</div>
                                         <div class="progress progress-thin mt-2">
-                                            <div class="progress-bar progress-bar1 {{ $progressColor }}" role="progressbar"
-                                                style="width: {{ $percentage }}%" aria-valuenow="{{ $percentage }}"
-                                                aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar progress-bar1 {{ $progressColor }}"
+                                                role="progressbar" style="width: {{ $percentage }}%"
+                                                aria-valuenow="{{ $percentage }}" aria-valuemin="0"
+                                                aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 @endforeach
@@ -230,18 +231,78 @@
                                 </div>
                             </div>
                         </div>
+                        {{-- <div class="col-sm-6 col-md-4">
+                            <div class="card text-white bg-success">
+                                <div class="card-body">
+                                    <div class="text-medium-emphasis-inverse text-end mb-4">
+                                        <div class=" text-white text-disabled p-2 rounded">
+                                            <i class="far fa-smile fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="fs-4 fw-semibold">385</div><small
+                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total student who
+                                        are satisfied</small>
+                                    <div class="progress progress-white progress-thin mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="card text-white bg-warning">
+                                <div class="card-body">
+                                    <div class="text-medium-emphasis-inverse text-end mb-4">
+                                        <div class=" text-white text-disabled p-2 rounded">
+                                            <i class="far fa-meh fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="fs-4 fw-semibold">1238</div><small
+                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total Student who
+                                        are Neautral</small>
+                                    <div class="progress progress-white progress-thin mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="card text-white bg-danger">
+                                <div class="card-body">
+                                    <div class="text-medium-emphasis-inverse text-end mb-4">
+                                        <div class=" text-white text-disabled p-2 rounded">
+                                            <i class="far fa-frown fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="fs-4 fw-semibold">321</div><small
+                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total Student who
+                                        are Unsatisfied</small>
+                                    <div class="progress progress-white progress-thin mt-3">
+                                        <div class="progress-bar" role="progressbar" style="width: 25%"
+                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
+
+
                         <div class="col-lg-6">
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Satisfied</div>
+                                        <div class="card-title text-disabled">Total tudent who are Satisfied</div>
                                         <div class=" text-success p-2 rounded">
                                             <i class="far fa-smile fa-2x"></i>
                                         </div>
                                     </div>
                                     <div class="fs-4 fw-semibold pb-3">44 Students</div><small class="text-success">(50.4%
                                         <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
+                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}"></use>
                                         </svg>)</small>
                                 </div>
                             </div>
@@ -250,32 +311,31 @@
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Unsatisfied </div>
+                                        <div class="card-title text-disabled">Total student who are Unsatisfied </div>
                                         <div class=" text-danger p-2 rounded">
                                             <i class="far fa-frown fa-2x"></i>
                                         </div>
                                     </div>
                                     <div class="fs-4 fw-semibold pb-3">385 Students</div><small class="text-danger">(17.2%
                                         <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
+                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}"></use>
                                         </svg>)</small>
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="card mb-4">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Neutral</div>
+                                        <div class="card-title text-disabled">Total student who are Neutral</div>
                                         <div class=" text-warning p-2 rounded">
                                             <i class="far fa-meh fa-2x"></i>
                                         </div>
                                     </div>
                                     <div class="fs-4 fw-semibold pb-3">70 Students</div><small class="text-warning">(20.2%
                                         <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
-                                        </svg>)</small>
+                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}"></use>
+                                        </svg> ) </small>
                                 </div>
                             </div>
                         </div>
