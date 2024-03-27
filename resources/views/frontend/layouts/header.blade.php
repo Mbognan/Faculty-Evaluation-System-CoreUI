@@ -21,8 +21,17 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="list-unstyled topbar-right d-flex align-items-center justify-content-end">
                         <ul class="topbar-link mb-0">
-                            <li><a href="login.html">Login</a></li>
-                            <li><a href="register.html">Register</a></li>
+                            @auth
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="">Logout</button>
+                            </form>
+                        @else
+                            <ul class="topbar-link mb-0">
+                                <li><a href="{{ route('login-user') }}">Login</a></li>
+                                <li><a href="{{ route('register') }}">Register</a></li>
+                            </ul>
+                        @endauth
                         </ul>
                     </div>
                 </div>
@@ -55,7 +64,7 @@
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">
                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html">home</a>
+                            <a class="nav-link active" href="{{ route('homeview') }}">home</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="about-us.html"> about </a>

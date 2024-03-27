@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\EvaluationScheduleController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\FacultyView;
 use App\Http\Controllers\Admin\FacultyViewController;
+use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\QuestionController;
 
@@ -41,5 +42,6 @@ Route::group([
             /**EvaluationSchedule route */
             Route::get('evaluation_schedule', [EvaluationScheduleController::class, 'index'])->name('evaluation_schedule.index');
             Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');
-
+            /**Hero Route */
+            Route::resource('/hero', HeroController::class);
 });

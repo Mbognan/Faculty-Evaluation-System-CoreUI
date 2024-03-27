@@ -164,8 +164,8 @@
                 z-index: 10;
             }
 
-            To center the upload preview within its container,
-            you can update the CSS for the #image-preview and #image-preview label as follows: css Copy code #image-preview {
+
+            #image-preview {
                 width: 200px;
                 height: 200px;
                 position: relative;
