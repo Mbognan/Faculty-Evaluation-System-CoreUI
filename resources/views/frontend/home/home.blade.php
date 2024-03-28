@@ -4,7 +4,9 @@
 {{-- trading courasel --}}
 {{-- @include('frontend.home-components.tradingcourasel') --}}
 {{-- courasel  --}}
+
     @include('frontend.home-components.courasel')
+
 {{--
  <div class="large_add_banner">
         <div class="container">

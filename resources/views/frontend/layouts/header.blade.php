@@ -10,7 +10,7 @@
                     <div class="topbar-left topbar-right d-flex align-items-center">
                         <ul class="topbar-sosmed p-0 mr-3">
                             <li>
-                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-facebook-f"></i></i></a>
                             </li>
                         </ul>
                         <div class="topbar-text">
@@ -21,17 +21,16 @@
                 <div class="col-sm-6 col-md-4">
                     <div class="list-unstyled topbar-right d-flex align-items-center justify-content-end">
                         <ul class="topbar-link mb-0">
-                            @auth
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="">Logout</button>
-                            </form>
-                        @else
-                            <ul class="topbar-link mb-0">
-                                <li><a href="{{ route('login-user') }}">Login</a></li>
-                                <li><a href="{{ route('register') }}">Register</a></li>
-                            </ul>
-                        @endauth
+
+
+                            @guest
+                                <ul class="topbar-link mb-0">
+                                    <li><a href="{{ route('login-user') }}">Login</a></li>
+                                    <li><a href="{{ route('register') }}">Register</a></li>
+                                </ul>
+                            @endguest
+
+
                         </ul>
                     </div>
                 </div>
@@ -41,9 +40,7 @@
     </div>
     <!-- End Navbar Top  -->
 
-
     <!-- Navbar  -->
-
     <!-- Navbar menu  -->
     <div class="navigation-wrap navigation-shadow bg-white">
         <nav class="navbar navbar-hover navbar-expand-lg navbar-soft">
@@ -55,9 +52,11 @@
                 </div>
                 <figure class="mb-0 mx-auto">
 
-                        <img src="{{ asset('frontend/assets/images/logomaster.png') }}"  alt="Desktop Logo" class="desktop-logo img-fluid logo">
+                    <img src="{{ asset('frontend/assets/images/logomaster.png') }}" alt="Desktop Logo"
+                        class="desktop-logo img-fluid logo">
 
-                        <img src="{{ asset('frontend/assets/images/pitno.png') }}" alt="Mobile Logo" class="mobile-logo img-fluid2 logo" style="font-size: 80px">
+                    <img src="{{ asset('frontend/assets/images/pitno.png') }}" alt="Mobile Logo"
+                        class="mobile-logo img-fluid2">
 
                 </figure>
 
@@ -70,7 +69,8 @@
                             <a class="nav-link" href="about-us.html"> about </a>
                         </li>
                         <li class="nav-item dropdown has-megamenu">
-                            <a class="nav-link" href="blog.html">Administration</a>
+                            <a class="nav-link" href="contact.html"> contact </a>
+
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Pages </a>
@@ -80,7 +80,23 @@
                                 <li><a class="dropdown-item" href="404.html"> 404 Error </a>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html"> contact </a></li>
+                        <li class="nav-item">
+                            @auth
+                                @if (Auth::user()->user_type === 'user')
+                                    <a class="nav-link" href="{{ route('user.profile.index') }}">Profile</a>
+                                @elseif(Auth::user()->user_type === 'faculty')
+                                    <a class="nav-link" href="{{ route('faculty.dashboard') }}">Faculty Dashboard</a>
+                                @endif
+                            @endauth
+                        </li>
+                        @auth
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <li class="nav-item"> <button type="submit" class=" nav-link bg-white"><i
+                                            class="fas fa-sign-out-alt icon-home"></i></button> </i></li>
+                            </form>
+                        @endauth
+
                     </ul>
 
 
@@ -136,7 +152,8 @@
                             </div> --}}
                             <figure class="mb-0 mx-auto">
                                 <a href="index.html">
-                                    <img src="{{ asset('frontend/assets/images/pitno.png') }}" alt="Mobile Logo" class="mobile-logo img-fluid2 logo" style="font-size: 80px">
+                                    <img src="{{ asset('frontend/assets/images/pitno.png') }}" alt="Mobile Logo"
+                                        class="mobile-logo img-fluid2 logo" style="font-size: 80px">
                                 </a>
                             </figure>
                         </div>
