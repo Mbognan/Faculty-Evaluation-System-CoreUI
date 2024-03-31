@@ -8,7 +8,7 @@
                         <!-- Post Article -->
                         <div class="card__post card__post-list">
                             <div class="image-sm">
-                                <a href="./blog_details.html">
+                                <a href="frontend/blog_details.html">
                                     <img src="images/news1.jpg" class="img-fluid" alt="">
                                 </a>
                             </div>

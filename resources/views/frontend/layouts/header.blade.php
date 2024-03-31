@@ -72,20 +72,19 @@
                             <a class="nav-link" href="contact.html"> contact </a>
 
                         </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> Pages </a>
-                            <ul class="dropdown-menu animate fade-up">
-                                <li><a class="dropdown-item icon-arrow" href="blog_details.html"> Blog single detail
-                                    </a></li>
-                                <li><a class="dropdown-item" href="404.html"> 404 Error </a>
-                            </ul>
+                        <li class="nav-item">
+                            @auth
+                            @if (Auth::user()->user_type === 'user')
+                            <a class="nav-link" href="{{ route('user.evaluation.index') }}" target="_blank" rel="noopener noreferrer">Evaluate</a>
+                            @endif
+                            @endauth
                         </li>
                         <li class="nav-item">
                             @auth
                                 @if (Auth::user()->user_type === 'user')
-                                    <a class="nav-link" href="{{ route('user.profile.index') }}">Profile</a>
+                                    <a class="nav-link" href="{{ route('user.profile.index') }}">Dashboard</a>
                                 @elseif(Auth::user()->user_type === 'faculty')
-                                    <a class="nav-link" href="{{ route('faculty.dashboard') }}">Faculty Dashboard</a>
+                                    <a class="nav-link" href="{{ route('user.profile.index') }}">Dashboard</a>
                                 @endif
                             @endauth
                         </li>

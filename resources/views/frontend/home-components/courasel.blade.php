@@ -10,7 +10,7 @@
                                 <div class="card__post">
                                     <div class="card__post__body">
                                         <a href="blog_details.html" tabindex="-1" class="image-box">
-                                            <img src="{{ $hero->background }}" class="img-fluid3" alt="">
+                                            <img src="{{ $hero->background }}" class="img-fluid-cover" alt="">
                                         </a>
                                     </div>
                                 </div>

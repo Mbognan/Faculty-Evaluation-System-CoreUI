@@ -94,7 +94,6 @@
                                 </td>
                                 <td class="text-center">
 
-
                                        <a href="{{ route('admin.faculty.result',$user->id) }}"> <i class="fas fa-search btn btn-success text-light" style="font-size: 20px"></i>
                                 </td>
                             </tr>
