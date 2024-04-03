@@ -1587,10 +1587,11 @@
                             <h4>
                                 Social
                             </h4>
-                            <a class="fa fa-fw fa-facebook"></a>
-                            <a class="fa fa-fw fa-twitter"></a>
-                            <a class="fa fa-fw fa-linkedin"></a>
-                            <a class="fa fa-fw fa-google-plus"></a>
+
+                            <a class=" fa-fw fab fa-facebook"></a>
+                            <a class=" fa-fw fab fa-github"></a>
+                            <a class="fas fa-fw fab fa-linkedin"></a>
+                            <a class="fas fa-fw fab fa-discord"></a>
                         </div>
                     </article>
                 </div>
@@ -1632,7 +1633,6 @@
                 </div> --}}
             </div>
         </div>
-
     </section>
 @endsection
 @push('scripts')

@@ -54,6 +54,32 @@
 
         // Listen for window resize event to toggle logo
         window.addEventListener('resize', toggleLogo);
+
+
+
+        function updateDateTime() {
+        // Get the current date and time
+        var currentDate = new Date();
+
+        // Format the date and time
+        var dateTimeString = currentDate.toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            second: 'numeric',
+            hour12: true
+        });
+
+        // Display the date and time
+        document.getElementById('currentDateTime').innerText = dateTimeString;
+    }
+
+    // Update the date and time immediately and then every second
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
     </script>
 
 @stack('scripts')

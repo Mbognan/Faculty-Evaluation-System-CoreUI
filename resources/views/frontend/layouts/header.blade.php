@@ -13,7 +13,7 @@
                                 <a href="#"><i class="fab fa-facebook-f"></i></i></a>
                             </li>
                         </ul>
-                        <div class="topbar-text">
+                        <div class="topbar-text" id="currentDateTime">
                             Friday, May 19, 2023
                         </div>
                     </div>
