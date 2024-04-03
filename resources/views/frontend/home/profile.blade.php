@@ -11,7 +11,7 @@
                     <div class="dashboard_content">
                         <div class="my_listing " style="border:solid">
                             <h4>basic information</h4>
-                            <form action="#" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('faculty.profile-update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -21,7 +21,7 @@
                                                 <div class="my_listing_single">
                                                     <label>First Name<span class="text-danger">*</span></label>
                                                     <div class="input_area">
-                                                        <input type="text" placeholder="" name="name"
+                                                        <input type="text" placeholder="" name="first_name"
                                                             value="{{ $user->first_name }}" required>
                                                     </div>
                                                 </div>
@@ -30,7 +30,7 @@
                                                 <div class="my_listing_single">
                                                     <label>last Name<span class="text-danger">*</span></label>
                                                     <div class="input_area">
-                                                        <input type="text" placeholder="" name="phone"
+                                                        <input type="text" placeholder="" name="last_name"
                                                             value="{{ $user->last_name }}" required>
                                                     </div>
                                                 </div>
@@ -44,7 +44,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-12">
+                                            {{-- <div class="col-xl-12">
                                                 <div class="my_listing_single">
                                                     <label>address<span class="text-danger">*</span></label>
                                                     <div class="input_area">
@@ -52,7 +52,7 @@
                                                             value="Palompon Of Technology" required>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-md-5">
@@ -60,8 +60,8 @@
                                             <label>Avatar</label>
                                             <div class="profile_pic_upload">
                                                 <img src="{{ asset($user->avatar) }}" alt="img" class="imf-fluid w-100" name="avatar">
-                                                <input type="file">
-                                                <input type="hidden" name="old_avatar" value="">
+                                                <input type="file" name="avatar">
+                                                <input type="hidden" name="oldAvatar" value="{{ $user->avatar }}">
                                             </div>
                                         </div>
                                     </div>

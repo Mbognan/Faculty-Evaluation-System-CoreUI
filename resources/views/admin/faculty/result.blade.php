@@ -453,7 +453,7 @@
                         labels: ['Satisfied', 'Unsatisfied', 'Neutral'],
                         datasets: [{
                             label: 'Number of Students',
-                            data: [44, 483, 77],
+                            data: [100, 483, 77],
                             backgroundColor: [
                                 'rgb(40, 167, 69)',
                                 'rgb(255, 99, 132)',

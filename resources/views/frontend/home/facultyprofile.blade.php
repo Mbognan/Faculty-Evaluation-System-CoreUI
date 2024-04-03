@@ -11,7 +11,7 @@
                     <div class="dashboard_content">
                         <div class="my_listing " style="border:solid">
                             <h4>basic information</h4>
-                            <form action="#" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('faculty.profile-update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -44,7 +44,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-xl-12">
+                                            {{-- <div class="col-xl-12">
                                                 <div class="my_listing_single">
                                                     <label>address<span class="text-danger">*</span></label>
                                                     <div class="input_area">
@@ -52,7 +52,7 @@
                                                             value="Palompon Of Technology" required>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="col-xl-4 col-md-5">
@@ -69,7 +69,6 @@
                                         <button type="submit" class="read_btn">Update</button>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                         <div class="my_listing list_mar "  style="border:solid">

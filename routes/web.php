@@ -43,7 +43,8 @@ Route::group([
         function(){
             Route::get('/dashboard', [FrontendFacultyController::class, 'index'])->name('dashboard');
             Route::get('/dashboard/profile', [FrontendFacultyController::class,'profile'])->name('profile.index');
-});
+            Route::put('dashboard/profile-update', [FrontendFacultyController::class, 'updateFaculty'])->name('profile-update');
+        });
 
 
 require __DIR__.'/auth.php';
