@@ -1547,7 +1547,6 @@
 
                     </ul>
                 </div>
-
             </div>
         </div>
         @php
@@ -1564,7 +1563,7 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <article class="material-card {{ $randomColor }}">
                         <h2>
-                            <span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span>
+                            <a href="{{ route('user.profile-evaluate') }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
                             <strong>
                                 <i class="fa fa-fw fa-star text-white"></i>
                                 BSIT Faculty
@@ -1587,7 +1586,6 @@
                             <h4>
                                 Social
                             </h4>
-
                             <a class=" fa-fw fab fa-facebook"></a>
                             <a class=" fa-fw fab fa-github"></a>
                             <a class="fas fa-fw fab fa-linkedin"></a>

@@ -51,4 +51,6 @@ class FacultyController extends Controller
         toastr()->success('Acount Updated Successfully!');
         return redirect()->back();
     }
+
+
 }

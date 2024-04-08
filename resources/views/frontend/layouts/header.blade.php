@@ -171,18 +171,21 @@
                                 <a class="nav-link text-dark" href="about-us.html"> About </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="blog.html">Blog </a>
+                                <a class="nav-link text-dark" href="blog.html">Contact </a>
                             </li>
+                            @auth
+                            @if (Auth::user()->user_type === 'user')
                             <li class="nav-item">
-                                <a class="nav-link active dropdown-toggle  text-dark" href="#"
-                                    data-toggle="dropdown">Pages </a>
-                                <ul class="dropdown-menu dropdown-menu-left">
-                                    <li><a class="dropdown-item" href="blog_details.html">Blog details</a></li>
-                                    <li><a class="dropdown-item" href="404.html"> 404 Error</a></li>
-
-                                </ul>
+                                <a class="nav-link text-dark" href="{{ route('user.evaluation.index') }}">Evaluate </a>
                             </li>
-                            <li class="nav-item"><a class="nav-link  text-dark" href="contact.html"> Contact </a>
+                            @endif
+                            @endauth
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="{{ route('logout') }}"    onclick="event.preventDefault();
+                                this.closest('form').submit();"><i class="fa fa-sign-out-alt"></i> Logout</a>
+                            </form>
+
                             </li>
                         </ul>
 

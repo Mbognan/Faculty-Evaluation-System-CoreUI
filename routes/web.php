@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\AuthLoginController;
 use App\Http\Controllers\Frontend\EvaluationController;
+use App\Http\Controllers\Frontend\EvaluationFormController;
 use App\Http\Controllers\Frontend\FacultyController as FrontendFacultyController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 Route::group(['middleware' => 'auth','user.type:user', 'prefix' => 'user', 'as' => 'user.'], function(){
     Route::get('/dashboard/profile', [HomeController::class,'index'])->name('profile.index');
     Route::get('/dashboard/Evaluate', [EvaluationController::class, 'index'])->name('evaluation.index');
+    Route::get('dashboard/profile/evaluate', [EvaluationFormController::class, 'evaluateFaculty'])->name('profile-evaluate');
 });
 
 
