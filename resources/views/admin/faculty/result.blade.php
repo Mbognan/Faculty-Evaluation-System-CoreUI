@@ -4,6 +4,7 @@
         margin-right: 10px;
         /* Adjust as needed */
     }
+    .link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
 </style>
 @section('contents')
     <div class="fs-2 fw-semibold">Faculty</div>
@@ -151,13 +152,17 @@
                                     <div class="small text-medium-emphasis text-disabled">1st Semester - July 2022 </div>
                                 </div>
                                 <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
-                                    <button class="btn btn-info text-white" type="button">Print Summary Result
-                                        <svg class="icon">
-                                            <use
-                                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
-                                            </use>
-                                        </svg>
-                                    </button>
+                                    <form method="POST" action="{{ route('admin.export-excel',['id' => $user->id]) }}">
+                                        @csrf
+                                        <button class="btn btn-info text-white" type="submit">Print Summary Result
+                                            <svg class="icon">
+                                                <use
+                                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
+                                                </use>
+                                            </svg>
+                                        </button>
+                                    </form>
+
                                 </div>
                             </div>
                             {{-- <canvas id="myChart" style="max-width: 999px; max-height: 500px;"></canvas> --}}
@@ -206,152 +211,87 @@
                                 @endforeach
                             </div>
                         </div>
+
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card mb-4">
-                                <div class="card text-white bg-info">
-                                    <div class="card-body">
-                                        <div class="text-medium-emphasis-inverse text-end mb-4">
-                                            <div class="col">
-                                                <div class="card-title fs-4 fw-semibold "><i class="fas fa-users"></i>
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-header" data-coreui-i18n="trafficAndSales">Sentiment Analysis Section</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <!-- Sentiment Analysis -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="card-title fs-4 fw-semibold">Setiment Analysis By Percentage</div>
+                                            <div class="card-subtitle text-disabled">1st Semester - 2024</div>
+                                            <div class="example">
+                                                <div class="tab-content rounded-bottom">
+                                                    <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1002">
+                                                        <div class="c-chart-wrapper">
+                                                            <canvas id="piecanva"></canvas>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="fs-4 fw-semibold">87</div>
-                                        <small class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total
-                                            Students Participants</small>
-                                        <div class="progress progress-white progress-thin mt-3">
-                                            <div class="progress-bar" role="progressbar" style="width: 25%"
-                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        {{-- <div class="col-sm-6 col-md-4">
-                            <div class="card text-white bg-success">
-                                <div class="card-body">
-                                    <div class="text-medium-emphasis-inverse text-end mb-4">
-                                        <div class=" text-white text-disabled p-2 rounded">
-                                            <i class="far fa-smile fa-2x"></i>
+                                <div class="col-lg-6">
+                                    <div class="card mb-4 bg-info text-white">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="card-title text-white">Total Student</div>
+                                                <div class=" text-white p-2 rounded">
+                                                    <i class="fas fa-user-friends fa-2x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="fs-4 fw-semibold pb-3">436 Students</div><small class="text-success"> </small>
                                         </div>
                                     </div>
-                                    <div class="fs-4 fw-semibold">385</div><small
-                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total student who
-                                        are satisfied</small>
-                                    <div class="progress progress-white progress-thin mt-3">
-                                        <div class="progress-bar" role="progressbar" style="width: 25%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-4">
-                            <div class="card text-white bg-warning">
-                                <div class="card-body">
-                                    <div class="text-medium-emphasis-inverse text-end mb-4">
-                                        <div class=" text-white text-disabled p-2 rounded">
-                                            <i class="far fa-meh fa-2x"></i>
+                                    <!-- Total Satisfied Students -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="card-title text-disabled">Total Student who are Satisfied</div>
+                                                <div class=" text-success p-2 rounded">
+                                                    <i class="far fa-smile fa-2x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="fs-4 fw-semibold pb-3">44 Students</div><small class="text-success">(50.4%
+                                                <svg class="icon">
+                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}"></use>
+                                                </svg>)</small>
                                         </div>
                                     </div>
-                                    <div class="fs-4 fw-semibold">1238</div><small
-                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total Student who
-                                        are Neautral</small>
-                                    <div class="progress progress-white progress-thin mt-3">
-                                        <div class="progress-bar" role="progressbar" style="width: 25%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-sm-6 col-md-4">
-                            <div class="card text-white bg-danger">
-                                <div class="card-body">
-                                    <div class="text-medium-emphasis-inverse text-end mb-4">
-                                        <div class=" text-white text-disabled p-2 rounded">
-                                            <i class="far fa-frown fa-2x"></i>
+                                    <!-- Total Unsatisfied Students -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="card-title text-disabled">Total Student who are Unsatisfied</div>
+                                                <div class=" text-danger p-2 rounded">
+                                                    <i class="far fa-frown fa-2x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="fs-4 fw-semibold pb-3">385 Students</div><small class="text-danger">(17.2%
+                                                <svg class="icon">
+                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}"></use>
+                                                </svg>)</small>
                                         </div>
                                     </div>
-                                    <div class="fs-4 fw-semibold">321</div><small
-                                        class="text-medium-emphasis-inverse text-uppercase fw-semibold">Total Student who
-                                        are Unsatisfied</small>
-                                    <div class="progress progress-white progress-thin mt-3">
-                                        <div class="progress-bar" role="progressbar" style="width: 25%"
-                                            aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-
-
-                        <div class="col-lg-6">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Total tudent who are Satisfied</div>
-                                        <div class=" text-success p-2 rounded">
-                                            <i class="far fa-smile fa-2x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="fs-4 fw-semibold pb-3">44 Students</div><small class="text-success">(50.4%
-                                        <svg class="icon">
-                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}"></use>
-                                        </svg>)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Total student who are Unsatisfied </div>
-                                        <div class=" text-danger p-2 rounded">
-                                            <i class="far fa-frown fa-2x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="fs-4 fw-semibold pb-3">385 Students</div><small class="text-danger">(17.2%
-                                        <svg class="icon">
-                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}"></use>
-                                        </svg>)</small>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <div class="card-title text-disabled">Total student who are Neutral</div>
-                                        <div class=" text-warning p-2 rounded">
-                                            <i class="far fa-meh fa-2x"></i>
-                                        </div>
-                                    </div>
-                                    <div class="fs-4 fw-semibold pb-3">70 Students</div><small class="text-warning">(20.2%
-                                        <svg class="icon">
-                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}"></use>
-                                        </svg> ) </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card mb-4">
-
-                        <div class="card-body">
-                            <div class="card-title fs-4 fw-semibold">Setiment Analysis By Percentage</div>
-                            <div class="card-subtitle text-disabled">1st Semester - 2024</div>
-                            <div class="example">
-                                <div class="tab-content rounded-bottom">
-                                    <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1002">
-                                        <div class="c-chart-wrapper">
-                                            <canvas id="piecanva"></canvas>
+                                    <!-- Total Neutral Students -->
+                                    <div class="card mb-4">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="card-title text-disabled">Total Student who are Neutral</div>
+                                                <div class=" text-warning p-2 rounded">
+                                                    <i class="far fa-meh fa-2x"></i>
+                                                </div>
+                                            </div>
+                                            <div class="fs-4 fw-semibold pb-3">70 Students</div><small class="text-warning">(20.2%
+                                                <svg class="icon">
+                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}"></use>
+                                                </svg> ) </small>
                                         </div>
                                     </div>
                                 </div>
@@ -359,17 +299,136 @@
                         </div>
                     </div>
                 </div>
+
+
+
+                <div class="col-md-12 mb-4">
+                    <div class="container">
+                        <div class="row d-flex justify-content-center">
+                          <div class="col-md-12 col-lg-10">
+                            <div class="card text-dark">
+                              <div class="card-body p-4">
+                                <h4 class="mb-0">Recent comments</h4>
+                                <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="60"
+                                    height="60" />
+                                  <div>
+                                    <h6 class="fw-bold mb-1">Maggie Marsh</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        March 07, 2021
+                                        <span class="badge bg-primary">Pending</span>
+                                      </p>
+                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                      Lorem Ipsum is simply dummy text of the printing and typesetting
+                                      industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                      since the 1500s, when an unknown printer took a galley of type and
+                                      scrambled it.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <hr class="my-0" />
+
+                              <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="60"
+                                    height="60" />
+                                  <div>
+                                    <h6 class="fw-bold mb-1">Lara Stewart</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        March 15, 2021
+                                        <span class="badge bg-success">Approved</span>
+                                      </p>
+                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                      <a href="#!" class="text-success"><i class="fas fa-redo-alt ms-2"></i></a>
+                                      <a href="#!" class="link-danger"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                      Contrary to popular belief, Lorem Ipsum is not simply random text. It
+                                      has roots in a piece of classical Latin literature from 45 BC, making it
+                                      over 2000 years old. Richard McClintock, a Latin professor at
+                                      Hampden-Sydney College in Virginia, looked up one of the more obscure
+                                      Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                                      the cites.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <hr class="my-0" style="height: 1px;" />
+
+                              <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(33).webp" alt="avatar" width="60"
+                                    height="60" />
+                                  <div>
+                                    <h6 class="fw-bold mb-1">Alexa Bennett</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        March 24, 2021
+                                        <span class="badge bg-danger">Rejected</span>
+                                      </p>
+                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                      There are many variations of passages of Lorem Ipsum available, but the
+                                      majority have suffered alteration in some form, by injected humour, or
+                                      randomised words which don't look even slightly believable. If you are
+                                      going to use a passage of Lorem Ipsum, you need to be sure.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <hr class="my-0" />
+
+                              <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                  <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp" alt="avatar" width="60"
+                                    height="60" />
+                                  <div>
+                                    <h6 class="fw-bold mb-1">Betty Walker</h6>
+                                    <div class="d-flex align-items-center mb-3">
+                                      <p class="mb-0">
+                                        March 30, 2021
+                                        <span class="badge bg-primary">Pending</span>
+                                      </p>
+                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    </div>
+                                    <p class="mb-0">
+                                      It uses a dictionary of over 200 Latin words, combined with a handful of
+                                      model sentence structures, to generate Lorem Ipsum which looks
+                                      reasonable. The generated Lorem Ipsum is therefore always free from
+                                      repetition, injected humour, or non-characteristic words etc.
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
 
-
-            </div>
-            <div class="col d-flex justify-content-center align-items-center">
-
-            </div>
-        </div>
     @endsection
 
     @push('scripts')

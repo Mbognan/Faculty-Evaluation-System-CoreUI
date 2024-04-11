@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\FacultyResultExport;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\EvaluationResult;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FacultyViewController extends Controller
 {
@@ -34,4 +36,18 @@ class FacultyViewController extends Controller
         }
         return view('admin.faculty.result',compact(['category','allCategories','resultsByCategory','user','evaluationResults']));
     }
+
+    public function export_excel(string $id)
+    {
+        $evaluationResults = EvaluationResult::with('category')->where('user_id', $id)->get();
+
+        if ($evaluationResults->isEmpty()) {
+            return redirect()->back()->with('error', 'No evaluation results found for the specified faculty member.');
+        }
+
+        return Excel::download(new FacultyResultExport($evaluationResults), 'faculty-result.xlsx');
+    }
+
+
+
 }

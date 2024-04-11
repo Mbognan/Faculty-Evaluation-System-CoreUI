@@ -29,12 +29,15 @@
                 <div class="mb-8">
                 </div>
                 <div class="btn-toolbar d-none d-md-block mb-8" role="toolbar" aria-label="Toolbar with buttons">
-                    <button class="btn btn-info text-white" type="button">Print Evaluation
-                        <svg class="icon">
-                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
-                            </use>
-                        </svg>
-                    </button>
+                    <form action="{{ route('admin.viewPdf') }}" target="_blank" method="POST">
+                        @csrf
+                        <button href="{{ route('admin.generatePdf') }}" class="btn btn-info text-white" type="submit">Dowload Template
+                            <svg class="icon">
+                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
+                                </use>
+                            </svg>
+                        </button>
+                    </form>
                 </div>
             </div>
 

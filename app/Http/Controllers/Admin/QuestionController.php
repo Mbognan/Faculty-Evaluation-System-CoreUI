@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Question;
+
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -103,6 +105,24 @@ class QuestionController extends Controller
         $question = Question::findOrFail($id);
         $question->delete();
         return response(['status' => 'success', 'message' =>'Item deleted successfully!']);
+    }
+
+    public function viewPdf(){
+        $questions = Question::orderBy('position', 'asc')->get();
+
+        $categories = Category::all();
+        $pdf = Pdf::loadView('admin.question.generate', ['questions' => $questions, 'categories' => $categories]);
+        return $pdf->stream();
+    }
+
+    public function generatePdf(){
+        $questions = Question::orderBy('position', 'asc')->get();
+
+        $categories = Category::all();
+
+        $pdf = Pdf::loadView('admin.question.generate', ['questions' => $questions, 'categories' => $categories]);
+
+        return $pdf->download('EvaluationForm.pdf');
     }
 
 

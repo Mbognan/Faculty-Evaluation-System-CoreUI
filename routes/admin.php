@@ -34,11 +34,14 @@ Route::group([
            Route::get('question-edit/{id}', [QuestionController::class, 'edit'])->name('question.edit');
            Route::put('question-update/{id}', [QuestionController::class, 'update'])->name('question.update');
            Route::delete('/question-delete/{id}', [QuestionController::class,'destroy'])->name('question.delete');
+           Route::get('generate-pdf',[QuestionController::class, 'generatePdf'])->name('generatePdf');
+           Route::post('view-pdf',[QuestionController::class, 'viewPdf'])->name('viewPdf');
 
             /**Faculty route */
             Route::resource('/faculty', FacultyController::class);
             Route::get('/faculty-view', [FacultyViewController::class,'index'])->name('faculty-view');
             Route::get('faculty/view-result/{user_id}', [FacultyViewController::class,'view'])->name('faculty.result');
+            Route::post('user/export-excel/{id}', [FacultyViewController::class, 'export_excel'])->name('export-excel');
             /**EvaluationSchedule route */
             Route::get('evaluation_schedule', [EvaluationScheduleController::class, 'index'])->name('evaluation_schedule.index');
             Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');

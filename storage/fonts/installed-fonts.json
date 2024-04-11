@@ -1,0 +1,22 @@
+{
+    "coreui-icons-free": {
+        "normal": "coreui_icons_free_normal_e818c992762d746af8cb8aa1a179cd3e"
+    },
+    "font awesome 6 brands": {
+        "normal": "font_awesome_6_brands_normal_5aa91754f1b8ab9921ec65040d0398d7"
+    },
+    "font awesome 6 free": {
+        "normal": "C:\\laragon\\www\\Faculty-Evaluation-System-CoreUI\\storage\\fonts\/font_awesome_6_free_normal_8f1c1da98dac9c284cefb97b004bd96e",
+        "900": "font_awesome_6_free_900_85a3b14fbfc79f50bc9c42a8003db748"
+    },
+    "font awesome 5 brands": {
+        "normal": "font_awesome_5_brands_normal_5aa91754f1b8ab9921ec65040d0398d7"
+    },
+    "font awesome 5 free": {
+        "900": "C:\\laragon\\www\\Faculty-Evaluation-System-CoreUI\\storage\\fonts\/font_awesome_5_free_900_85a3b14fbfc79f50bc9c42a8003db748",
+        "normal": "font_awesome_5_free_normal_8f1c1da98dac9c284cefb97b004bd96e"
+    },
+    "fontawesome": {
+        "normal": "fontawesome_normal_7a14673ce35632e39e645a3d6f1a41c1"
+    }
+}
