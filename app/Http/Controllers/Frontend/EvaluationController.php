@@ -13,4 +13,5 @@ class EvaluationController extends Controller
         $facultys = User::where('user_type', 'faculty')->get();
         return view('frontend.home.evaluation.eval',compact('facultys'));
     }
+
 }

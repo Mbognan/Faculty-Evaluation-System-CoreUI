@@ -19,6 +19,6 @@ class UserType
             return $next($request);
         }
 
-        return to_route('dashboard');
+        return redirect()->route('dashboard');
     }
 }

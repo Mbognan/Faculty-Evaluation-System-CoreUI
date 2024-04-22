@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class RawEvaluationResult extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'question_id',
+        'user_id',
+        'evaluation_schedules_id',
+        'category_id',
+        'rating',
+    ];
 }

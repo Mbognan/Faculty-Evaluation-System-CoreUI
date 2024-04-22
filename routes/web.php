@@ -34,7 +34,9 @@ Route::middleware('auth')->group(function () {
 Route::group(['middleware' => 'auth','user.type:user', 'prefix' => 'user', 'as' => 'user.'], function(){
     Route::get('/dashboard/profile', [HomeController::class,'index'])->name('profile.index');
     Route::get('/dashboard/Evaluate', [EvaluationController::class, 'index'])->name('evaluation.index');
-    Route::get('dashboard/profile/evaluate', [EvaluationFormController::class, 'evaluateFaculty'])->name('profile-evaluate');
+    Route::get('dashboard/profile/evaluate/{id}', [EvaluationFormController::class, 'evaluateFaculty'])->name('profile-evaluate');
+    Route::post('dashboard/evaluation-submit', [EvaluationFormController::class, 'store'])->name('evaluation-submit');
+    Route::get('dashboard/evaluation-success', [EvaluationFormController::class, 'success'])->name('evaluation-success');
 });
 
 

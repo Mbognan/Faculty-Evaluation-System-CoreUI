@@ -1563,7 +1563,7 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <article class="material-card {{ $randomColor }}">
                         <h2>
-                            <a href="{{ route('user.profile-evaluate') }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
+                            <a href="{{ route('user.profile-evaluate',$faculty->id) }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
                             <strong>
                                 <i class="fa fa-fw fa-star text-white"></i>
                                 BSIT Faculty
