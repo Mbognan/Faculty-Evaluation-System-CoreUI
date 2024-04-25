@@ -15,13 +15,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('question_id')->constrained('questions');
             $table->foreignId('user_id')->constrained('users');
-            $table->integer('faculty_id');
-            $table->foreignId('evaluation_schedules_id')->constrained('evaluation_schedules');
+            $table->foreignId('faculty_id');
+            $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
+            $table->foreignId('evaluation_schedules_id')->constrained('evaluation_schedules')->nullable();
             $table->foreignId('category_id')->constrained('categories');
             $table->integer('rating');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
