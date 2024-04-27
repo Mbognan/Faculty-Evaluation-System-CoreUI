@@ -46,13 +46,17 @@
                 <svg class="nav-icon">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-group') }}"></use>
                 </svg> Faculty</a>
+
+
+
             <ul class="nav-group-items">
                 <li class="nav-item"><a class="nav-link" href="{{ route('admin.faculty.index') }}"><span
                             class="nav-icon"></span>
                         Create Faculty</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('admin.faculty-view') }}"><span
-                            class="nav-icon"></span>
-                        View Faculty</a></li>
+                        <li class="nav-group"><a class="nav-link " href="{{ route('admin.faculty-view') }}">
+                            View Faculty</a>
+
+                        </li>
             </ul>
         </li>
 

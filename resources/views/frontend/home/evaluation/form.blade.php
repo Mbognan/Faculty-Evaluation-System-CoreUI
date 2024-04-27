@@ -15,6 +15,12 @@
             /* Adjust the height as needed */
             overflow-y: auto;
         }
+        .danger-span{
+           color: red;
+        }
+        ul.page-section{
+            border: solid;
+        }
     </style>
 
     @section('home')
@@ -30,13 +36,14 @@
                         </li>
                     @endforeach
                 </ul>
-                <div class="tab-content">
+                <div class="tab-content tab">
                     @foreach ($categories as $category)
                         <div id="step-{{ $category->id }}" class="tab-pane" role="tabpanel"
                             aria-labelledby="step-{{ $category->id }}">
                             <form class="evaluationForm">
                                 @csrf
-                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}"> <!-- Add this line -->
+                                <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                                <!-- Add this line -->
                                 <input type="hidden" name="faculty_id" value="">
                                 <div role="main" class="form-all">
                                     <ul class="form-section page-section">
@@ -59,7 +66,8 @@
                                                     aria-hidden="false">
                                                     {{ $counter }}. {{ $question->question }}
                                                 </label>
-                                                <div id="cid_{{ $question->id }}" class="form-input-wide" data-layout="full">
+                                                <div id="cid_{{ $question->id }}" class="form-input-wide"
+                                                    data-layout="full">
                                                     <span class="form-sub-label-container" style="vertical-align: top">
                                                         <div role="radiogroup"
                                                             aria-labelledby="label_{{ $question->id }} sublabel_input_{{ $question->id }}_description"
@@ -70,7 +78,8 @@
                                                                     <div class="rating-item">
                                                                         @if ($i == 1)
                                                                             <span class="rating-item-title for-from">
-                                                                                <label for="input_{{ $question->id }}_worst"
+                                                                                <label
+                                                                                    for="input_{{ $question->id }}_worst"
                                                                                     aria-hidden="true">Disagree</label>
                                                                             </span>
                                                                         @elseif ($i == 5)
@@ -103,6 +112,27 @@
                                                 $counter++;
                                             @endphp
                                         @endforeach
+                                        @if ($loop->last)
+                                        <li class="form-line" data-type="control_button" id="id_2">
+                                            <div id="cid_2" class="form-input-wide" data-layout="full">
+                                                <div data-align="auto"
+                                                    class="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField">
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="form-line" data-type="control_textarea" id="id_24">
+                                            <h2>Comment</h2>
+                                            <label class="form-label form-label-top form-label-auto" id="label_24" for="input_24" aria-hidden="false">
+                                            <span class="danger-span"><i class="fal fa-asterisk"></i>(Please be mindful of the words you use, its recommended to use english language)</span>
+                                            </label>
+                                            <div id="cid_24" class="form-input-wide" data-layout="full">
+                                                <textarea id="input_24" class="form-textarea custom-hint-group form-custom-hint" name="comment"
+                                                    style="width:648px;height:163px" data-component="textarea" aria-labelledby="label_24" data-customhint="Type here..."
+                                                    customhinted="true" placeholder="Type here..." spellcheck="false"></textarea>
+                                            </div>
+                                        </li>
+                                    @endif
+
                                     </ul>
                                 </div>
 
@@ -129,56 +159,56 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
-          // Function to extract faculty ID from URL
-function getFacultyIdFromUrl() {
-    // Get the current URL
-    var url = window.location.href;
-    // Extract the faculty ID from the URL
-    var matches = url.match(/\/evaluate\/(\d+)/);
-    if (matches && matches.length > 1) {
-        return matches[1];
-    } else {
-        return null;
-    }
-}
-
-// Function to handle form submission
-function submitEvaluation() {
-    // Get the faculty ID from the URL
-    var facultyId = getFacultyIdFromUrl();
-    if (!facultyId) {
-        alert('Error: Faculty ID not found in URL');
-        return;
-    }
-
-    // Set the value of the hidden input field for the faculty ID
-    $('input[name="faculty_id"]').val(facultyId);
-
-    // Serialize form data into a URL-encoded string
-    var formData = $('.evaluationForm').serialize();
-
-    // Perform AJAX submission
-    $.ajax({
-        method: 'POST',
-        url: "{{ route('user.evaluation-submit') }}",
-        data: formData,
-        headers: {
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-        },
-        success: function(response) {
-            if (response.status === 'success') {
-                // Redirect the user to another page
-                window.location.href = "{{ route('user.evaluation-success') }}";
-            } else if (response.status === 'error') {
-                alert('Error: ' + response.message);
+            // Function to extract faculty ID from URL
+            function getFacultyIdFromUrl() {
+                // Get the current URL
+                var url = window.location.href;
+                // Extract the faculty ID from the URL
+                var matches = url.match(/\/evaluate\/(\d+)/);
+                if (matches && matches.length > 1) {
+                    return matches[1];
+                } else {
+                    return null;
+                }
             }
-        },
-        error: function(xhr, status, error) {
-            console.error("Error occurred while submitting data:", error);
-            // Optionally, you can display an error message to the user
-        }
-    });
-}
+
+            // Function to handle form submission
+            function submitEvaluation() {
+                // Get the faculty ID from the URL
+                var facultyId = getFacultyIdFromUrl();
+                if (!facultyId) {
+                    alert('Error: Faculty ID not found in URL');
+                    return;
+                }
+
+                // Set the value of the hidden input field for the faculty ID
+                $('input[name="faculty_id"]').val(facultyId);
+
+                // Serialize form data into a URL-encoded string
+                var formData = $('.evaluationForm').serialize();
+
+                // Perform AJAX submission
+                $.ajax({
+                    method: 'POST',
+                    url: "{{ route('user.evaluation-submit') }}",
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Redirect the user to another page
+                            window.location.href = "{{ route('user.evaluation-success') }}";
+                        } else if (response.status === 'error') {
+                            alert('Error: ' + response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error occurred while submitting data:", error);
+                        // Optionally, you can display an error message to the user
+                    }
+                });
+            }
 
 
 
@@ -206,6 +236,7 @@ function submitEvaluation() {
                         unDoneOnBackNavigation: true,
                         enableDoneStateNavigation: true
                     }
+
                 });
 
                 // Initialize jQuery Validate for each form

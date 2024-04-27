@@ -15,22 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::insert([
-            [
-                'first_name' => 'Admin',
-                'last_name' => 'SuperAdmin',
-                'email' => 'admin@gmail.com',
-                'password' => static::$password ??= Hash::make('password'),
-                'user_type' => 'admin',
-
-            ],
-            [
-                'first_name' => 'User',
+        for ($i = 1; $i <= 20; $i++) {
+             User::create([
+                'first_name' => 'User' . $i,
                 'last_name' => 'SuperUser',
-                'email' => 'user@gmail.com',
-                'password' => static::$password ??= Hash::make('password'),
+                'email' => "user$i@example.com",
+                'password' => Hash::make('password'),
                 'user_type' => 'user',
-            ]
-        ]);
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

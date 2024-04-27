@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class EvaluationResult extends Model
 {
     use HasFactory;
-    protected $fillable = ['user_id', 'category_id', 'result'];
+    protected $fillable = ['user_id', 'category_id', 'results_by_category'];
 
     public function user()
     {
