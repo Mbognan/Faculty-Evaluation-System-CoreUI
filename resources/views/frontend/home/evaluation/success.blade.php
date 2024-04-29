@@ -16,8 +16,8 @@
                 </div>
                 <div class="text-center">
                     <h1>Thank You !</h1>
-                    <p>We've send the link to your inbox. Lorem ipsum dolor sit,lorem lorem </p>
-                    <button class="btn btn-outline-success">Back Home</button>
+                    <p>Your response is encrypted and secure!</p>
+                    <a href="{{ route('user.evaluation.index') }}"  class="btn btn-outline-success">Evaluate Again</a>
                 </div>
             </div>
         </div>

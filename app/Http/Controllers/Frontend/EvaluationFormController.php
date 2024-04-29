@@ -45,6 +45,8 @@ class EvaluationFormController extends Controller
         $commentStore->post_comment = $request->comment;
         $commentStore->save();
 
+        $commentsId = $commentStore->id;
+
        //comment analysis
        $sentiment = new Sentiment();
         $tr->setSource('tl');
@@ -62,6 +64,7 @@ class EvaluationFormController extends Controller
         }
 
         $sentiment->faculty_id = $facultyId;
+        $sentiment->comments_id = $commentsId;
         $sentiment->sentiment = $mood;
         $sentiment->user_id = $userId;
         $sentiment->save();
