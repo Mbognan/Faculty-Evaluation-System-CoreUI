@@ -10,7 +10,9 @@ use App\Http\Controllers\Admin\FacultyViewController;
 use App\Http\Controllers\Admin\HeroController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\QuestionController;
-
+use App\Http\Controllers\Admin\RegistrationPendingController;
+use App\Http\Controllers\Admin\RejectedAccountController;
+use App\Http\Controllers\Admin\VerifiedAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
@@ -47,4 +49,14 @@ Route::group([
             Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');
             /**Hero Route */
             Route::resource('/hero', HeroController::class);
+
+            /**registration prending route */
+            Route::get('/registration-pending', [RegistrationPendingController::class, 'pendingRegistration'])->name('registration.pending');
+            Route::put('accepted-account/{id}', [RegistrationPendingController::class, 'store'])->name('accepted.store');
+            Route::put('rejected-account/{id}', [RegistrationPendingController::class, 'rejected'])->name('rejected.store');
+            /**Verified account route */
+            Route::get('account/verified', [VerifiedAccountController::class, 'index'])->name('account.verified');
+            /**Rejected account route */
+            Route::get('rejected/account', [RejectedAccountController::class, 'index'])->name('rejected.index');
+
 });

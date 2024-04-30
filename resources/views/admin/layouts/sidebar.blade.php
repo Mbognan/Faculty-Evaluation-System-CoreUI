@@ -77,6 +77,21 @@
             </ul>
         </li>
 
+        <li class="nav-title">Manage Request</li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.account.verified') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-check-circle') }}"></use>
+            </svg>Verified Accounts</a></li>
+        <li class="nav-item"><a class="nav-link" href="{{ route('admin.registration.pending') }}">
+            <svg class="nav-icon">
+                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user-plus') }}"></use>
+            </svg>Pending Registration</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.rejected.index') }}">
+                <svg class="nav-icon">
+                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user-x') }}"></use>
+                </svg>Rejected Accounts </a></li>
+
+
         <li class="nav-title">Sections</li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.hero.index') }}">
                 <svg class="nav-icon">
@@ -86,6 +101,7 @@
                 <svg class="nav-icon">
                     <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-pencil') }}"></use>
                 </svg> Under Develop</a></li>
+
 
     </ul>
     <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>

@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
             'first_name' => $request->input('name'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
-            'student_id' => $request->input('student_id'),
+            'student_id' => $request->input('student_ID'),
             'password' => Hash::make($request->input('password')),
         ]);
 
