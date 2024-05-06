@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('frontend/assets/css/style.css')}}">
     <link rel="stylesheet" href="{{ asset('frontend/assets/css-profile/css/responsive.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.7/css/jquery.dataTables.min.css">
 </head>
 <body>
     <style>
@@ -36,6 +37,7 @@
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script> --}}
      <!--main/custom js-->
      <script src="{{ asset('frontend/assets/js-profile/js/main.js')}}"></script>
+     <script src="//cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
      <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     <script>

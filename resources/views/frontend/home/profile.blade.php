@@ -10,7 +10,20 @@
                 <div class="col-lg-9">
                     <div class="dashboard_content">
                         <div class="my_listing " style="border:solid">
-                            <h4>basic information</h4>
+                            <h4>student profile</h4>
+                            @if($user->status === 0)
+                            <div class="alert alert-warning" role="alert">
+                                <h7>Account Pending</h7>
+                              </div>
+                            @elseif ($user->status === 2)
+                            <div class="alert alert-danger" role="alert">
+                                <h7>Account Rejected <span>*note please go the the IT Department for confirmation</span></h7>
+                              </div>
+                              @else
+                              <div class="alert alert-success" role="alert">
+                                <h7>Account Verified <span>*IT1002897</span></h7>
+                              </div>
+                            @endif
                             <form action="{{ route('faculty.profile-update') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')

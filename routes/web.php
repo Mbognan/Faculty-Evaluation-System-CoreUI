@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Frontend\AuthLoginController;
+use App\Http\Controllers\Frontend\ClassListController;
 use App\Http\Controllers\Frontend\EvaluationController;
 use App\Http\Controllers\Frontend\EvaluationFormController;
 use App\Http\Controllers\Frontend\FacultyController as FrontendFacultyController;
@@ -48,6 +49,9 @@ Route::group([
             Route::get('/dashboard', [FrontendFacultyController::class, 'index'])->name('dashboard');
             Route::get('/dashboard/profile', [FrontendFacultyController::class,'profile'])->name('profile.index');
             Route::put('dashboard/profile-update', [FrontendFacultyController::class, 'updateFaculty'])->name('profile-update');
+            Route::get('class-list', [ClassListController::class, 'index'])->name('class-list.index');
+            Route::get('class-list-import', [ClassListController::class, 'import'])->name('class-list.import');
+            Route::post('class-list-import', [ClassListController::class, 'uploadData'])->name('class-list.upload');
         });
 
 

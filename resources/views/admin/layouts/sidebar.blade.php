@@ -78,19 +78,22 @@
         </li>
 
         <li class="nav-title">Manage Request</li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.account.verified') }}">
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
             <svg class="nav-icon">
-                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-check-circle') }}"></use>
-            </svg>Verified Accounts</a></li>
-        <li class="nav-item"><a class="nav-link" href="{{ route('admin.registration.pending') }}">
-            <svg class="nav-icon">
-                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user-plus') }}"></use>
-            </svg>Pending Registration</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ route('admin.rejected.index') }}">
-                <svg class="nav-icon">
-                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-user-x') }}"></use>
-                </svg>Rejected Accounts </a></li>
+                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-https') }}"></use>
+            </svg>Account Verification</a>
 
+
+
+        <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.account.verified') }}">
+                Verified Accounts</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ route('admin.registration.pending') }}">
+                Pending Accounts</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('admin.rejected.index') }}">
+                    Rejected Accounts </a></li>
+        </ul>
+    </li>
 
         <li class="nav-title">Sections</li>
         <li class="nav-item"><a class="nav-link" href="{{ route('admin.hero.index') }}">

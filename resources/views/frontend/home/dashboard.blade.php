@@ -83,7 +83,7 @@
                     <div class="col-lg-3">
 
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="dashboard_content">
                             <div class="manage_dashboard">
                                 <div class="active_package">

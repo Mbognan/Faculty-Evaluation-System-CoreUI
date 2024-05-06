@@ -1530,6 +1530,20 @@
         h3 {
             font-weight: 200;
         }
+
+        .material-card.disabled {
+    opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
+    filter: grayscale(100%); /* Apply grayscale filter */
+}
+
+.material-card.disabled a {
+    pointer-events: none; /* Disable pointer events on links */
+}
+
+.material-card.disabled .img-container img {
+    filter: grayscale(100%); /* Ensure images are grayscale */
+}
+
     </style>
     <section class="blog_pages">
         <div class="container">
@@ -1548,6 +1562,13 @@
                     </ul>
                 </div>
             </div>
+            @if ($student->status === 0)
+            <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> Account is still pending please wait for further action!</div>
+            @elseif ($student->status === 2)
+            <div class="alert alert-danger "><i class="fas fa-skull-crossbones"></i> Account is rejected please contact the IT Department for Verification!</div>
+            @endif
+
+
         </div>
         @php
             $colors =  ['Red','Blue','Green','Yellow','Pink','Purple','Deep-Purple','Light-Blue'];
@@ -1556,12 +1577,20 @@
             <div class="row active-with-click">
                 @foreach ($facultys as $faculty )
                 @php
+                    $isDisabled = 0;
                 // Generate a random index to select a color
                 $randomIndex = array_rand($colors);
                 $randomColor = $colors[$randomIndex];
+                if($student->status === 1){
+                    $isDisabled = 0;
+                }else{
+                    $isDisabled = 1;
+                }
+
+                $isAssociated = in_array($faculty->id, $facultyIds);
                  @endphp
                 <div class="col-md-4 col-sm-6 col-xs-12">
-                    <article class="material-card {{ $randomColor }}">
+                    <article class="material-card {{ $randomColor }} @unless($isAssociated) disabled @endunless">
                         <h2>
                             <a href="{{ route('user.profile-evaluate',$faculty->id) }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
                             <strong>
@@ -1571,7 +1600,7 @@
                         </h2>
                         <div class="mc-content">
                             <div class="img-container">
-                                <img class="img-responsive"
+                                <img  class="img-responsive"
                                     src="{{ asset($faculty->avatar) }}">
                             </div>
                             <div class="mc-description">

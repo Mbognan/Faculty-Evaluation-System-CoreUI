@@ -199,9 +199,6 @@
             });
         });
 
-
-
-
         $('body').on('click', '.check-item', function(e) {
             e.preventDefault();
             let url = $(this).attr('href');

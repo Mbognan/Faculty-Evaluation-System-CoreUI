@@ -103,9 +103,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <button type="submit" class="read_btn">Reset Password</button>
-                                    </div>
+
                                 </div>
                             </form>
                         </div>
