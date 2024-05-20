@@ -54,8 +54,7 @@
                             class="nav-icon"></span>
                         Create Faculty</a></li>
                         <li class="nav-group"><a class="nav-link " href="{{ route('admin.faculty-view') }}">
-                            View Faculty</a>
-
+                            View Result</a>
                         </li>
             </ul>
         </li>

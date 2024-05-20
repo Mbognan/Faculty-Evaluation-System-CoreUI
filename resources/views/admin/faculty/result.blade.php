@@ -553,7 +553,8 @@
                                 categoryPercentage: 0.5 // Adjust category width (0.0 to 1.0)
                             },
                             y: {
-                                beginAtZero: true
+                                beginAtZero: true,
+                                grace: 5,
                             }
                         }
                     }
@@ -644,117 +645,105 @@
                 });
 
                 const ctx3 = document.getElementById('myChartStack');
+                var data4 = {
+                    labels: ['IT 101L', 'Cap 101C', 'RSI 103', 'SER 102', 'IT 102', 'Entr 101'],
+                    datasets: [{
+                            label: 'Commitment',
+                            data: [50, 60, 30, 50, 20, 30],
+                            backgroundColor: 'rgba(255, 99, 132, 1)',
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            borderWidth: 1,
+                            barThickness: 100
+                        },
+                        {
+                            label: 'Knowledge of Subjects',
+                            data: [54, 87, 38, 47, 42, 34],
+                            backgroundColor: 'rgba(255, 206, 86, 1)',
+                            borderColor: 'rgba(255, 206, 86, 1)',
+                            borderWidth: 1,
+                            barThickness: 100
+                        },
+                        {
+                            label: 'Management of Learning',
+                            data: [40, 19, 21, 50, 60, 30],
+                            backgroundColor: 'rgba(75, 192, 192, 1)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1,
+                            barThickness: 100
+                        },
+                        {
+                            label: 'Teaching for Independent Learning',
+                            data: [12, 19, 30, 50, 29, 30],
+                            backgroundColor: 'rgba(54, 162, 235, 1)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1,
+                            barThickness: 100
+                        }
+                    ]
+                };
+
+
+                // const toplabels = {
+                //     id: 'toplabels',
+                //     afterDatasetsDraw(chart, args, pluginOptions) {
+                //         const {
+                //             ctx,
+                //             scales: {
+                //                 x,
+                //                 y
+                //             }
+                //         } = chart;
+
+                //         chart.data.datasets[0].data.forEach((datapoint, index) => {
+                //             const datasetArray = [];
+
+                //             chart.data.datasets.forEach((datasets)=>{
+                //                 datasetArray.push(datasets.data[index]);
+
+                //             });
+                //             console.log(datasetArray);
+
+                //             function totalSum(total,values){
+                //                 return total + values;
+                //             };
+                //             let sum = datasetArray.reduce(totalSum,0);
+
+                //             console.log(sum);
+                //             ctx.font = 'bold 12px Arial';
+                //         ctx.fillStyle = 'bllue';
+                //         ctx.textAlign = 'center';
+                //         ctx.fillText(sum, x.getPixelForValue(index), chart.getDatasetMeta(1).data[index].y - 180)
+                //         });
+
+
+
+                //     }
+                // }
 
                 new Chart(ctx3, {
+
                     type: 'bar',
-                    data: {
-                        labels: ['IT 101L', 'Cap 101C', 'RSI 103', 'SER 102', 'IT 102', 'Entr 101'],
-                        datasets: [{
-                                label: 'Commitment',
-                                data: [50, 60, 30, 50, 20, 30],
-                                backgroundColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                    'rgba(255, 99, 132, 1)',
-                                ],
-                                borderWidth: 1,
-                                barThickness: 100,
-
-                            },
-                            {
-                                label: 'Knowledge of Subjects',
-                                data: [54, 87, 38, 47, 42, 34],
-                                backgroundColor: [
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                ],
-                                borderColor: [
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                    'rgba(255, 206, 86, 1)',
-                                ],
-                                borderWidth: 1,
-                                barThickness: 100,
-
-                            },
-                            {
-                                label: 'Management of Learning',
-                                data: [40, 19, 21, 50, 60, 30],
-                                backgroundColor: [
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)'
-                                ],
-                                borderColor: [
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                    'rgba(75, 192, 192, 1)',
-                                ],
-                                borderWidth: 1,
-                                barThickness: 100,
-
-                            },
-                            {
-                                label: 'Teaching for Independent Learning',
-                                data: [12, 19, 30, 50, 29, 30],
-                                backgroundColor: [
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                ],
-                                borderColor: [
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                    'rgba(54, 162, 235, 1)',
-                                ],
-                                borderWidth: 1,
-                                barThickness: 100,
-
-                            }
-
-                        ]
-                    },
+                    data: data4,
                     options: {
+                        plugins: {
+                            datalabels: {
+                                color: 'black' // Set the text color to black
+                            }
+                        },
                         responsive: true,
                         scales: {
                             x: {
                                 stacked: true
                             },
                             y: {
-                                stacked: true
+                                stacked: true,
+                                beginAtZero: true,
+                                grace:4
+
                             }
                         }
-                    }
+                    },
+                    plugins: [ChartDataLabels]
                 });
 
             });
