@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluation_results', function (Blueprint $table) {
             $table->id();
+            $table->string('by_subject');
             $table->integer('results_by_category');
             $table->foreignId('category_id');
             $table->foreignId('user_id');

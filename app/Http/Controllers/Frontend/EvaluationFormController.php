@@ -20,29 +20,40 @@ use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class EvaluationFormController extends Controller
 {
-    public function evaluateFaculty(string $id):View{
+    public function evaluateFaculty(string $id,string $subject_id,string $schedule_id){
 
+
+       $schedule = $schedule_id;
+        $facultyId = $id;
+        $subject = $subject_id;
         $questions = Question::orderBy('position', 'asc')->get();
         $categories = Category::all();
 
-        return view('frontend.home.evaluation.form',compact(['questions','categories']));
+        return view('frontend.home.evaluation.form',compact(['questions','categories','facultyId','subject','schedule']));
     }
+
+
 
 
 
     public function store(Request $request)
     {
+
+        // dd($request->all());
         $anlyszer = new Analyzer;
         $tr = new GoogleTranslate();
 
         $userId = $request->input('user_id');
         $facultyId = $request->input('faculty_id');
+        $subject = $request->input('subject');
+        $schedule = $request->input('schedule');
 
         //comment store raw
         $commentStore = new Comments();
         $commentStore->user_id = $userId;
         $commentStore->faculty_id = $facultyId;
         $commentStore->post_comment = $request->comment;
+        $commentStore->evaluation_schedules_id = $schedule;
         $commentStore->save();
 
         $commentsId = $commentStore->id;
@@ -67,13 +78,14 @@ class EvaluationFormController extends Controller
         $sentiment->comments_id = $commentsId;
         $sentiment->sentiment = $mood;
         $sentiment->user_id = $userId;
+        $sentiment->evaluation_schedules_id = $schedule;
         $sentiment->save();
 
 
 
         // evaluationresult
         $categoryTotal = [];
-        foreach ($request->except('_token', 'user_id', 'faculty_id') as $key => $rating) {
+        foreach ($request->except('_token', 'user_id', 'faculty_id','schedule') as $key => $rating) {
             if (preg_match('/^q(\d+)_(\d+)$/', $key, $matches)) {
                 $categoryId = $matches[1];
                 $questionId = $matches[2];
@@ -89,6 +101,7 @@ class EvaluationFormController extends Controller
                     'faculty_id' => $facultyId,
                     'category_id' => $categoryId,
                     'rating' => $rating,
+                    'evaluation_schedules_id' => $schedule,
                 ]);
             }
         }
@@ -97,6 +110,8 @@ class EvaluationFormController extends Controller
         foreach ($categoryTotal as $categoryId => $totalRating) {
             $existingResult = EvaluationResult::where('user_id', $facultyId)
                 ->where('category_id', $categoryId)
+                ->where('by_subject', $subject)
+                ->where('evaluation_schedules_id', $schedule)
                 ->first();
 
             if ($existingResult) {
@@ -107,6 +122,8 @@ class EvaluationFormController extends Controller
                     'user_id' => $facultyId,
                     'category_id' => $categoryId,
                     'results_by_category' => $totalRating,
+                    'by_subject' => $subject,
+                    'evaluation_schedules_id' => $schedule,
                 ]);
             }
         }

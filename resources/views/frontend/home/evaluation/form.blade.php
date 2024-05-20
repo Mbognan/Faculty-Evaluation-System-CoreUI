@@ -45,6 +45,8 @@
                                 <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
                                 <!-- Add this line -->
                                 <input type="hidden" name="faculty_id" value="">
+                                <input type="hidden" name="subject" value="{{ $subject }}">
+                                <input type="hidden" name="schedule" value="{{ $schedule }}">
                                 <div role="main" class="form-all">
                                     <ul class="form-section page-section">
                                         <li id="cid_1" class="form-input-wide" data-type="control_head">
@@ -159,11 +161,11 @@
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script type="text/javascript">
-            // Function to extract faculty ID from URL
+
             function getFacultyIdFromUrl() {
-                // Get the current URL
+
                 var url = window.location.href;
-                // Extract the faculty ID from the URL
+
                 var matches = url.match(/\/evaluate\/(\d+)/);
                 if (matches && matches.length > 1) {
                     return matches[1];
@@ -172,22 +174,25 @@
                 }
             }
 
-            // Function to handle form submission
+
             function submitEvaluation() {
-                // Get the faculty ID from the URL
+
                 var facultyId = getFacultyIdFromUrl();
                 if (!facultyId) {
                     alert('Error: Faculty ID not found in URL');
                     return;
                 }
 
-                // Set the value of the hidden input field for the faculty ID
+
                 $('input[name="faculty_id"]').val(facultyId);
+                var subject = $('input[name="subject"]').val();
+                var schedule = $('input[name="schedule"]').val();
 
-                // Serialize form data into a URL-encoded string
+
                 var formData = $('.evaluationForm').serialize();
+                formData += '&subject=' + subject;
 
-                // Perform AJAX submission
+
                 $.ajax({
                     method: 'POST',
                     url: "{{ route('user.evaluation-submit') }}",
@@ -197,7 +202,7 @@
                     },
                     success: function(response) {
                         if (response.status === 'success') {
-                            // Redirect the user to another page
+
                             window.location.href = "{{ route('user.evaluation-success') }}";
                         } else if (response.status === 'error') {
                             alert('Error: ' + response.message);
@@ -205,7 +210,7 @@
                     },
                     error: function(xhr, status, error) {
                         console.error("Error occurred while submitting data:", error);
-                        // Optionally, you can display an error message to the user
+
                     }
                 });
             }
@@ -213,7 +218,7 @@
 
 
             $(document).ready(function() {
-                // Initialize SmartWizard
+
                 $('#smartwizard').smartWizard({
                     selected: 0,
                     theme: 'dots',
@@ -239,7 +244,7 @@
 
                 });
 
-                // Initialize jQuery Validate for each form
+
                 $('form').each(function() {
                     $(this).validate({
                         errorPlacement: function(error, element) {

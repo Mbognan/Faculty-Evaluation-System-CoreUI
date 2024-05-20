@@ -252,7 +252,7 @@
     $(document).on('click', '.edit-question', function(e) {
         e.preventDefault();
         var questionId = $(this).val();
-        console.log(questionId);
+
 
         $.ajax({
             type: "GET",

@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\EvaluationResult;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -19,23 +20,35 @@ class FacultyViewController extends Controller
         return view('admin.faculty.view',compact(['users','facultyCount']));
     }
 
-    function view(string $id):View{
+    public function view(string $id): View {
         $user = User::findOrFail($id);
-        $evaluationResults = EvaluationResult::where('user_id', $user->id)->get();
+
+
         $allCategories = Category::all();
-        $category = Category::pluck('title')->toArray();
-        $results = EvaluationResult::where('user_id', $user->id)->pluck('results_by_category')->toArray();
-        $resultsByCategory = [];
-        foreach ($results as $key => $result) {
-            $resultsByCategory[$category[$key]] = $result;
-        }
-        foreach ($category as $cat) {
-            if (!isset($resultsByCategory[$cat])) {
-                $resultsByCategory[$cat] = 0;
+        $categoryTitles = $allCategories->pluck('title', 'id')->toArray();
+
+
+        $resultsByCategory = EvaluationResult::where('user_id', $user->id)
+            ->select('category_id', DB::raw('SUM(results_by_category) as total'))
+            ->groupBy('category_id')
+            ->pluck('total', 'category_id')->toArray();
+
+
+        foreach ($categoryTitles as $categoryId => $categoryTitle) {
+            if (!isset($resultsByCategory[$categoryId])) {
+                $resultsByCategory[$categoryId] = 0;
             }
         }
-        return view('admin.faculty.result',compact(['category','allCategories','resultsByCategory','user','evaluationResults']));
+
+
+        $resultsWithTitles = [];
+        foreach ($resultsByCategory as $categoryId => $total) {
+            $resultsWithTitles[$categoryTitles[$categoryId]] = $total;
+        }
+
+        return view('admin.faculty.result', compact('categoryTitles', 'allCategories', 'resultsWithTitles', 'user'));
     }
+
 
     public function export_excel(string $id)
     {

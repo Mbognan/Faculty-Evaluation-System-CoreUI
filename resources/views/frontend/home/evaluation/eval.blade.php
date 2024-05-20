@@ -1558,6 +1558,15 @@
                         <li class="breadcrumbs__item">
                             <a href="javascirt:;" class="breadcrumbs__url">Evaluation Section</a>
                         </li>
+                        @if ($valid == true)
+                        <li class="breadcrumbs__item">
+                            <a href="javascirt:;" class="breadcrumbs__url">{{ $schedule->semester }} {{ $schedule->academic_year }}</a>
+                        </li>
+                        @else
+                        <li class="breadcrumbs__item">
+                            <a href="javascirt:;" class="breadcrumbs__url">Evaluation is not available right now</a>
+                        </li>
+                        @endif
 
                     </ul>
                 </div>
@@ -1573,7 +1582,11 @@
         @php
             $colors =  ['Red','Blue','Green','Yellow','Pink','Purple','Deep-Purple','Light-Blue'];
         @endphp
+
         <div class="container">
+            @if ($valid === false)
+            <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> <h6>Faculty Evaluation is not Available right now</h6> </div>
+            @else
             <div class="row active-with-click">
                 @foreach ($facultys as $faculty )
                 @php
@@ -1592,7 +1605,7 @@
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <article class="material-card {{ $randomColor }} @unless($isAssociated) disabled @endunless">
                         <h2>
-                            <a href="{{ route('user.profile-evaluate',$faculty->id) }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
+                            <a href="{{ route('user.evaluation-subject',$faculty->id) }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
                             <strong>
                                 <i class="fa fa-fw fa-star text-white"></i>
                                 BSIT Faculty
@@ -1659,7 +1672,12 @@
                     </article>
                 </div> --}}
             </div>
+            @endif
         </div>
+
+
+
+
     </section>
 @endsection
 @push('scripts')

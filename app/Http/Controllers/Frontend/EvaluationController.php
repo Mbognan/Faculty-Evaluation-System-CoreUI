@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Http\Controllers\Admin\EvaluationScheduleController;
 use App\Http\Controllers\Controller;
 use App\Models\ClassList;
+use App\Models\EvaluationSchedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,12 +14,61 @@ use Illuminate\View\View;
 class EvaluationController extends Controller
 {
     public function index(){
+        $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
+
+        $valid = false;
+        if($schedules === null){
+            $valid = false;
+            $schedule = null;
+        }else if($schedules->count() === 1){
+            $valid = true;
+            $schedule = $schedules->first();
+        }else{
+            $valid = false;
+             $schedule = null;
+        }
+
+
+
+
         $facultys = User::where('user_type', 'faculty')->get();
         $student = Auth::user();
         $facultyIds = ClassList::where('student_id', $student->student_id)->pluck('user_id')->toArray();
 
         $faculties = User::whereIn('id', $facultyIds)->where('user_type', 'faculty')->get();
-        return view('frontend.home.evaluation.eval',compact(['facultys','student','faculties','facultyIds']));
+
+
+        return view('frontend.home.evaluation.eval',compact(['facultys','student','faculties','facultyIds','valid','schedule']));
+    }
+
+    public function subject_choose(string $id){
+
+
+
+        $faculty  = User::findOrFail($id);
+        $user = Auth::user();
+        $subjects = ClassList::where('student_id', $user->student_id)->where('user_id', $faculty->id)
+                         ->get()
+                         ->pluck('subject');
+
+        $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
+        if($schedules === null){
+
+            $schedule = null;
+        }else if($schedules->count() === 1){
+
+            $schedule = $schedules->first();
+        }else{
+
+             $schedule = null;
+        }
+
+
+
+
+
+
+        return view('frontend.home.evaluation.subject',compact(['subjects','faculty','schedule']));
     }
 
 }

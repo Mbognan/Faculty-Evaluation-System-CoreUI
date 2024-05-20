@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('middle_initial');
+            $table->string('subject');
             $table->string('student_id');
             $table->string('semester');
             $table->string('year');

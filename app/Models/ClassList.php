@@ -13,6 +13,7 @@ class ClassList extends Model
         'first_name',
         'last_name',
         'middle_initials',
+        'subject',
         'student_id',
         'semester',
         'year',

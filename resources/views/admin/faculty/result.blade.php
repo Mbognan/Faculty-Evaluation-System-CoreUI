@@ -4,7 +4,14 @@
         margin-right: 10px;
         /* Adjust as needed */
     }
-    .link-muted { color: #aaa; } .link-muted:hover { color: #1266f1; }
+
+    .link-muted {
+        color: #aaa;
+    }
+
+    .link-muted:hover {
+        color: #1266f1;
+    }
 </style>
 @section('contents')
     <div class="fs-2 fw-semibold">Faculty</div>
@@ -143,16 +150,18 @@
                     </div>
                 </div>
 
-                <div class="col-md-12">
+
+
+                <div class="col-md-12 ">
                     <div class="card mb-4">
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <div>
-                                    <h4 class="card-title mb-0">Evaluation Result By Category </h4>
+                                    <h4 class="card-title mb-0">The Overall Evaluation Result By Category </h4>
                                     <div class="small text-medium-emphasis text-disabled">1st Semester - July 2022 </div>
                                 </div>
                                 <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
-                                    <form method="POST" action="{{ route('admin.export-excel',['id' => $user->id]) }}">
+                                    <form method="POST" action="{{ route('admin.export-excel', ['id' => $user->id]) }}">
                                         @csrf
                                         <button class="btn btn-info text-white" type="submit">Print Summary Result
                                             <svg class="icon">
@@ -165,12 +174,14 @@
 
                                 </div>
                             </div>
-                            {{-- <canvas id="myChart" style="max-width: 999px; max-height: 500px;"></canvas> --}}
-                            <canvas class="chart" id="myChart" height="450" width="1377"
-                                style="display: block; box-sizing: border-box; height: 300px; width: 918px;"></canvas>
+                            <div class="col-md-12 mb-4">
+                                <canvas class="chart" id="myChart" height="450" width="1377"
+                                    style="display: block; box-sizing: border-box; height: 300px; width: 918px;"></canvas>
+                            </div>
+
                         </div>
 
-
+                        {{--
                         <div class="card-footer">
                             <div class="row row-cols-1 row-cols-md-4 text-center">
                                 @foreach ($allCategories as $index => $cat)
@@ -210,7 +221,29 @@
                                     </div>
                                 @endforeach
                             </div>
+                        </div> --}}
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card mb-4">
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between ">
+                                <div>
+                                    <h4 class="card-title mb-0">Subject-wise Evaluation Results: A Stacked Bar Chart </h4>
+                                </div>
+
+                            </div>
+                            <div class="col-md-12 mt-4">
+                                <canvas class="chart" id="myChartStack" height="800" width="1377"
+                                    style="display: block; box-sizing: border-box; height: 500px; width: 918px;"></canvas>
+                            </div>
+
+
                         </div>
+
 
                     </div>
                 </div>
@@ -227,7 +260,8 @@
                                             <div class="card-subtitle text-disabled">1st Semester - 2024</div>
                                             <div class="example">
                                                 <div class="tab-content rounded-bottom">
-                                                    <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1002">
+                                                    <div class="tab-pane p-3 active preview" role="tabpanel"
+                                                        id="preview-1002">
                                                         <div class="c-chart-wrapper">
                                                             <canvas id="piecanva"></canvas>
                                                         </div>
@@ -246,7 +280,8 @@
                                                     <i class="fas fa-user-friends fa-2x"></i>
                                                 </div>
                                             </div>
-                                            <div class="fs-4 fw-semibold pb-3">436 Students</div><small class="text-success"> </small>
+                                            <div class="fs-4 fw-semibold pb-3">436 Students</div><small
+                                                class="text-success"> </small>
                                         </div>
                                     </div>
                                     <!-- Total Satisfied Students -->
@@ -258,9 +293,12 @@
                                                     <i class="far fa-smile fa-2x"></i>
                                                 </div>
                                             </div>
-                                            <div class="fs-4 fw-semibold pb-3">44 Students</div><small class="text-success">(50.4%
+                                            <div class="fs-4 fw-semibold pb-3">44 Students</div><small
+                                                class="text-success">(50.4%
                                                 <svg class="icon">
-                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}"></use>
+                                                    <use
+                                                        xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}">
+                                                    </use>
                                                 </svg>)</small>
                                         </div>
                                     </div>
@@ -268,14 +306,18 @@
                                     <div class="card mb-4">
                                         <div class="card-body">
                                             <div class="d-flex justify-content-between">
-                                                <div class="card-title text-disabled">Total Student who are Unsatisfied</div>
+                                                <div class="card-title text-disabled">Total Student who are Unsatisfied
+                                                </div>
                                                 <div class=" text-danger p-2 rounded">
                                                     <i class="far fa-frown fa-2x"></i>
                                                 </div>
                                             </div>
-                                            <div class="fs-4 fw-semibold pb-3">385 Students</div><small class="text-danger">(17.2%
+                                            <div class="fs-4 fw-semibold pb-3">385 Students</div><small
+                                                class="text-danger">(17.2%
                                                 <svg class="icon">
-                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}"></use>
+                                                    <use
+                                                        xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}">
+                                                    </use>
                                                 </svg>)</small>
                                         </div>
                                     </div>
@@ -288,9 +330,12 @@
                                                     <i class="far fa-meh fa-2x"></i>
                                                 </div>
                                             </div>
-                                            <div class="fs-4 fw-semibold pb-3">70 Students</div><small class="text-warning">(20.2%
+                                            <div class="fs-4 fw-semibold pb-3">70 Students</div><small
+                                                class="text-warning">(20.2%
                                                 <svg class="icon">
-                                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}"></use>
+                                                    <use
+                                                        xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}">
+                                                    </use>
                                                 </svg> ) </small>
                                         </div>
                                     </div>
@@ -305,267 +350,416 @@
                 <div class="col-md-12 mb-4">
                     <div class="container">
                         <div class="row d-flex justify-content-center">
-                          <div class="col-md-12 col-lg-10">
-                            <div class="card text-dark">
-                              <div class="card-body p-4">
-                                <h4 class="mb-0">Recent comments</h4>
-                                <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+                            <div class="col-md-12 col-lg-10">
+                                <div class="card text-dark">
+                                    <div class="card-body p-4">
+                                        <h4 class="mb-0">Recent comments</h4>
+                                        <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
 
-                                <div class="d-flex flex-start">
-                                  <img class="rounded-circle shadow-1-strong me-3"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar" width="60"
-                                    height="60" />
-                                  <div>
-                                    <h6 class="fw-bold mb-1">Maggie Marsh</h6>
-                                    <div class="d-flex align-items-center mb-3">
-                                      <p class="mb-0">
-                                        March 07, 2021
-                                        <span class="badge bg-primary">Pending</span>
-                                      </p>
-                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
+                                                alt="avatar" width="60" height="60" />
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Maggie Marsh</h6>
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <p class="mb-0">
+                                                        March 07, 2021
+                                                        <span class="badge bg-primary">Pending</span>
+                                                    </p>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-pencil-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-redo-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-heart ms-2"></i></a>
+                                                </div>
+                                                <p class="mb-0">
+                                                    Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                    industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                                    since the 1500s, when an unknown printer took a galley of type and
+                                                    scrambled it.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="mb-0">
-                                      Lorem Ipsum is simply dummy text of the printing and typesetting
-                                      industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                      since the 1500s, when an unknown printer took a galley of type and
-                                      scrambled it.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
 
-                              <hr class="my-0" />
+                                    <hr class="my-0" />
 
-                              <div class="card-body p-4">
-                                <div class="d-flex flex-start">
-                                  <img class="rounded-circle shadow-1-strong me-3"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar" width="60"
-                                    height="60" />
-                                  <div>
-                                    <h6 class="fw-bold mb-1">Lara Stewart</h6>
-                                    <div class="d-flex align-items-center mb-3">
-                                      <p class="mb-0">
-                                        March 15, 2021
-                                        <span class="badge bg-success">Approved</span>
-                                      </p>
-                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                      <a href="#!" class="text-success"><i class="fas fa-redo-alt ms-2"></i></a>
-                                      <a href="#!" class="link-danger"><i class="fas fa-heart ms-2"></i></a>
+                                    <div class="card-body p-4">
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
+                                                alt="avatar" width="60" height="60" />
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Lara Stewart</h6>
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <p class="mb-0">
+                                                        March 15, 2021
+                                                        <span class="badge bg-success">Approved</span>
+                                                    </p>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-pencil-alt ms-2"></i></a>
+                                                    <a href="#!" class="text-success"><i
+                                                            class="fas fa-redo-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-danger"><i
+                                                            class="fas fa-heart ms-2"></i></a>
+                                                </div>
+                                                <p class="mb-0">
+                                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It
+                                                    has roots in a piece of classical Latin literature from 45 BC, making it
+                                                    over 2000 years old. Richard McClintock, a Latin professor at
+                                                    Hampden-Sydney College in Virginia, looked up one of the more obscure
+                                                    Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                                                    the cites.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="mb-0">
-                                      Contrary to popular belief, Lorem Ipsum is not simply random text. It
-                                      has roots in a piece of classical Latin literature from 45 BC, making it
-                                      over 2000 years old. Richard McClintock, a Latin professor at
-                                      Hampden-Sydney College in Virginia, looked up one of the more obscure
-                                      Latin words, consectetur, from a Lorem Ipsum passage, and going through
-                                      the cites.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
 
-                              <hr class="my-0" style="height: 1px;" />
+                                    <hr class="my-0" style="height: 1px;" />
 
-                              <div class="card-body p-4">
-                                <div class="d-flex flex-start">
-                                  <img class="rounded-circle shadow-1-strong me-3"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(33).webp" alt="avatar" width="60"
-                                    height="60" />
-                                  <div>
-                                    <h6 class="fw-bold mb-1">Alexa Bennett</h6>
-                                    <div class="d-flex align-items-center mb-3">
-                                      <p class="mb-0">
-                                        March 24, 2021
-                                        <span class="badge bg-danger">Rejected</span>
-                                      </p>
-                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    <div class="card-body p-4">
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(33).webp"
+                                                alt="avatar" width="60" height="60" />
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Alexa Bennett</h6>
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <p class="mb-0">
+                                                        March 24, 2021
+                                                        <span class="badge bg-danger">Rejected</span>
+                                                    </p>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-pencil-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-redo-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-heart ms-2"></i></a>
+                                                </div>
+                                                <p class="mb-0">
+                                                    There are many variations of passages of Lorem Ipsum available, but the
+                                                    majority have suffered alteration in some form, by injected humour, or
+                                                    randomised words which don't look even slightly believable. If you are
+                                                    going to use a passage of Lorem Ipsum, you need to be sure.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="mb-0">
-                                      There are many variations of passages of Lorem Ipsum available, but the
-                                      majority have suffered alteration in some form, by injected humour, or
-                                      randomised words which don't look even slightly believable. If you are
-                                      going to use a passage of Lorem Ipsum, you need to be sure.
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
 
-                              <hr class="my-0" />
+                                    <hr class="my-0" />
 
-                              <div class="card-body p-4">
-                                <div class="d-flex flex-start">
-                                  <img class="rounded-circle shadow-1-strong me-3"
-                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp" alt="avatar" width="60"
-                                    height="60" />
-                                  <div>
-                                    <h6 class="fw-bold mb-1">Betty Walker</h6>
-                                    <div class="d-flex align-items-center mb-3">
-                                      <p class="mb-0">
-                                        March 30, 2021
-                                        <span class="badge bg-primary">Pending</span>
-                                      </p>
-                                      <a href="#!" class="link-muted"><i class="fas fa-pencil-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
-                                      <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
+                                    <div class="card-body p-4">
+                                        <div class="d-flex flex-start">
+                                            <img class="rounded-circle shadow-1-strong me-3"
+                                                src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp"
+                                                alt="avatar" width="60" height="60" />
+                                            <div>
+                                                <h6 class="fw-bold mb-1">Betty Walker</h6>
+                                                <div class="d-flex align-items-center mb-3">
+                                                    <p class="mb-0">
+                                                        March 30, 2021
+                                                        <span class="badge bg-primary">Pending</span>
+                                                    </p>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-pencil-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-redo-alt ms-2"></i></a>
+                                                    <a href="#!" class="link-muted"><i
+                                                            class="fas fa-heart ms-2"></i></a>
+                                                </div>
+                                                <p class="mb-0">
+                                                    It uses a dictionary of over 200 Latin words, combined with a handful of
+                                                    model sentence structures, to generate Lorem Ipsum which looks
+                                                    reasonable. The generated Lorem Ipsum is therefore always free from
+                                                    repetition, injected humour, or non-characteristic words etc.
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <p class="mb-0">
-                                      It uses a dictionary of over 200 Latin words, combined with a handful of
-                                      model sentence structures, to generate Lorem Ipsum which looks
-                                      reasonable. The generated Lorem Ipsum is therefore always free from
-                                      repetition, injected humour, or non-characteristic words etc.
-                                    </p>
-                                  </div>
                                 </div>
-                              </div>
                             </div>
-                          </div>
                         </div>
-                      </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     @endsection
 
     @push('scripts')
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"
             integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig=="
             crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const category = {!! json_encode($category) !!};
-                    const resultsByCategory = {!! json_encode(array_values($resultsByCategory)) !!};
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const category = {!! json_encode(array_keys($resultsWithTitles)) !!};
+                const resultsByCategory = {!! json_encode(array_values($resultsWithTitles)) !!};
 
-                    function generateBackgroundColors(data) {
-                        return data.map(result => {
-                            const percentage = result * 100 / 100;
-                            if (percentage <= 40) {
-                                return 'rgba(255, 0, 0, 0.2)'; // Red
-                            } else if (percentage <= 60) {
-                                return 'rgba(255, 255, 0, 0.2)'; // Yellow
-                            } else if (percentage <= 80) {
-                                return 'rgba(0, 0, 255, 0.2)'; // blue
-                            } else if (percentage <= 90) {
-                                return 'rgba(23, 162, 184, 0.2)'; // Purple
-                            } else {
-                                return 'rgba(0, 128, 0, 0.2)'; // green
-                            }
-                        });
-                    }
-
-                    function generateBorderColors(data) {
-                        return data.map(result => {
-                            const percentage = result * 100 / 100;
-                            if (percentage <= 40) {
-                                return 'rgba(255, 0, 0, 1)'; // Red
-                            } else if (percentage <= 60) {
-                                return 'rgba(255, 255, 0, 1)'; // Yellow
-                            } else if (percentage <= 80) {
-                                return 'rgba(0, 0, 255, 1)'; // blue
-                            } else if (percentage <= 90) {
-                                return 'rgba(128, 0, 128, 1)'; // Purple
-                            } else {
-                                return 'rgba(0, 128, 0, 1)'; // green
-                            }
-                        });
-                    }
-
-                    const backgroundColor = generateBackgroundColors(resultsByCategory);
-                    const borderColor = generateBorderColors(resultsByCategory);
-
-                    const data = {
-                        labels: category,
-                        datasets: [{
-                            label: 'The Mean of each Category',
-                            data: resultsByCategory,
-                            backgroundColor: backgroundColor,
-                            borderColor: borderColor,
-                            borderWidth: 1
-                        }]
+                let combineData = category.map((cat, index) => {
+                    return {
+                        category: cat,
+                        mean: resultsByCategory[index]
                     };
+                });
 
-                    const config = {
-                        type: 'bar',
-                        data: data,
-                        options: {
-                            scales: {
-                                y: {
-                                    beginAtZero: true
+                combineData.sort((a, b) => b.mean - a.mean);
+
+                const sortedCategories = combineData.map(data => data.category);
+                const sortedResults = combineData.map(data => data.mean);
+
+                const data = {
+                    labels: sortedCategories,
+                    datasets: [{
+                        label: 'The Mean of each Category',
+                        data: sortedResults,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(255, 159, 64, 0.5)',
+                            'rgba(255, 205, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(201, 203, 207, 0.5)'
+                        ],
+                        borderColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(255, 205, 86)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                            'rgb(153, 102, 255)',
+                            'rgb(201, 203, 207)'
+                        ],
+
+                        borderWidth: 1
+                    }]
+                };
+
+                const config = {
+                    type: 'bar',
+                    data: data,
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                barPercentage: 0.5, // Adjust bar width (0.0 to 1.0)
+                                categoryPercentage: 0.5 // Adjust category width (0.0 to 1.0)
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                };
+
+                const myChart = new Chart(
+                    document.getElementById('myChart'),
+                    config
+                );
+                // Pie Chart
+
+                const data2 = {
+                    labels: ['Positive', 'Negative', 'Neutral'],
+                    datasets: [{
+                        label: 'Number of Students',
+                        data: [200, 109, 77],
+                        backgroundColor: [
+                            'rgb(40, 167, 69)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 205, 86)'
+                        ],
+                        hoverOffset: 40
+                    }]
+                };
+
+                const doughnutLabel = {
+                    id: 'doughnutLabel',
+                    beforeDatasetsDraw(chart, args, pluginOption) {
+                        const {
+                            ctx,
+                            data
+                        } = chart;
+                        ctx.save();
+                        const xCoor = chart.getDatasetMeta(0).data[0].x;
+                        const yCoor = chart.getDatasetMeta(0).data[0].y;
+
+                        ctx.font = 'bold 25px Arial';
+                        ctx.fillStyle = 'black';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText(`${data2.labels[0]}:${data2.datasets[0].data[0]}`, xCoor, yCoor);
+                    }
+                }
+
+                const config2 = {
+                    type: 'doughnut',
+                    data: data2,
+                    options: {
+                        responsive: true,
+                        scales: {
+
+                        },
+                        plugins: {
+                            datalabels: {
+
+                                color: 'black',
+                                formatter: (value, context) => {
+                                    const datapoints = context.chart.data.datasets[0].data;
+
+                                    function totalSum(total, datapoint) {
+                                        return total + datapoint
+                                    }
+                                    const totalValue = datapoints.reduce(totalSum, 0)
+                                    const totalPercentage = (value / totalValue * 100).toFixed(2)
+                                    return `${totalPercentage}%`
                                 }
                             }
                         }
-                    };
+                    },
+                    plugins: [ChartDataLabels, doughnutLabel, ]
+                };
 
-                    // Render the chart
-                    const myChart = new Chart(document.getElementById('myChart'), config);
+                const ctx = document.getElementById('piecanva').getContext('2d');
+                new Chart(ctx, config2);
 
-                    // Pie Chart
+                const progressBars = document.querySelectorAll('.progress-bar1');
+                progressBars.forEach((progressBar, index) => {
+                    const percentage = data.datasets[0].data[index] * 100 / 100;
+                    if (percentage <= 40) {
+                        progressBar.classList.add('bg-danger');
+                    } else if (percentage <= 60) {
+                        progressBar.classList.add('bg-warning');
+                    } else if (percentage <= 80) {
+                        progressBar.classList.add('bg-primary');
+                    } else {
+                        progressBar.classList.add('bg-success');
+                    }
+                });
 
-                    const data2 = {
-                        labels: ['Satisfied', 'Unsatisfied', 'Neutral'],
+                const ctx3 = document.getElementById('myChartStack');
+
+                new Chart(ctx3, {
+                    type: 'bar',
+                    data: {
+                        labels: ['IT 101L', 'Cap 101C', 'RSI 103', 'SER 102', 'IT 102', 'Entr 101'],
                         datasets: [{
-                            label: 'Number of Students',
-                            data: [100, 483, 77],
-                            backgroundColor: [
-                                'rgb(40, 167, 69)',
-                                'rgb(255, 99, 132)',
-                                'rgb(255, 205, 86)'
-                            ],
-                            hoverOffset: 4
-                        }]
-                    };
-
-                    const config2 = {
-                        type: 'pie',
-                        data: data2,
-                        options: {
-                            scales: {
+                                label: 'Commitment',
+                                data: [50, 60, 30, 50, 20, 30],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(255, 99, 132, 1)',
+                                ],
+                                borderWidth: 1,
+                                barThickness: 100,
 
                             },
-                            plugins: {
-                                datalabels: {
+                            {
+                                label: 'Knowledge of Subjects',
+                                data: [54, 87, 38, 47, 42, 34],
+                                backgroundColor: [
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                ],
+                                borderColor: [
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                ],
+                                borderWidth: 1,
+                                barThickness: 100,
 
-                                    color: 'white',
-                                    formatter: (value, context) => {
-                                        const datapoints = context.chart.data.datasets[0].data;
+                            },
+                            {
+                                label: 'Management of Learning',
+                                data: [40, 19, 21, 50, 60, 30],
+                                backgroundColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)'
+                                ],
+                                borderColor: [
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                ],
+                                borderWidth: 1,
+                                barThickness: 100,
 
-                                        function totalSum(total, datapoint) {
-                                            return total + datapoint
-                                        }
-                                        const totalValue = datapoints.reduce(totalSum, 0)
-                                        const totalPercentage = (value / totalValue * 100).toFixed(2)
-                                        return `${totalPercentage}%`
-                                    }
-                                }
+                            },
+                            {
+                                label: 'Teaching for Independent Learning',
+                                data: [12, 19, 30, 50, 29, 30],
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                ],
+                                borderColor: [
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                ],
+                                borderWidth: 1,
+                                barThickness: 100,
+
                             }
-                        },
-                        plugins: [ChartDataLabels]
-                    };
 
-                    const ctx = document.getElementById('piecanva').getContext('2d');
-                    new Chart(ctx, config2);
-
-                    const progressBars = document.querySelectorAll('.progress-bar1');
-                    progressBars.forEach((progressBar, index) => {
-                        const percentage = data.datasets[0].data[index] * 100 / 100;
-                        if (percentage <= 40) {
-                            progressBar.classList.add('bg-danger');
-                        } else if (percentage <= 60) {
-                            progressBar.classList.add('bg-warning');
-                        } else if (percentage <= 80) {
-                            progressBar.classList.add('bg-primary');
-                        } else {
-                            progressBar.classList.add('bg-success');
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            x: {
+                                stacked: true
+                            },
+                            y: {
+                                stacked: true
+                            }
                         }
-                    });
+                    }
                 });
-            </script>
 
+            });
+
+
+            // Stack Bar   Chart
+        </script>
     @endpush

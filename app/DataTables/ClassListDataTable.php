@@ -66,6 +66,7 @@ class ClassListDataTable extends DataTable
             Column::make('first_name'),
             Column::make('last_name'),
             Column::make('middle_initials')->width(20),
+            Column::make('subject'),
             Column::make('student_id'),
             Column::make('semester'),
             Column::make('year'),

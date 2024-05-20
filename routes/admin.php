@@ -47,6 +47,8 @@ Route::group([
             /**EvaluationSchedule route */
             Route::get('evaluation_schedule', [EvaluationScheduleController::class, 'index'])->name('evaluation_schedule.index');
             Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');
+            Route::get('evaluation_schedule-edit/{id}', [EvaluationScheduleController::class, 'edit'])->name('evaluation_schedule.edit');
+            Route::put('evaluation_schedule-update/{id}', [EvaluationScheduleController::class, 'update'])->name('evaluation_schedule_update');
             /**Hero Route */
             Route::resource('/hero', HeroController::class);
 

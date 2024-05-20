@@ -30,6 +30,7 @@ class ClassListImport implements ToModel,WithHeadingRow
     $firstName = $row['first_name'];
     $lastName =  $row['last_name'] ;
     $middleInitials =  $row['middle_initials'] ;
+    $subject = $row['subject'];
     $studentId =  $row['student_id'] ;
     $semester =  $row['semester'] ;
     $year = $row['year'] ;
@@ -38,6 +39,7 @@ class ClassListImport implements ToModel,WithHeadingRow
             "first_name" => $firstName,
             "last_name" => $lastName,
             "middle_initials" =>  $middleInitials,
+            "subject" => $subject,
             "student_id" => $studentId,
             "semester" =>  $semester,
             "year" => $year,
