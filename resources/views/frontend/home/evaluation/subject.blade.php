@@ -23,9 +23,17 @@
             </div>
         </div>
       <div class="row justify-content-center">
+
         <div class="col-12 col-lg-10 col-xl-8 col-xxl-7">
+            @if ($remainingSubjects->isEmpty())
+
+                <div class="alert alert-info" role="alert">
+                    <h4 class="alert-heading"><i class="fas fa-thumbs-up"></i> All subjects evaluated!</h4>
+                    <p>You have completed evaluations for all your subjects for this faculty.</p>
+                </div>
+            @else
           <div class="row gy-4 ">
-            @foreach ($subjects as $subject )
+            @foreach ($remainingSubjects as $subject )
             <div class="mb-4 col-12 col-sm-6" >
                 <div class="card widget-card border-light shadow-sm">
                   <div class="card-body p-4" style="border: solid">
@@ -46,6 +54,8 @@
                 </div>
               </div>
             @endforeach
+            @endif
+
 
             {{-- <div class="col-12 col-sm-6">
               <div class="card widget-card border-light shadow-sm">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\EvaluationScheduleController;
 use App\Http\Controllers\Controller;
 use App\Models\ClassList;
 use App\Models\EvaluationSchedule;
+use App\Models\Tokenform;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -51,24 +52,29 @@ class EvaluationController extends Controller
                          ->get()
                          ->pluck('subject');
 
+
         $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
-        if($schedules === null){
+        $schedule = ($schedules->count() === 1) ? $schedules->first() : null;
 
-            $schedule = null;
-        }else if($schedules->count() === 1){
 
-            $schedule = $schedules->first();
-        }else{
-
-             $schedule = null;
+        if ($schedule) {
+            $evaluatedSubjects = Tokenform::where('faculty_id', $id)
+                                          ->where('user_id', $user->id)
+                                          ->where('evaluation_schedules_id', $schedule->id)
+                                          ->pluck('subject');
+        } else {
+            $evaluatedSubjects = collect();
         }
 
 
+        $remainingSubjects = $subjects->diff($evaluatedSubjects);
+        return view('frontend.home.evaluation.subject', compact(['faculty', 'user', 'remainingSubjects', 'schedule']));
 
 
 
 
-        return view('frontend.home.evaluation.subject',compact(['subjects','faculty','schedule']));
+
+
     }
 
 }

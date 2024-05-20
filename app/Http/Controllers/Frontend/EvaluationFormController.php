@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Comments;
 use App\Models\EvaluationResult;
 use App\Models\Question;
+use App\Models\Tokenform;
 use Google\Cloud\Translate\V2\TranslateClient;
 use App\Models\RawEvaluationResult;
 use App\Models\Sentiment;
@@ -47,6 +48,14 @@ class EvaluationFormController extends Controller
         $facultyId = $request->input('faculty_id');
         $subject = $request->input('subject');
         $schedule = $request->input('schedule');
+
+        //Tokenform
+        $token = new Tokenform();
+        $token->user_id = $userId;
+        $token->faculty_id = $facultyId;
+        $token->subject = $subject;
+        $token->evaluation_schedules_id = $schedule;
+        $token->save();
 
         //comment store raw
         $commentStore = new Comments();
@@ -127,6 +136,9 @@ class EvaluationFormController extends Controller
                 ]);
             }
         }
+
+        //
+
 
         toastr()->success('Form Submitted Successfully!');
         return response()->json(['status' => 'success', 'message' => 'Evaluation submitted successfully']);
