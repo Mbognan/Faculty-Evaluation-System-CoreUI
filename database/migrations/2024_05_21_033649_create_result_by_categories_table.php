@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evaluation_results', function (Blueprint $table) {
+        Schema::create('result_by_categories', function (Blueprint $table) {
             $table->id();
             $table->string('by_subject');
             $table->integer('results_by_category');
-            $table->foreignId('category_id');
+            $table->foreignId('category_id')->constrained('categories');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('faculty_id');
             $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
-            $table->foreignId('semester_id');
+            $table->foreignId('semester_id')->constrained('evaluation_schedules');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evaluation_results');
+        Schema::dropIfExists('result_by_categories');
     }
 };

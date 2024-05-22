@@ -10,6 +10,7 @@ use App\Models\Question;
 use App\Models\Tokenform;
 use Google\Cloud\Translate\V2\TranslateClient;
 use App\Models\RawEvaluationResult;
+use App\Models\ResultByCategory;
 use App\Models\Sentiment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -113,6 +114,19 @@ class EvaluationFormController extends Controller
                     'evaluation_schedules_id' => $schedule,
                 ]);
             }
+        }
+
+        //result by category ,by faculty , by student
+
+        foreach ($categoryTotal as $categoryId => $totalRating) {
+            ResultByCategory::create([
+                'by_subject' =>  $subject, // Replace with actual subject data if available
+                'results_by_category' => $totalRating,
+                'category_id' => $categoryId,
+                'user_id' => $userId,
+                'faculty_id' => $facultyId,
+                'semester_id' => $schedule,
+            ]);
         }
 
         // Update existing results with new ratings
