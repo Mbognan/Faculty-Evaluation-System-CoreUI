@@ -36,7 +36,7 @@
 
         <div class="container-lg">
             <div class="row row-cols-2">
-                <div class="col-lg-4">
+                {{-- <div class="col-lg-4">
                     <div class="container d-flex justify-content-center align-items-center mb-4">
                         <div class="card">
                             <div class="user text-center">
@@ -73,6 +73,24 @@
 
                         </div>
                     </div>
+                </div> --}}
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center"> <img
+                                    src="{{ $user->avatar }}" alt="Admin"
+                                    class="rounded-circle" width="150">
+                                <div class="mt-3">
+                                    <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
+                                    <p class="text-secondary mb-1">BSIT Department Faculty</p>
+                                    <p class="text-muted font-size-sm">Palompon Institute of Technology</p> <button
+                                        class="btn btn-primary">Follow</button> <button
+                                        class="btn btn-outline-primary">Message</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="col-lg-8">
                     <div class="card mb-3">
@@ -160,10 +178,11 @@
                                     <h4 class="card-title mb-0">The Overall Evaluation Result By Category </h4>
                                     <div class="small text-medium-emphasis text-disabled">1st Semester - July 2022 </div>
                                 </div>
-                                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                                <div class="btn-toolbar d-none d-md-block" role="toolbar"
+                                    aria-label="Toolbar with buttons">
                                     <form method="POST" action="{{ route('admin.export-excel', ['id' => $user->id]) }}">
                                         @csrf
-                                        <button class="btn btn-info text-white" type="submit">Print Summary Result
+                                        <button class="btn btn-info text-white" type="submit">
                                             <svg class="icon">
                                                 <use
                                                     xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
@@ -274,8 +293,9 @@
                                     role="tabpanel"aria-labelledby="home-tab">
                                     <div class="d-flex justify-content-between mt-4">
                                         <div>
-                                            <h4 class="card-title mb-0">Subject-wise Evaluation Results: A Stacked Bar
-                                                Chart </h4>
+                                            <h4 class="card-title mb-0">Detailed Faculty Evaluation by Subject and Category
+                                                Percentage Breakdown</h4>
+
                                         </div>
                                     </div>
                                     <div class="col-lg-12 mt-4">
@@ -293,8 +313,8 @@
                                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="d-flex justify-content-between mt-4">
                                         <div>
-                                            <h4 class="card-title mb-0">Subject-wise Evaluation Results: A Stacked Bar
-                                                Chart </h4>
+                                            <h4 class="card-title mb-0">Overview of Faculty Performance Percentages Across
+                                                Subjects (Radar Chart) </h4>
                                         </div>
                                     </div>
 
@@ -319,68 +339,58 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-6 mt-4">
-
-                                                <div class="col mb-4">
-                                                    <div class="card text-white bg-primary">
-                                                        <div class="card-body">
-                                                            <div class="fs-4 fw-semibold">89.9%</div>
-                                                            <div>Widget title</div>
-                                                            <div class="progress progress-white progress-thin my-2">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: 25%" aria-valuenow="25"
-                                                                    aria-valuemin="0" aria-valuemax="100"></div>
-                                                            </div><small class="text-medium-emphasis-inverse">Widget helper
-                                                                text</small>
-                                                        </div>
+                                            {{-- <div class="row"> --}}
+                                            <div class="col mb-4">
+                                                <div class="card text-white bg-primary">
+                                                    <div class="card-body">
+                                                        <div class="fs-4 fw-semibold">{{ $formatedHighest }}%</div>
+                                                        <div>{{ $highestKey }}</div>
+                                                        <div class="progress progress-white progress-thin my-2">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div><small class="text-medium-emphasis-">Highest Average among
+                                                            subject</small>
                                                     </div>
                                                 </div>
-                                                <div class="col mb-4">
-                                                    <div class="card text-white bg-primary">
-                                                        <div class="card-body">
-                                                            <div class="fs-4 fw-semibold">89.9%</div>
-                                                            <div>Widget title</div>
-                                                            <div class="progress progress-white progress-thin my-2">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div><small class="text-medium-emphasis-inverse">Widget helper
-                                                                text</small>
-                                                        </div>
+                                            </div>
+                                            <div class="col mb-4">
+                                                <div class="card text-white bg-danger">
+                                                    <div class="card-body">
+                                                        <div class="fs-4 fw-semibold">{{ $formatedLowest }}%</div>
+                                                        <div>{{ $lowestKey }}</div>
+                                                        <div class="progress progress-white progress-thin my-2">
+                                                            <div class="progress-bar" role="progressbar"
+                                                                style="width: 25%" aria-valuenow="25" aria-valuemin="0"
+                                                                aria-valuemax="100"></div>
+                                                        </div><small class="text-medium-emphasis-">Lowest Average among
+                                                            subject</small>
                                                     </div>
                                                 </div>
-                                                <div class="col mb-4">
-                                                    <div class="card text-white bg-primary">
-                                                        <div class="card-body">
-                                                            <div class="fs-4 fw-semibold">89.9%</div>
-                                                            <div>Widget title</div>
-                                                            <div class="progress progress-white progress-thin my-2">
-                                                                <div class="progress-bar" role="progressbar"
-                                                                    style="width: 25%" aria-valuenow="25" aria-valuemin="0"
-                                                                    aria-valuemax="100"></div>
-                                                            </div><small class="text-medium-emphasis-inverse">Widget helper
-                                                                text</small>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
+                                            </div>
 
                                         </div>
 
+
+
+
                                     </div>
-
-
 
                                 </div>
 
+
+
                             </div>
-                            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                ...</div>
+
                         </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            ...</div>
                     </div>
-
-
                 </div>
+
+
             </div>
+        </div>
 
 
 
@@ -396,235 +406,223 @@
 
 
 
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <div class="card-header" data-coreui-i18n="trafficAndSales">Sentiment Analysis Section</div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <!-- Sentiment Analysis -->
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <div class="card-title fs-4 fw-semibold">Setiment Analysis By Percentage</div>
-                                        <div class="card-subtitle text-disabled">1st Semester - 2024</div>
-                                        <div class="example">
-                                            <div class="tab-content rounded-bottom">
-                                                <div class="tab-pane p-3 active preview" role="tabpanel"
-                                                    id="preview-1002">
-                                                    <div class="c-chart-wrapper">
-                                                        <canvas id="piecanva"></canvas>
-                                                    </div>
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header" data-coreui-i18n="trafficAndSales">Sentiment Analysis Section</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- Sentiment Analysis -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="card-title fs-4 fw-semibold">Setiment Analysis By Percentage</div>
+                                    <div class="card-subtitle text-disabled">1st Semester - 2024</div>
+                                    <div class="example">
+                                        <div class="tab-content rounded-bottom">
+                                            <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1002">
+                                                <div class="c-chart-wrapper">
+                                                    <canvas id="piecanva"></canvas>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="card mb-4 bg-info text-white">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="card-title text-white">Total Student</div>
-                                            <div class=" text-white p-2 rounded">
-                                                <i class="fas fa-user-friends fa-2x"></i>
-                                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="card mb-4 bg-info text-white">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="card-title text-white">Total Student</div>
+                                        <div class=" text-white p-2 rounded">
+                                            <i class="fas fa-user-friends fa-2x"></i>
                                         </div>
-                                        <div class="fs-4 fw-semibold pb-3">436 Students</div><small class="text-success">
-                                        </small>
                                     </div>
+                                    <div class="fs-4 fw-semibold pb-3">436 Students</div><small class="text-success">
+                                    </small>
                                 </div>
-                                <!-- Total Satisfied Students -->
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="card-title text-disabled">Total Student who are Satisfied</div>
-                                            <div class=" text-success p-2 rounded">
-                                                <i class="far fa-smile fa-2x"></i>
-                                            </div>
+                            </div>
+                            <!-- Total Satisfied Students -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="card-title text-disabled">Total Student who are Satisfied</div>
+                                        <div class=" text-success p-2 rounded">
+                                            <i class="far fa-smile fa-2x"></i>
                                         </div>
-                                        <div class="fs-4 fw-semibold pb-3">44 Students</div><small
-                                            class="text-success">(50.4%
-                                            <svg class="icon">
-                                                <use
-                                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}">
-                                                </use>
-                                            </svg>)</small>
                                     </div>
+                                    <div class="fs-4 fw-semibold pb-3">44 Students</div><small class="text-success">(50.4%
+                                        <svg class="icon">
+                                            <use
+                                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-top') }}">
+                                            </use>
+                                        </svg>)</small>
                                 </div>
-                                <!-- Total Unsatisfied Students -->
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="card-title text-disabled">Total Student who are Unsatisfied
-                                            </div>
-                                            <div class=" text-danger p-2 rounded">
-                                                <i class="far fa-frown fa-2x"></i>
-                                            </div>
+                            </div>
+                            <!-- Total Unsatisfied Students -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="card-title text-disabled">Total Student who are Unsatisfied
                                         </div>
-                                        <div class="fs-4 fw-semibold pb-3">385 Students</div><small
-                                            class="text-danger">(17.2%
-                                            <svg class="icon">
-                                                <use
-                                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}">
-                                                </use>
-                                            </svg>)</small>
+                                        <div class=" text-danger p-2 rounded">
+                                            <i class="far fa-frown fa-2x"></i>
+                                        </div>
                                     </div>
+                                    <div class="fs-4 fw-semibold pb-3">385 Students</div><small class="text-danger">(17.2%
+                                        <svg class="icon">
+                                            <use
+                                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom') }}">
+                                            </use>
+                                        </svg>)</small>
                                 </div>
-                                <!-- Total Neutral Students -->
-                                <div class="card mb-4">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="card-title text-disabled">Total Student who are Neutral</div>
-                                            <div class=" text-warning p-2 rounded">
-                                                <i class="far fa-meh fa-2x"></i>
-                                            </div>
+                            </div>
+                            <!-- Total Neutral Students -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="card-title text-disabled">Total Student who are Neutral</div>
+                                        <div class=" text-warning p-2 rounded">
+                                            <i class="far fa-meh fa-2x"></i>
                                         </div>
-                                        <div class="fs-4 fw-semibold pb-3">70 Students</div><small
-                                            class="text-warning">(20.2%
-                                            <svg class="icon">
-                                                <use
-                                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}">
-                                                </use>
-                                            </svg> ) </small>
                                     </div>
+                                    <div class="fs-4 fw-semibold pb-3">70 Students</div><small class="text-warning">(20.2%
+                                        <svg class="icon">
+                                            <use
+                                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-warning') }}">
+                                            </use>
+                                        </svg> ) </small>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
 
-            <div class="col-md-12 mb-4">
-                <div class="container">
-                    <div class="row d-flex justify-content-center">
-                        <div class="col-md-12 col-lg-10">
-                            <div class="card text-dark">
-                                <div class="card-body p-4">
-                                    <h4 class="mb-0">Recent comments</h4>
-                                    <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
+        <div class="col-md-12 mb-4">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-12 col-lg-10">
+                        <div class="card text-dark">
+                            <div class="card-body p-4">
+                                <h4 class="mb-0">Recent comments</h4>
+                                <p class="fw-light mb-4 pb-2">Latest Comments section by users</p>
 
-                                    <div class="d-flex flex-start">
-                                        <img class="rounded-circle shadow-1-strong me-3"
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp"
-                                            alt="avatar" width="60" height="60" />
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Maggie Marsh</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    March 07, 2021
-                                                    <span class="badge bg-primary">Pending</span>
-                                                </p>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-pencil-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-redo-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-heart ms-2"></i></a>
-                                            </div>
+                                <div class="d-flex flex-start">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(23).webp" alt="avatar"
+                                        width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Maggie Marsh</h6>
+                                        <div class="d-flex align-items-center mb-3">
                                             <p class="mb-0">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it.
+                                                March 07, 2021
+                                                <span class="badge bg-primary">Pending</span>
                                             </p>
+                                            <a href="#!" class="link-muted"><i
+                                                    class="fas fa-pencil-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
                                         </div>
+                                        <p class="mb-0">
+                                            Lorem Ipsum is simply dummy text of the printing and typesetting
+                                            industry. Lorem Ipsum has been the industry's standard dummy text ever
+                                            since the 1500s, when an unknown printer took a galley of type and
+                                            scrambled it.
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
 
-                                <hr class="my-0" />
+                            <hr class="my-0" />
 
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <img class="rounded-circle shadow-1-strong me-3"
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp"
-                                            alt="avatar" width="60" height="60" />
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Lara Stewart</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    March 15, 2021
-                                                    <span class="badge bg-success">Approved</span>
-                                                </p>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-pencil-alt ms-2"></i></a>
-                                                <a href="#!" class="text-success"><i
-                                                        class="fas fa-redo-alt ms-2"></i></a>
-                                                <a href="#!" class="link-danger"><i
-                                                        class="fas fa-heart ms-2"></i></a>
-                                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(26).webp" alt="avatar"
+                                        width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Lara Stewart</h6>
+                                        <div class="d-flex align-items-center mb-3">
                                             <p class="mb-0">
-                                                Contrary to popular belief, Lorem Ipsum is not simply random text. It
-                                                has roots in a piece of classical Latin literature from 45 BC, making it
-                                                over 2000 years old. Richard McClintock, a Latin professor at
-                                                Hampden-Sydney College in Virginia, looked up one of the more obscure
-                                                Latin words, consectetur, from a Lorem Ipsum passage, and going through
-                                                the cites.
+                                                March 15, 2021
+                                                <span class="badge bg-success">Approved</span>
                                             </p>
+                                            <a href="#!" class="link-muted"><i
+                                                    class="fas fa-pencil-alt ms-2"></i></a>
+                                            <a href="#!" class="text-success"><i
+                                                    class="fas fa-redo-alt ms-2"></i></a>
+                                            <a href="#!" class="link-danger"><i class="fas fa-heart ms-2"></i></a>
                                         </div>
+                                        <p class="mb-0">
+                                            Contrary to popular belief, Lorem Ipsum is not simply random text. It
+                                            has roots in a piece of classical Latin literature from 45 BC, making it
+                                            over 2000 years old. Richard McClintock, a Latin professor at
+                                            Hampden-Sydney College in Virginia, looked up one of the more obscure
+                                            Latin words, consectetur, from a Lorem Ipsum passage, and going through
+                                            the cites.
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
 
-                                <hr class="my-0" style="height: 1px;" />
+                            <hr class="my-0" style="height: 1px;" />
 
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <img class="rounded-circle shadow-1-strong me-3"
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(33).webp"
-                                            alt="avatar" width="60" height="60" />
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Alexa Bennett</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    March 24, 2021
-                                                    <span class="badge bg-danger">Rejected</span>
-                                                </p>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-pencil-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-redo-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-heart ms-2"></i></a>
-                                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(33).webp" alt="avatar"
+                                        width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Alexa Bennett</h6>
+                                        <div class="d-flex align-items-center mb-3">
                                             <p class="mb-0">
-                                                There are many variations of passages of Lorem Ipsum available, but the
-                                                majority have suffered alteration in some form, by injected humour, or
-                                                randomised words which don't look even slightly believable. If you are
-                                                going to use a passage of Lorem Ipsum, you need to be sure.
+                                                March 24, 2021
+                                                <span class="badge bg-danger">Rejected</span>
                                             </p>
+                                            <a href="#!" class="link-muted"><i
+                                                    class="fas fa-pencil-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
                                         </div>
+                                        <p class="mb-0">
+                                            There are many variations of passages of Lorem Ipsum available, but the
+                                            majority have suffered alteration in some form, by injected humour, or
+                                            randomised words which don't look even slightly believable. If you are
+                                            going to use a passage of Lorem Ipsum, you need to be sure.
+                                        </p>
                                     </div>
                                 </div>
+                            </div>
 
-                                <hr class="my-0" />
+                            <hr class="my-0" />
 
-                                <div class="card-body p-4">
-                                    <div class="d-flex flex-start">
-                                        <img class="rounded-circle shadow-1-strong me-3"
-                                            src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp"
-                                            alt="avatar" width="60" height="60" />
-                                        <div>
-                                            <h6 class="fw-bold mb-1">Betty Walker</h6>
-                                            <div class="d-flex align-items-center mb-3">
-                                                <p class="mb-0">
-                                                    March 30, 2021
-                                                    <span class="badge bg-primary">Pending</span>
-                                                </p>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-pencil-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-redo-alt ms-2"></i></a>
-                                                <a href="#!" class="link-muted"><i
-                                                        class="fas fa-heart ms-2"></i></a>
-                                            </div>
+                            <div class="card-body p-4">
+                                <div class="d-flex flex-start">
+                                    <img class="rounded-circle shadow-1-strong me-3"
+                                        src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(24).webp" alt="avatar"
+                                        width="60" height="60" />
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Betty Walker</h6>
+                                        <div class="d-flex align-items-center mb-3">
                                             <p class="mb-0">
-                                                It uses a dictionary of over 200 Latin words, combined with a handful of
-                                                model sentence structures, to generate Lorem Ipsum which looks
-                                                reasonable. The generated Lorem Ipsum is therefore always free from
-                                                repetition, injected humour, or non-characteristic words etc.
+                                                March 30, 2021
+                                                <span class="badge bg-primary">Pending</span>
                                             </p>
+                                            <a href="#!" class="link-muted"><i
+                                                    class="fas fa-pencil-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-redo-alt ms-2"></i></a>
+                                            <a href="#!" class="link-muted"><i class="fas fa-heart ms-2"></i></a>
                                         </div>
+                                        <p class="mb-0">
+                                            It uses a dictionary of over 200 Latin words, combined with a handful of
+                                            model sentence structures, to generate Lorem Ipsum which looks
+                                            reasonable. The generated Lorem Ipsum is therefore always free from
+                                            repetition, injected humour, or non-characteristic words etc.
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -633,6 +631,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 @endsection
 
@@ -645,8 +644,8 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const category = {!! json_encode(array_keys($resultsWithTitles)) !!};
-            const resultsByCategory = {!! json_encode(array_values($resultsWithTitles)) !!};
+            const category = {!! json_encode(array_keys($totalPercentageByCategory)) !!};
+            const resultsByCategory = {!! json_encode(array_values($totalPercentageByCategory)) !!};
 
             let combineData = category.map((cat, index) => {
                 return {
@@ -793,54 +792,40 @@
                 }
             });
 
+            const colors = [
+                'rgba(255, 99, 132, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(54, 162, 235, 1)'
+            ];
 
 
+            const ctx3 = document.getElementById('myChartStack').getContext('2d');
 
-            const ctx3 = document.getElementById('myChartStack');
-            var data4 = {
-                labels: ['IT 101L', 'Cap 101C', 'RSI 103', 'SER 102', 'IT 102', 'Entr 101'],
-                datasets: [{
-                        label: 'Commitment',
-                        data: [50, 60, 30, 50, 20, 30],
-                        backgroundColor: 'rgba(255, 99, 132, 1)',
-                        borderColor: 'rgba(255, 99, 132, 1)',
-                        borderWidth: 1,
-                        barThickness: 100
-                    },
-                    {
-                        label: 'Knowledge of Subjects',
-                        data: [54, 87, 38, 47, 42, 34],
-                        backgroundColor: 'rgba(255, 206, 86, 1)',
-                        borderColor: 'rgba(255, 206, 86, 1)',
-                        borderWidth: 1,
-                        barThickness: 100
-                    },
-                    {
-                        label: 'Management of Learning',
-                        data: [40, 19, 21, 50, 60, 30],
-                        backgroundColor: 'rgba(75, 192, 192, 1)',
-                        borderColor: 'rgba(75, 192, 192, 1)',
-                        borderWidth: 1,
-                        barThickness: 100
-                    },
-                    {
-                        label: 'Teaching for Independent Learning',
-                        data: [12, 19, 30, 50, 29, 30],
-                        backgroundColor: 'rgba(54, 162, 235, 1)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1,
-                        barThickness: 100
-                    }
-                ]
-            };
+            const distinctSubjectSchedules = @json($distinctSubject);
+            const percentagesBySubjectAndCategory = @json($percentagesBySubjectAndCategory);
+            const categoryTitles = @json(array_values($categoryTitles));
+            const datasets = categoryTitles.map((categoryTitle, index) => {
+                return {
+                    label: categoryTitle,
+                    data: distinctSubjectSchedules.map(subject => {
 
-
-
+                        return (percentagesBySubjectAndCategory[subject][categoryTitle] || 0)
+                            .toFixed(2);
+                    }),
+                    backgroundColor: colors[index],
+                    borderColor: colors[index],
+                    borderWidth: 1,
+                    barThickness: 100
+                };
+            });
 
             new Chart(ctx3, {
-
                 type: 'bar',
-                data: data4,
+                data: {
+                    labels: distinctSubjectSchedules,
+                    datasets: datasets
+                },
                 options: {
                     plugins: {
                         datalabels: {
@@ -856,19 +841,27 @@
                             stacked: true,
                             beginAtZero: true,
                             grace: 4
-
                         }
                     }
                 },
                 plugins: [ChartDataLabels]
             });
 
+            function getRandomColor() {
+                const r = Math.floor(Math.random() * 255);
+                const g = Math.floor(Math.random() * 255);
+                const b = Math.floor(Math.random() * 255);
+                return `rgba(${r}, ${g}, ${b}, 1)`;
+            }
+            const chartData = @json($overallPercentageBySubject);
 
+            const labelsRadar = Object.keys(chartData);
+            const dataRadar = Object.values(chartData);
 
             const radarChart = new Chart(document.getElementById('canvas-4'), {
                 type: 'radar',
                 data: {
-                    labels: ['IT 101L', 'Cap 101C', 'RSI 103', 'SER 102', 'IT 102', 'Entr 101'],
+                    labels: labelsRadar,
                     datasets: [{
                         label: 'Radar Chart',
                         backgroundColor: 'rgba(151, 187, 205, 0.2)',
@@ -877,11 +870,21 @@
                         pointBorderColor: '#fff',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(151, 187, 205, 1)',
-                        data: [69, 48, 70, 96, 77, 100]
+                        data: dataRadar
                     }]
                 },
                 options: {
-                    responsive: true
+                    responsive: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                beginAtZero: true,
+                                max: 100
+                            }
+                        }
+                    }
                 }
             });
 
