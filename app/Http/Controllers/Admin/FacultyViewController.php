@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\FacultyResultExport;
+use App\Exports\ResultRawExport;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ClassList;
 use App\Models\EvaluationResult;
 use App\Models\ResultByCategory;
 use App\Models\User;
@@ -23,7 +25,11 @@ class FacultyViewController extends Controller
     }
 
     public function view(string $id): View {
-        $user = User::findOrFail($id);
+    $user = User::findOrFail($id);
+
+    $subjects = ResultByCategory::where('faculty_id',$user->id)->distinct()->pluck('by_subject');
+
+
 
     $allCategories = Category::all();
     $categoryTitles = $allCategories->pluck('title', 'id')->toArray();
@@ -174,7 +180,7 @@ if (!empty($overallPercentageBySubject)) {
 
 
 
-    // dd($highest, $lowest);
+
 
 
     return view('admin.faculty.result', compact(
@@ -190,21 +196,44 @@ if (!empty($overallPercentageBySubject)) {
         'formatedHighest',
         'formatedLowest',
         'highestKey',
-        'lowestKey'
+        'lowestKey',
+        'subjects'
     ));
     }
 
 
     public function export_excel(string $id)
     {
+
+
+
         $evaluationResults = EvaluationResult::with('category')->where('user_id', $id)->get();
 
         if ($evaluationResults->isEmpty()) {
             return redirect()->back()->with('error', 'No evaluation results found for the specified faculty member.');
         }
-
         return Excel::download(new FacultyResultExport($evaluationResults), 'faculty-result.xlsx');
     }
+
+    public function export(string $id, Request $request){
+
+
+        $subject = $request->subject;
+        $evaluationResultsBySubject = ResultByCategory::where('faculty_id', $id)
+        ->where('by_subject', $subject)
+        ->with('category')
+        ->get();
+
+
+
+        if ($evaluationResultsBySubject->isEmpty()) {
+            return redirect()->back()->with('warning', 'No evaluation results found for the specified faculty member.');
+        }
+
+        return Excel::download(new ResultRawExport($evaluationResultsBySubject,$subject), 'faculty-resultby-Subject.xlsx');
+    }
+
+
 
 
 

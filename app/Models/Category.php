@@ -18,4 +18,8 @@ class Category extends Model
         return $this->hasMany(EvaluationResult::class);
     }
 
+    public function result(){
+        return $this->hasMany(ResultByCategory::class);
+    }
+
 }

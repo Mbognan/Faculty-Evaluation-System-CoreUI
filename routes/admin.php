@@ -44,6 +44,8 @@ Route::group([
             Route::get('/faculty-view', [FacultyViewController::class,'index'])->name('faculty-view');
             Route::get('faculty/view-result/{user_id}', [FacultyViewController::class,'view'])->name('faculty.result');
             Route::post('user/export-excel/{id}', [FacultyViewController::class, 'export_excel'])->name('export-excel');
+            Route::post('faculty/raw-result/expor/{id}', [FacultyViewController::class, 'export'])->name('export.raw_result');
+
             /**EvaluationSchedule route */
             Route::get('evaluation_schedule', [EvaluationScheduleController::class, 'index'])->name('evaluation_schedule.index');
             Route::post('evaluation_schedule-store', [EvaluationScheduleController::class,'store'])->name('evaluation_schedule.store');

@@ -77,9 +77,8 @@
                 <div class="col-md-4 mb-3">
                     <div class="card">
                         <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center"> <img
-                                    src="{{ $user->avatar }}" alt="Admin"
-                                    class="rounded-circle" width="150">
+                            <div class="d-flex flex-column align-items-center text-center"> <img src="{{ $user->avatar }}"
+                                    alt="Admin" class="rounded-circle" width="150">
                                 <div class="mt-3">
                                     <h4>{{ $user->first_name }} {{ $user->last_name }}</h4>
                                     <p class="text-secondary mb-1">BSIT Department Faculty</p>
@@ -178,8 +177,7 @@
                                     <h4 class="card-title mb-0">The Overall Evaluation Result By Category </h4>
                                     <div class="small text-medium-emphasis text-disabled">1st Semester - July 2022 </div>
                                 </div>
-                                <div class="btn-toolbar d-none d-md-block" role="toolbar"
-                                    aria-label="Toolbar with buttons">
+                                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
                                     <form method="POST" action="{{ route('admin.export-excel', ['id' => $user->id]) }}">
                                         @csrf
                                         <button class="btn btn-info text-white" type="submit">
@@ -297,6 +295,28 @@
                                                 Percentage Breakdown</h4>
 
                                         </div>
+
+                                        <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
+                                            <form method="POST" action="{{ route('admin.export.raw_result', ['id' => $user->id]) }}">
+                                                @csrf
+                                                <div class="d-flex align-items-center">
+                                                    <select name="subject" class="form-select me-2">
+                                                        <option>Select Subject</option>
+                                                        @foreach ($subjects as $subject )
+                                                        <option value="{{ $subject }}">{{ $subject }}</option>
+                                                        @endforeach
+
+                                                    </select>
+                                                    <button class="btn btn-info text-white" type="submit">
+                                                        <svg class="icon">
+                                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
+                                                            </use>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+
                                     </div>
                                     <div class="col-lg-12 mt-4">
                                         <div class="card-body">
@@ -377,14 +397,14 @@
                                     </div>
 
                                 </div>
-
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    ...</div>
 
 
                             </div>
 
                         </div>
-                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                            ...</div>
+
                     </div>
                 </div>
 
