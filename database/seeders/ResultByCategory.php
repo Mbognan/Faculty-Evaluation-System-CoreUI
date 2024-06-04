@@ -28,7 +28,7 @@ class ResultByCategory extends Seeder
                 foreach ($categories as $category) {
                     DB::table('result_by_categories')->insert([
                         'by_subject' => $randomSubject,
-                        'results_by_category' => rand(15, 25),
+                        'results_by_category' => rand(5, 25),
                         'category_id' => $category,
                         'user_id' => $user,
                         'faculty_id' => $facultyId,
@@ -48,7 +48,7 @@ class ResultByCategory extends Seeder
                 foreach ($categories as $category) {
                     DB::table('result_by_categories')->insert([
                         'by_subject' => $randomSubject,
-                        'results_by_category' => rand(15, 25),
+                        'results_by_category' => rand(5, 25),
                         'category_id' => $category,
                         'user_id' => $user,
                         'faculty_id' => $facultyId,

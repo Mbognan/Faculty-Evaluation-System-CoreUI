@@ -277,7 +277,7 @@
                                 <li class="nav-item" role="presentation">
                                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab"
                                         data-bs-target="#contact" type="button" role="tab" aria-controls="contact"
-                                        aria-selected="false"> <i class="fas fa-cogs fa-fw me-2"></i>Settings</button>
+                                        aria-selected="false"> <i class="fas fa-cogs fa-fw me-2"></i>Histogram</button>
 
                                 </li>
                             </ul>
@@ -398,7 +398,12 @@
 
                                 </div>
                                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    ...</div>
+                                    <div id="container"></div>
+                                    <p class="highcharts-description">
+                                        Chart showing how Highcharts can automatically compute a histogram from
+                                        source data.
+                                    </p>
+                                </div>
 
 
                             </div>
@@ -656,6 +661,10 @@
 @endsection
 
 @push('scripts')
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -912,6 +921,45 @@
         });
 
 
-        // Stack Bar   Chart
+        // Histogram Chart
+        const data = @json($histogramData);
+
+Highcharts.chart('container', {
+    title: {
+        text: 'Faculty Performance Evaluation Histogram'
+    },
+    xAxis: {
+        title: { text: 'Total Rating' },
+        alignTicks: false
+    },
+    yAxis: {
+        title: { text: 'Number of Evaluator' },
+        alignTicks: false
+    },
+    plotOptions: {
+        histogram: {
+            binWidth: 1, // Set the bin width to 4
+            accessibility: {
+                point: {
+                    valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Histogram',
+        type: 'histogram',
+        baseSeries: 's1',
+        zIndex: -1
+    }, {
+        name: 'Data',
+        type: 'scatter',
+        data: data,
+        id: 's1',
+        visible: false,
+        showInLegend: false
+    }]
+});
+
     </script>
 @endpush

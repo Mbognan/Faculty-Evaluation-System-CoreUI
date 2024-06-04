@@ -25,180 +25,172 @@ class FacultyViewController extends Controller
     }
 
     public function view(string $id): View {
-    $user = User::findOrFail($id);
+        $user = User::findOrFail($id);
 
-    $subjects = ResultByCategory::where('faculty_id',$user->id)->distinct()->pluck('by_subject');
+        $subjects = ResultByCategory::where('faculty_id', $user->id)->distinct()->pluck('by_subject');
 
+        $allCategories = Category::all();
+        $categoryTitles = $allCategories->pluck('title', 'id')->toArray();
+        $maxPointsPerEvaluation = 25;
 
+        $distinctSubject = ResultByCategory::where('faculty_id', $user->id)
+            ->distinct()
+            ->pluck('by_subject');
 
-    $allCategories = Category::all();
-    $categoryTitles = $allCategories->pluck('title', 'id')->toArray();
-    $maxPointsPerEvaluation = 25;
+        $percentagesBySubjectAndCategory = [];
+        $totalScoresBySubject = [];
+        $overallPercentageBySubject = [];
 
+        $totalResultsByCategory = [];
+        $totalPossibleSumForAllSubjects = 0;
+        $totalScoreForAllSubjects = 0;
 
+        foreach ($distinctSubject as $subjectSchedule) {
+            // Get the total results for each category
+            $resultsByCategory = ResultByCategory::where('faculty_id', $user->id)
+                ->where('by_subject', $subjectSchedule)
+                ->select('category_id', DB::raw('SUM(results_by_category) as total'))
+                ->groupBy('category_id')
+                ->get();
 
+            $resultsByCategoryArray = $resultsByCategory->pluck('total', 'category_id')->toArray();
 
-    $distinctSubject = ResultByCategory::where('faculty_id', $user->id)
-        ->distinct()
-        ->pluck('by_subject');
+            // Calculate the total score for this subject schedule
+            $totalScore = array_sum($resultsByCategoryArray);
+            $totalScoreForAllSubjects += $totalScore;
 
-    $percentagesBySubjectAndCategory = [];
-    $totalScoresBySubject = [];
-    $overallPercentageBySubject = [];
+            // Calculate the maximum possible sum for this subject schedule
+            $numEvaluationsForSubject = ResultByCategory::where('faculty_id', $user->id)
+                ->where('by_subject', $subjectSchedule)
+                ->select(DB::raw('COUNT(DISTINCT id) as num_students'))
+                ->first();
 
-    $totalResultsByCategory = [];
-    $totalPossibleSumForAllSubjects = 0;
-    $totalScoreForAllSubjects = 0;
+            if ($numEvaluationsForSubject && $numEvaluationsForSubject->num_students > 0) {
+                $maxPossibleSumForSubject = $numEvaluationsForSubject->num_students * $maxPointsPerEvaluation;
+                $totalPossibleSumForAllSubjects += $maxPossibleSumForSubject;
 
+                $percentagesByCategory = [];
+                foreach ($resultsByCategoryArray as $categoryId => $total) {
+                    $percentage = ($total / $maxPossibleSumForSubject) * 100;
+                    $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
+                    $percentagesByCategory[$categoryTitle] = $percentage;
 
-    foreach ($distinctSubject as $subjectSchedule) {
-        // Get the total results for each category
-        $resultsByCategory = ResultByCategory::where('faculty_id', $user->id)
-            ->where('by_subject', $subjectSchedule)
+                    if (!isset($totalResultsByCategory[$categoryId])) {
+                        $totalResultsByCategory[$categoryId] = 0;
+                    }
+                    $totalResultsByCategory[$categoryId] += $total;
+                }
+                $overallPercentage = ($totalScore / $maxPossibleSumForSubject) * 100;
+                $percentagesBySubjectAndCategory[$subjectSchedule] = $percentagesByCategory;
+                $totalScoresBySubject[$subjectSchedule] = $totalScore;
+                $overallPercentageBySubject[$subjectSchedule] = $overallPercentage;
+            } else {
+                $percentagesBySubjectAndCategory[$subjectSchedule] = [];
+                $totalScoresBySubject[$subjectSchedule] = 0;
+                $overallPercentageBySubject[$subjectSchedule] = 0;
+            }
+        }
+
+        // Calculate total percentage by category across all subjects
+        $totalPercentageByCategory = [];
+        if ($totalPossibleSumForAllSubjects > 0) {
+            foreach ($totalResultsByCategory as $categoryId => $total) {
+                $percentage = ($total / $totalPossibleSumForAllSubjects) * 100;
+                $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
+                $totalPercentageByCategory[$categoryTitle] = $percentage;
+            }
+            $overallPercentageForFaculty = ($totalScoreForAllSubjects / $totalPossibleSumForAllSubjects) * 100;
+        } else {
+            $overallPercentageForFaculty = 0;
+        }
+
+        // New logic: Calculate the overall sum of each category for the faculty
+        $totalSumByCategory = [];
+        $resultsByCategoryAllSubjects = ResultByCategory::where('faculty_id', $user->id)
             ->select('category_id', DB::raw('SUM(results_by_category) as total'))
             ->groupBy('category_id')
             ->get();
 
-        $resultsByCategoryArray = $resultsByCategory->pluck('total', 'category_id')->toArray();
+        $totalResultsByCategoryAllSubjects = $resultsByCategoryAllSubjects->pluck('total', 'category_id')->toArray();
 
-        // Calculate the total score for this subject schedule
-        $totalScore = array_sum($resultsByCategoryArray);
-        $totalScoreForAllSubjects += $totalScore;
-
-        // Calculate the maximum possible sum for this subject schedule
-        $numEvaluationsForSubject = ResultByCategory::where('faculty_id', $user->id)
-            ->where('by_subject', $subjectSchedule)
-            ->select(DB::raw('COUNT(DISTINCT id) as num_students'))
-            ->first();
-
-        if ($numEvaluationsForSubject && $numEvaluationsForSubject->num_students > 0) {
-            $maxPossibleSumForSubject = $numEvaluationsForSubject->num_students * $maxPointsPerEvaluation;
-            $totalPossibleSumForAllSubjects += $maxPossibleSumForSubject;
-
-
-            $percentagesByCategory = [];
-            foreach ($resultsByCategoryArray as $categoryId => $total) {
-                $percentage = ($total / $maxPossibleSumForSubject) * 100;
-                $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
-                $percentagesByCategory[$categoryTitle] = $percentage;
-
-
-                if (!isset($totalResultsByCategory[$categoryId])) {
-                    $totalResultsByCategory[$categoryId] = 0;
-                }
-                $totalResultsByCategory[$categoryId] += $total;
-            }
-            $overallPercentage = ($totalScore / $maxPossibleSumForSubject) * 100;
-            $percentagesBySubjectAndCategory[$subjectSchedule] = $percentagesByCategory;
-            $totalScoresBySubject[$subjectSchedule] = $totalScore;
-            $overallPercentageBySubject[$subjectSchedule] = $overallPercentage;
-        } else {
-
-            $percentagesBySubjectAndCategory[$subjectSchedule] = [];
-            $totalScoresBySubject[$subjectSchedule] = 0;
-            $overallPercentageBySubject[$subjectSchedule] = 0;
-        }
-    }
-
-    // Calculate total percentage by category across all subjects
-    $totalPercentageByCategory = [];
-    if ($totalPossibleSumForAllSubjects > 0) {
-        foreach ($totalResultsByCategory as $categoryId => $total) {
-            $percentage = ($total / $totalPossibleSumForAllSubjects) * 100;
+        foreach ($totalResultsByCategoryAllSubjects as $categoryId => $total) {
             $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
-            $totalPercentageByCategory[$categoryTitle] = $percentage;
+            $totalSumByCategory[$categoryTitle] = $total;
         }
-        $overallPercentageForFaculty = ($totalScoreForAllSubjects / $totalPossibleSumForAllSubjects) * 100;
-    } else {
-        $overallPercentageForFaculty = 0;
-    }
 
+        // Check if the total sum is empty or not
+        if (!empty($totalSumByCategory)) {
+            $totalSumOfAllCategories = array_sum($totalSumByCategory);
 
-    $totalSumByCategory = [];
-$resultsByCategoryAllSubjects = ResultByCategory::where('faculty_id', $user->id)
-    ->select('category_id', DB::raw('SUM(results_by_category) as total'))
-    ->groupBy('category_id')
-    ->get();
+            if ($totalSumOfAllCategories > 0) {
+                foreach ($totalSumByCategory as $categoryTitle => $total) {
+                    $percentage = ($total / $totalSumOfAllCategories) * 100;
+                    $totalPercentageByCategoryUsingSum[$categoryTitle] = $percentage;
+                }
+            } else {
+                $totalPercentageByCategoryUsingSum = [];
+            }
+        } else {
+            $totalSumByCategory = [];
+            $totalPercentageByCategoryUsingSum = [];
+        }
 
-$totalResultsByCategoryAllSubjects = $resultsByCategoryAllSubjects->pluck('total', 'category_id')->toArray();
+        if (!empty($overallPercentageBySubject)) {
+            $values = array_values($overallPercentageBySubject);
+            $keys = array_keys($overallPercentageBySubject);
 
-foreach ($totalResultsByCategoryAllSubjects as $categoryId => $total) {
-    $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
-    $totalSumByCategory[$categoryTitle] = $total;
-}
+            $highest = max($values);
+            $lowest = min($values);
 
+            $highestIndex = array_search($highest, $values);
+            $lowestIndex = array_search($lowest, $values);
 
-$totalPercentageByCategoryUsingSum = [];
-$totalSumOfAllCategories = array_sum($totalResultsByCategory);
+            if ($highestIndex !== false && $lowestIndex !== false) {
+                $lowestKey = $keys[$lowestIndex];
+                $highestKey = $keys[$highestIndex];
+            } else {
+                $lowestKey = 'Unknown';
+                $highestKey = 'Unknown';
+            }
 
-if ($totalSumOfAllCategories > 0) {
-    foreach ($totalResultsByCategory as $categoryId => $total) {
-        $percentage = ($total / $totalSumOfAllCategories) * 100;
-        $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
-        $totalPercentageByCategoryUsingSum[$categoryTitle] = $percentage;
-    }
-}
+            $formatedHighest = number_format($highest, 2);
+            $formatedLowest = number_format($lowest, 2);
+        } else {
+            $formatedHighest = 'N/A';
+            $formatedLowest = 'N/A';
+            $lowestKey = 'N/A';
+            $highestKey = 'N/A';
+        }
 
+        $histogramData = ResultByCategory::where('faculty_id', $user->id)
+        ->pluck('results_by_category')
+        ->toArray();
 
-
-
-
-if (!empty($overallPercentageBySubject)) {
-
-    $values = array_values($overallPercentageBySubject);
-    $keys = array_keys($overallPercentageBySubject);
-
-
-    $highest = max($values);
-    $lowest = min($values);
-
-    $highestIndex = array_search($highest, $values);
-    $lowestIndex = array_search($lowest, $values);
-
-
-    if ($highestIndex !== false && $lowestIndex !== false) {
-        $lowestKey = $keys[$lowestIndex];
-        $highestKey = $keys[$highestIndex];
-    } else {
-
-        $lowestKey = 'Unknown';
-        $highestKey = 'Unknown';
-    }
-
-
-    $formatedHighest = number_format($highest, 2);
-    $formatedLowest = number_format($lowest, 2);
-} else {
-
-    $formatedHighest = 'N/A';
-    $formatedLowest = 'N/A';
-    $lowestKey = 'N/A';
-    $highestKey = 'N/A';
-}
+        // dd($histogramData);
 
 
 
+        return view('admin.faculty.result', compact(
+            'categoryTitles',
+            'allCategories',
+            'user',
+            'percentagesBySubjectAndCategory',
+            'overallPercentageForFaculty',
+            'totalPercentageByCategory',
+            'overallPercentageBySubject',
+            'totalScoresBySubject',
+            'distinctSubject',
+            'formatedHighest',
+            'formatedLowest',
+            'highestKey',
+            'lowestKey',
+            'subjects',
+            'totalSumByCategory',
+            'totalPercentageByCategoryUsingSum',
+            'histogramData'
+        ));
 
 
-
-
-
-    return view('admin.faculty.result', compact(
-        'categoryTitles',
-        'allCategories',
-        'user',
-        'percentagesBySubjectAndCategory',
-        'overallPercentageForFaculty',
-        'totalPercentageByCategory',
-        'overallPercentageBySubject',
-        'totalScoresBySubject',
-        'distinctSubject',
-        'formatedHighest',
-        'formatedLowest',
-        'highestKey',
-        'lowestKey',
-        'subjects'
-    ));
     }
 
 

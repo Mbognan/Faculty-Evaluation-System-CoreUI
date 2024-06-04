@@ -176,6 +176,13 @@
 
 
             function submitEvaluation() {
+                document.getElementById('btnFinish').disabled = true;
+
+        // Show the spinner
+                document.getElementById('spinner').classList.remove('d-none');
+
+        // Change the button text (optional)
+                document.getElementById('btnText').innerText = 'Submitting...';
 
                 var facultyId = getFacultyIdFromUrl();
                 if (!facultyId) {
@@ -231,7 +238,7 @@
                         showPreviousButton: true,
                         showSubmitButton: true,
                         position: 'bottom',
-                        extraHtml: `<button class="btn btn-success" id="btnFinish" disabled onclick="submitEvaluation()">Submit</button>`,
+                        extraHtml: `<button class="btn btn-success" id="btnFinish" disabled onclick="submitEvaluation()"><span id="btnText">Submit</span>  <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span></button>`,
                     },
                     anchor: {
                         enableNavigation: true,

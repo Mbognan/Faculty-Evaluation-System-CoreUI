@@ -6,7 +6,7 @@
         @if (auth()->check() && auth()->user()->user_type === 'faculty')
 
         <li><a @if(Route::currentRouteName() === 'faculty.dashboard') class="active" @endif  href="{{ route('faculty.dashboard',auth()->id()) }}"><i class="fas fa-tachometer"aria-hidden="true"></i>Dashboard</a></li>
-        <li><a href=""><i class="fas fa-list-ul" aria-hidden="true"></i>View Sentiment</a></li>
+        <li><a href="{{ route('faculty.sentimentAnalysis.index') }}"><i class="far fa-star" aria-hidden="true"></i>View Sentiment</a></li>
         <li><a href="{{ route('faculty.class-list.index') }}"><i class="fas fa-list-ul" aria-hidden="true"></i>Class List</a></li>
         @else
         @endif

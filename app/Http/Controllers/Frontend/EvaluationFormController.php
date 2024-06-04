@@ -42,8 +42,8 @@ class EvaluationFormController extends Controller
     {
 
         // dd($request->all());
-        $anlyszer = new Analyzer;
-        $tr = new GoogleTranslate();
+        // $anlyszer = new Analyzer;
+        // $tr = new GoogleTranslate();
 
         $userId = $request->input('user_id');
         $facultyId = $request->input('faculty_id');
@@ -70,19 +70,42 @@ class EvaluationFormController extends Controller
 
        //comment analysis
        $sentiment = new Sentiment();
-        $tr->setSource('tl');
-        $tr->setTarget('en');
+        // $tr->setSource('tl');
+        // $tr->setTarget('en');
 
-        $translatedText = $tr->translate($request->comment);
-        $output = $anlyszer->getSentiment($translatedText);
-        $mood = '';
-        if ($output['compound'] < -0.05) {
-            $mood = 'Negative';
-        } elseif ($output['compound'] > 0.05) {
-            $mood = 'Positive';
-        } else {
-            $mood = 'Neutral';
-        }
+        // $translatedText = $tr->translate($request->comment);
+        // $output = $anlyszer->getSentiment($translatedText);
+        // $mood = '';
+        // if ($output['compound'] < -0.05) {
+        //     $mood = 'Negative';
+        // } elseif ($output['compound'] > 0.05) {
+        //     $mood = 'Positive';
+        // } else {
+        //     $mood = 'Neutral';
+        // }
+
+
+        $pythonPath = 'C:\laragon\bin\python\python-3.10\python.exe';
+        $pythonScriptPath = base_path('app/Http/PythonScripts/sentiment_analyze.py');
+
+            $text = escapeshellarg($request->comment);
+            $command = "$pythonPath $pythonScriptPath $text";
+            $output = shell_exec($command);
+            if ($output !== null) {
+                $result = json_decode($output, true);
+
+                // Process sentiment and keywords
+                if ($result['sentiment']['label'] === 'NEGATIVE') {
+                    $mood = 'Negative';
+
+                } elseif ($result['sentiment']['label'] === 'POSITIVE') {
+                    $mood = 'Positive';
+                } else {
+                    $mood = 'neutral';
+                }
+            }
+
+
 
         $sentiment->faculty_id = $facultyId;
         $sentiment->comments_id = $commentsId;

@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Comments extends Model
 {
     use HasFactory;
+    public function sentiments(){
+        return $this->hasMany(Sentiment::class);
+    }
 }
