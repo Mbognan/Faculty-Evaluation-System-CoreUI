@@ -71,7 +71,7 @@
                                     <div class="manage_dashboard_single orange">
                                         <i class="fas fa-list-ul" aria-hidden="true"></i>
                                         <h3>21</h3>
-                                        <p>List Of Participant</p>
+                                        <p>List Of Evaluator</p>
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-12 col-sm-6 col-lg-6 col-xxl-3">
@@ -83,8 +83,8 @@
                                 </div>
 
                                 <div class="col-xl-12">
-                                    <div class="active_package" style="border: solid;">
-                                        <h4>Raw Data</h4>
+                                    <div class="active_package" >
+                                        <h4>Faculty Evaluation</h4>
                                         <div class="table-responsive">
                                             <table class="table dashboard_table">
                                                 <tbody>
@@ -94,19 +94,19 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="active_left">Date</td>
-                                                        <td class="package_right">1st Semester</td>
+                                                        <td class="package_right">1st Semester 2021-2022</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="active_left">Total Mean</td>
-                                                        <td class="package_right">1900</td>
+                                                        <td class="active_left">Overall Result</td>
+                                                        <td class="package_right">89%</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="active_left">Expired Date</td>
-                                                        <td class="package_right">14 November, 2021</td>
+                                                        <td class="active_left">Current Status</td>
+                                                        <td class="package_right">Excellent</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="active_left">Package Name</td>
-                                                        <td class="package_right">Free</td>
+                                                        <td class="active_left">Evaluation Status</td>
+                                                        <td class="package_right">Ongoing</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="active_left">Maximum Listings</td>
@@ -130,7 +130,7 @@
                 <div class="col-lg-12 mb-4">
                     <div class="dashboard_content">
                         <div class="manage_dashboard">
-                            <div class="active_package" style="border: solid;">
+                            <div class="active_package shadow p-3 mb-5 bg-white rounded" >
                                 <h4>Data Visualizations</h4>
 
                                 <div id="container"></div>
@@ -150,58 +150,29 @@
 
                                 <hr>
 
-                                <div id="container3" class="mt-4"></div>
-                                <p class="highcharts-description">
-                                    Chart showing how Highcharts can automatically compute a histogram from
-                                    source data.
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-12 mb-4">
-                    <div class="dashboard_content">
-                        <div class="manage_dashboard">
-                            <div class="active_package" style="border: solid;">
-                                <h4>Evaluation Result</h4>
                                 <div class="row">
-                                    <div class="col-lg-4">
-                                        <img id="chart-image-2" src="" alt="Chart">
+                                    <div class="col-lg-6">
+                                        <div id="container3" class="mt-4"></div>
 
                                     </div>
-                                    <div class="col-lg-8">
-
-
-                                        <img id="chart-image" src="" alt="Chart">
-
+                                    <div class="col-lg-6">
+                                        <div id="container4" class="mt-4"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div id="container5" class="mt-4"></div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div id="container6" class="mt-4"></div>
                                     </div>
                                 </div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <div class="dashboard_content">
-                        <div class="manage_dashboard">
 
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                </div>
 
-                <div class="col-lg-6">
-                    <div class="dashboard_content">
-                        <div class="manage_dashboard">
-                            <div class="active_package" style="border: solid;">
-                                <h4>Overall Evaluation Result By Category Percentage</h4>
-                                <canvas id="myChart" width="400" height="400"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -335,10 +306,11 @@
             });
             // histogram chart
             const data2 = @json($histogramData);
+            var specificCategoryData = @json($specificCategoryData);
 
             Highcharts.chart('container3', {
                 title: {
-                    text: 'Faculty Performance Evaluation Histogram'
+                    text: 'Commitment'
                 },
                 xAxis: {
                     title: {
@@ -370,7 +342,130 @@
                 }, {
                     name: 'Data',
                     type: 'scatter',
-                    data: data2,
+                    data: specificCategoryData['Commitment'] || [],
+                    id: 's1',
+                    visible: false,
+                    showInLegend: false
+                }]
+            });
+            Highcharts.chart('container4', {
+                title: {
+                    text: 'Knowledge of the Subject'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Total Rating'
+                    },
+                    alignTicks: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Evaluator'
+                    },
+                    alignTicks: false
+                },
+                plotOptions: {
+                    histogram: {
+                        binWidth: 1, // Set the bin width to 4
+                        color: 'lightgreen',
+                        accessibility: {
+                            point: {
+                                valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Number of Evaluator',
+                    type: 'histogram',
+                    baseSeries: 's1',
+                    zIndex: -1
+                }, {
+                    name: 'Data',
+                    type: 'scatter',
+                    data: specificCategoryData['Knowledge of Subjects'] || [],
+                    id: 's1',
+                    visible: false,
+                    showInLegend: false
+                }]
+            });
+            Highcharts.chart('container5', {
+                title: {
+                    text: 'Teaching for Independent Learning'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Total Rating'
+                    },
+                    alignTicks: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Evaluator'
+                    },
+                    alignTicks: false
+                },
+                plotOptions: {
+                    histogram: {
+                        binWidth: 1, // Set the bin width to 4
+                        color: 'orange',
+                        accessibility: {
+                            point: {
+                                valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Number of Evaluator',
+                    type: 'histogram',
+                    baseSeries: 's1',
+                    zIndex: -1
+                }, {
+                    name: 'Data',
+                    type: 'scatter',
+                    data: specificCategoryData['Teaching for Independent Learning'] || [],
+                    id: 's1',
+                    visible: false,
+                    showInLegend: false
+                }]
+            });
+            Highcharts.chart('container6', {
+                title: {
+                    text: 'Management of Learning'
+                },
+                xAxis: {
+                    title: {
+                        text: 'Total Rating'
+                    },
+                    alignTicks: false
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Evaluator'
+                    },
+                    alignTicks: false
+                },
+                plotOptions: {
+                    histogram: {
+                        binWidth: 1, // Set the bin width to 4
+                        color: 'purple',
+                        accessibility: {
+                            point: {
+                                valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Number of Evaluator',
+                    type: 'histogram',
+                    baseSeries: 's1',
+                    zIndex: -1
+                }, {
+                    name: 'Data',
+                    type: 'scatter',
+                    data: specificCategoryData['Management of Learning'] || [],
                     id: 's1',
                     visible: false,
                     showInLegend: false

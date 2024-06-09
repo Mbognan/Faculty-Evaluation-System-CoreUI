@@ -25,7 +25,7 @@
     <link href="{{ asset('admin/css/examples.css') }}" rel="stylesheet">
 
 
-    {{-- <link href="{{ asset('admin/vendors/@coreui/chartjs/css/coreui-chartjs.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('admin/vendors/@coreui/chartjs/css/coreui-chartjs.css') }}" rel="stylesheet">
     {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <link href="{{ asset('admin/vendors/@coreui/icons/css/free.min.css') }}" rel="stylesheet">
@@ -129,10 +129,10 @@
 <script src="{{ asset('admin/vendors/@coreui/coreui/js/coreui.bundle.min.js') }}"></script>
 <script src="{{ asset('admin/vendors/simplebar/js/simplebar.min.js') }}"></script>
 <!-- Plugins and scripts required by this view-->
-{{-- <script src="{{ asset('admin/vendors/chart.js/js/chart.min.js') }}"></script>
-<script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script> --}}
+<script src="{{ asset('admin/vendors/chart.js/js/chart.min.js') }}"></script>
+<script src="{{ asset('admin/vendors/@coreui/chartjs/js/coreui-chartjs.js') }}"></script>
 <script src="{{ asset('admin/vendors/@coreui/utils/js/coreui-utils.js') }}"></script>
-{{-- <script src="{{ asset('admin/js/main.js') }}"></script> --}}
+<script src="{{ asset('admin/js/main.js') }}"></script>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

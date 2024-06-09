@@ -62,7 +62,7 @@
 
 
                             <div class="col-xl-12">
-                                <div class="active_package" style="border: solid;">
+                                <div class="active_package shadow p-3 mb-5 bg-white rounded" >
                                     <h4>Sentiment Analysis Overall</h4>
                                     <div id="container"></div>
                                     {{-- <p class="highcharts-description">
@@ -71,6 +71,7 @@
                                         for improvement across key categories: Commitment, Knowledge of Subjects, Management of
                                         Learning, and Teaching for Independent Learning.
                                     </p> --}}
+
                                 </div>
                             </div>
                         </div>
@@ -84,7 +85,7 @@
 
 
                           <div class="col-xl-12">
-                              <div class="active_package" style="border: solid;">
+                              <div class="active_package shadow p-3 mb-5 bg-white rounded" >
                                   <h4>Sentiment Analysis Overall</h4>
                                   <div id="container2"></div>
                                   <p class="highcharts-description">
@@ -93,107 +94,20 @@
                                       for improvement across key categories: Commitment, Knowledge of Subjects, Management of
                                       Learning, and Teaching for Independent Learning.
                                   </p>
+                                  <hr>
+                                  <div class="my_listing">
+
+                                    <h4 style="justify-content: space-between">All Comments
+                                    </h4>
+                                    {{ $dataTable->table() }}
+                                </div>
                               </div>
                           </div>
                       </div>
                   </div>
               </div>
           </div>
-            <div class="col-lg-12 mt-4">
-                <div class="dashboard_content">
-                    <div class="manage_dashboard">
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="active_package" style="border: solid;">
-                                    <div class="my_listing">
-                                        {{-- <div class="blog_comment_area">
-                                            <h5 class="wsus__single_comment_heading">Total Comment 05</h5>
-                                            <div class="wsus__single_comment">
-                                                <div class="wsus__single_comment_img">
-                                                    <img src="images/user_large_img.jpg" alt="comment" class="img-fluid w-100">
-                                                </div>
-                                                <div class="wsus__single_comment_text">
-                                                    <h5>sumon jahan</h5>
-                                                    <span>01-Dec-2021</span>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad maxime placeat
-                                                        ducimus magni facilis delectus.</p>
-                                                </div>
-                                            </div>
-                                            <div class="wsus__single_comment">
-                                                <div class="wsus__single_comment_img">
-                                                    <img src="images/card_img.jpg" alt="comment" class="img-fluid w-100">
-                                                </div>
-                                                <div class="wsus__single_comment_text">
-                                                    <h5>shimul sign</h5>
-                                                    <span>21-Nov-2021</span>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad maxime placeat
-                                                        ducimus magni facilis delectus.</p>
-                                                </div>
-                                            </div>
-                                            <div class="wsus__single_comment">
-                                                <div class="wsus__single_comment_img">
-                                                    <img src="images/user_large_img.jpg" alt="comment" class="img-fluid w-100">
-                                                </div>
-                                                <div class="wsus__single_comment_text">
-                                                    <h5>sumon jahan</h5>
-                                                    <span>01-Dec-2021</span>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad maxime placeat
-                                                        ducimus magni facilis delectus.</p>
-                                                </div>
-                                            </div>
-                                            <div class="wsus__single_comment">
-                                                <div class="wsus__single_comment_img">
-                                                    <img src="images/card_img.jpg" alt="comment" class="img-fluid w-100">
-                                                </div>
-                                                <div class="wsus__single_comment_text">
-                                                    <h5>shimul sign</h5>
-                                                    <span>21-Nov-2021</span>
-                                                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ad maxime placeat
-                                                        ducimus magni facilis delectus.</p>
-                                                </div>
-                                            </div>
-                                            <form class="input_comment">
-                                                <h5>post a Comment </h5>
-                                                <div class="row">
-                                                    <div class="col-xl-6">
-                                                        <div class="blog_single_input">
-                                                            <input type="text" placeholder="Name">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-6">
-                                                        <div class="blog_single_input">
-                                                            <input type="email" placeholder="Email">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-6">
-                                                        <div class="blog_single_input">
-                                                            <input type="text" placeholder="Phone">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-6">
-                                                        <div class="blog_single_input">
-                                                            <input type="text" placeholder="Subject">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-xl-12">
-                                                        <div class="blog_single_input">
-                                                            <textarea cols="3" rows="5" placeholder="Message"></textarea>
-                                                            <button type="submit" class="read_btn">send</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div> --}}
-                                        <h4 style="justify-content: space-between">All Comments
-                                        </h4>
-                                        {{ $dataTable->table() }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
 

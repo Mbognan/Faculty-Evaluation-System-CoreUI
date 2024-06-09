@@ -196,6 +196,17 @@ if ($totalPossibleSumForAllSubjects > 0) {
 }
 
 
+$specificCategoryData = [];
+foreach ($categoryTitles as $categoryId => $categoryTitle) {
+    $categoryResults = ResultByCategory::where('faculty_id', $userId)
+        ->where('category_id', $categoryId)
+        ->pluck('results_by_category')
+        ->toArray();
+    $specificCategoryData[$categoryTitle] = $categoryResults;
+}
+
+
+
 
     $histogramData = ResultByCategory::where('faculty_id', $userId)
     ->pluck('results_by_category')
@@ -206,7 +217,7 @@ if ($totalPossibleSumForAllSubjects > 0) {
 
 
 
-        return view('frontend.home.dashboard', compact(['category', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData']));
+        return view('frontend.home.dashboard', compact(['category', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData']));
     }
 
     public function profile():View{

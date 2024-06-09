@@ -10,7 +10,7 @@
             </div>
             <div class="col-lg-9">
                 <div class="dashboard_content">
-                    <div class="my_listing">
+                    <div class="my_listing shadow p-3 mb-5 bg-white rounded">
                         <h4 style="justify-content: space-between">Class List <a href="{{ route('faculty.class-list.import') }}" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>
                         </h4>
                         {{ $dataTable->table() }}
