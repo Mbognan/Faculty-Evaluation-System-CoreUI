@@ -55,6 +55,8 @@ Route::group([
             Route::get('class-list', [ClassListController::class, 'index'])->name('class-list.index');
             Route::get('class-list-import', [ClassListController::class, 'import'])->name('class-list.import');
             Route::post('class-list-import', [ClassListController::class, 'uploadData'])->name('class-list.upload');
+            Route::get('class-list-add', [ClassListController::class, 'addStudent'])->name('addStudent.index');
+            Route::post('class-list-add-student', [ClassListController::class, 'store'])->name('store.index');
         });
 
 

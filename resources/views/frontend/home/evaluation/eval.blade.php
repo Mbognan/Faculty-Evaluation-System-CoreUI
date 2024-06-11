@@ -1532,18 +1532,21 @@
         }
 
         .material-card.disabled {
-    opacity: 0.5; /* Reduce opacity to visually indicate disabled state */
-    filter: grayscale(100%); /* Apply grayscale filter */
-}
+            opacity: 0.5;
+            /* Reduce opacity to visually indicate disabled state */
+            filter: grayscale(100%);
+            /* Apply grayscale filter */
+        }
 
-.material-card.disabled a {
-    pointer-events: none; /* Disable pointer events on links */
-}
+        .material-card.disabled a {
+            pointer-events: none;
+            /* Disable pointer events on links */
+        }
 
-.material-card.disabled .img-container img {
-    filter: grayscale(100%); /* Ensure images are grayscale */
-}
-
+        .material-card.disabled .img-container img {
+            filter: grayscale(100%);
+            /* Ensure images are grayscale */
+        }
     </style>
     <section class="blog_pages">
         <div class="container">
@@ -1559,119 +1562,148 @@
                             <a href="javascirt:;" class="breadcrumbs__url">Evaluation Section</a>
                         </li>
                         @if ($valid == true)
-                        <li class="breadcrumbs__item">
-                            <a href="javascirt:;" class="breadcrumbs__url">{{ $schedule->semester }} {{ $schedule->academic_year }}</a>
-                        </li>
+                            <li class="breadcrumbs__item">
+                                <a href="javascirt:;" class="breadcrumbs__url">{{ $schedule->semester }}
+                                    {{ $schedule->academic_year }}</a>
+                            </li>
                         @else
-                        <li class="breadcrumbs__item">
-                            <a href="javascirt:;" class="breadcrumbs__url">Evaluation is not available right now</a>
-                        </li>
+                            <li class="breadcrumbs__item">
+                                <a href="javascirt:;" class="breadcrumbs__url">Evaluation is not available right now</a>
+                            </li>
                         @endif
 
                     </ul>
                 </div>
             </div>
             @if ($student->status === 0)
-            <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> Account is still pending please wait for further action!</div>
+                <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> Account is still
+                    pending please wait for further action!</div>
             @elseif ($student->status === 2)
-            <div class="alert alert-danger "><i class="fas fa-skull-crossbones"></i> Account is rejected please contact the IT Department for Verification!</div>
+                <div class="alert alert-danger "><i class="fas fa-skull-crossbones"></i> Account is rejected please contact
+                    the IT Department for Verification!</div>
             @endif
 
 
         </div>
         @php
-            $colors =  ['Red','Blue','Green','Yellow','Pink','Purple','Deep-Purple','Light-Blue'];
+            $colors = ['Red', 'Blue', 'Green', 'Yellow', 'Pink', 'Purple', 'Deep-Purple', 'Light-Blue'];
         @endphp
 
         <div class="container">
             @if ($valid === false)
-            <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> <h6>Faculty Evaluation is not Available right now</h6> </div>
-            @else
-            <div class="row active-with-click">
-                @foreach ($facultys as $faculty )
-                @php
-                    $isDisabled = 0;
-                // Generate a random index to select a color
-                $randomIndex = array_rand($colors);
-                $randomColor = $colors[$randomIndex];
-                if($student->status === 1){
-                    $isDisabled = 0;
-                }else{
-                    $isDisabled = 1;
-                }
-
-                $isAssociated = in_array($faculty->id, $facultyIds);
-                 @endphp
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <article class="material-card {{ $randomColor }} @unless($isAssociated) disabled @endunless">
-                        <h2>
-                            <a href="{{ route('user.evaluation-subject',$faculty->id) }}"><span class="text-white">{{ $faculty->first_name }} {{ $faculty->last_name }}</span></a>
-                            <strong>
-                                <i class="fa fa-fw fa-star text-white"></i>
-                                BSIT Faculty
-                            </strong>
-                        </h2>
-                        <div class="mc-content">
-                            <div class="img-container">
-                                <img  class="img-responsive"
-                                    src="{{ asset($faculty->avatar) }}">
-                            </div>
-                            <div class="mc-description">
-                                He has appeared in more than 100 films and television shows, including The Deer Hunter,
-                                Annie Hall, The Prophecy trilogy, The Dogs of War ...
-                            </div>
-                        </div>
-                        <a class="mc-btn-action text-white">
-                            <i class="fa fa-bars text-white"></i>
-                        </a>
-                        <div class="mc-footer">
-                            <h4>
-                                Social
-                            </h4>
-                            <a class=" fa-fw fab fa-facebook"></a>
-                            <a class=" fa-fw fab fa-github"></a>
-                            <a class="fas fa-fw fab fa-linkedin"></a>
-                            <a class="fas fa-fw fab fa-discord"></a>
-                        </div>
-                    </article>
+                <div class="alert alert-warning text-black">
+                    <h6><i class="fas fa-exclamation-triangle"></i> Faculty Evaluation is not Available right now</h6>
                 </div>
-                @endforeach
+                @elseif ($valid === true && !empty($faculties) && $student->status === 1)
+                    <div class="alert alert-success text-black">
+                        <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available as of the moment..</h6>
+                    </div>
+                @else
+                <div class="row active-with-click">
+                    @foreach ($faculties as $faculty)
+                        @php
+                            $isDisabled = 0;
+                            // Generate a random index to select a color
+                            $randomIndex = array_rand($colors);
+                            $randomColor = $colors[$randomIndex];
+                            if ($student->status === 1) {
+                                $isDisabled = 0;
+                            } else {
+                                $isDisabled = 1;
+                            }
 
-                {{-- <div class="col-md-4 col-sm-6 col-xs-12">
-                    <article class="material-card Pink">
-                        <h2>
-                            <span class="text-white">Sean Penn</span>
-                            <strong>
-                                <i class="fa fa-fw fa-star"></i>
-                                Mystic River
-                            </strong>
-                        </h2>
-                        <div class="mc-content">
-                            <div class="img-container">
-                                <img class="img-responsive"
-                                    src="{{ asset('default/girl_1.jpg') }}">
-                            </div>
-                            <div class="mc-description">
-                                He has won two Academy Awards, for his roles in the mystery drama Mystic River (2003) and
-                                the biopic Milk (2008). Penn began his acting career in television with a brief appearance
-                                in a 1974 episode of Little House on the Prairie ...
-                            </div>
+                            $isAssociated = in_array($faculty->id, $facultyIds);
+                        @endphp
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <article
+                                class="material-card {{ $randomColor }} @unless ($isAssociated) disabled @endunless">
+                                <h2>
+                                    <a href="{{ route('user.evaluation-subject', $faculty->id) }}"><span
+                                            class="text-white">{{ $faculty->first_name }}
+                                            {{ $faculty->last_name }}</span></a>
+                                    <strong>
+                                        <i class="fa fa-fw fa-star text-white"></i>
+                                        BSIT Faculty
+                                    </strong>
+                                </h2>
+                                <div class="mc-content">
+                                    <div class="img-container">
+                                        <img class="img-responsive" src="{{ asset($faculty->avatar) }}">
+                                    </div>
+                                    <div class="mc-description">
+                                        He has appeared in more than 100 films and television shows, including The Deer
+                                        Hunter,
+                                        Annie Hall, The Prophecy trilogy, The Dogs of War ...
+                                    </div>
+                                </div>
+                                <a class="mc-btn-action text-white">
+                                    <i class="fa fa-bars text-white"></i>
+                                </a>
+                                <div class="mc-footer">
+                                    <h4>
+                                        Social
+                                    </h4>
+                                    <a class=" fa-fw fab fa-facebook"></a>
+                                    <a class=" fa-fw fab fa-github"></a>
+                                    <a class="fas fa-fw fab fa-linkedin"></a>
+                                    <a class="fas fa-fw fab fa-discord"></a>
+                                </div>
+                            </article>
                         </div>
-                        <a class="mc-btn-action text-white">
-                            <i class="fa fa-bars text-white"></i>
-                        </a>
-                        <div class="mc-footer">
-                            <h4>
-                                Social
-                            </h4>
-                            <a class="fa fa-fw fa-facebook"></a>
-                            <a class="fa fa-fw fa-twitter"></a>
-                            <a class="fa fa-fw fa-linkedin"></a>
-                            <a class="fa fa-fw fa-google-plus"></a>
+                    @endforeach
+                    {{-- @foreach ($facultys as $faculty)
+                        @php
+                            $isDisabled = 0;
+                            // Generate a random index to select a color
+                            $randomIndex = array_rand($colors);
+                            $randomColor = $colors[$randomIndex];
+                            if ($student->status === 1) {
+                                $isDisabled = 0;
+                            } else {
+                                $isDisabled = 1;
+                            }
+
+                            $isAssociated = in_array($faculty->id, $facultyIds);
+                        @endphp
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <article
+                                class="material-card {{ $randomColor }} @unless ($isAssociated) disabled @endunless">
+                                <h2>
+                                    <a href="{{ route('user.evaluation-subject', $faculty->id) }}"><span
+                                            class="text-white">{{ $faculty->first_name }}
+                                            {{ $faculty->last_name }}</span></a>
+                                    <strong>
+                                        <i class="fa fa-fw fa-star text-white"></i>
+                                        BSIT Faculty
+                                    </strong>
+                                </h2>
+                                <div class="mc-content">
+                                    <div class="img-container">
+                                        <img class="img-responsive" src="{{ asset($faculty->avatar) }}">
+                                    </div>
+                                    <div class="mc-description">
+                                        He has appeared in more than 100 films and television shows, including The Deer
+                                        Hunter,
+                                        Annie Hall, The Prophecy trilogy, The Dogs of War ...
+                                    </div>
+                                </div>
+                                <a class="mc-btn-action text-white">
+                                    <i class="fa fa-bars text-white"></i>
+                                </a>
+                                <div class="mc-footer">
+                                    <h4>
+                                        Social
+                                    </h4>
+                                    <a class=" fa-fw fab fa-facebook"></a>
+                                    <a class=" fa-fw fab fa-github"></a>
+                                    <a class="fas fa-fw fab fa-linkedin"></a>
+                                    <a class="fas fa-fw fab fa-discord"></a>
+                                </div>
+                            </article>
                         </div>
-                    </article>
-                </div> --}}
-            </div>
+                    @endforeach --}}
+
+                </div>
             @endif
         </div>
 
@@ -1681,7 +1713,7 @@
     </section>
 @endsection
 @push('scripts')
-    <script>
+    {{-- <script>
         $(function() {
             $('.material-card > .mc-btn-action').click(function() {
                 var card = $(this).parent('.material-card');
@@ -1711,5 +1743,5 @@
                 }
             });
         });
-    </script>
+    </script> --}}
 @endpush

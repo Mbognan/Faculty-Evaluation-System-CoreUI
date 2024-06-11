@@ -38,7 +38,6 @@ class EvaluationController extends Controller
 
         $faculties = User::whereIn('id', $facultyIds)->where('user_type', 'faculty')->get();
 
-
         return view('frontend.home.evaluation.eval',compact(['facultys','student','faculties','facultyIds','valid','schedule']));
     }
 
@@ -65,6 +64,7 @@ class EvaluationController extends Controller
         } else {
             $evaluatedSubjects = collect();
         }
+
 
 
         $remainingSubjects = $subjects->diff($evaluatedSubjects);

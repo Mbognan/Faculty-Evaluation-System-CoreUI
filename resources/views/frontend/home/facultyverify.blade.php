@@ -2,7 +2,7 @@
 
 @section('home')
 
-<section id="dashboard">
+<section >
     <div class="container">
         <div class="row">
             <div class="col-lg-3">
@@ -11,12 +11,18 @@
             <div class="col-lg-9">
                 <div class="dashboard_content">
                     <div class="my_listing shadow p-3 mb-5 bg-white rounded">
-                        <h4 style="justify-content: space-between">Class List <a href="{{ route('faculty.class-list.import') }}" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>
-                        </h4>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h4>Class List</h4>
+                            <div>
+                                <a href="{{ route('faculty.class-list.import') }}" class="btn btn-primary"><i class="fas fa-upload"></i> Import</a>
+                                <a href="{{ route('faculty.addStudent.index') }}" class="btn btn-info text-white"><i class="fas fa-upload"></i> Add</a>
+                            </div>
+                        </div>
                         {{ $dataTable->table() }}
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 </section>

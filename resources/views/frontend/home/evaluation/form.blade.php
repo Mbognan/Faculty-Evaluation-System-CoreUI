@@ -48,7 +48,7 @@
                                 <input type="hidden" name="subject" value="{{ $subject }}">
                                 <input type="hidden" name="schedule" value="{{ $schedule }}">
                                 <div role="main" class="form-all">
-                                    <ul class="form-section page-section">
+                                    <ul class="form-section page-section shadow">
                                         <li id="cid_1" class="form-input-wide" data-type="control_head">
                                             <div class="form-header-group header-large">
                                                 <div class="header-text httac htvam">
