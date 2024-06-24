@@ -86,14 +86,14 @@
 
                           <div class="col-xl-12">
                               <div class="active_package shadow p-3 mb-5 bg-white rounded" >
-                                  <h4>Sentiment Analysis Overall</h4>
+                                  <h4>Word Cloud</h4>
                                   <div id="container2"></div>
-                                  <p class="highcharts-description">
+                                  {{-- <p class="highcharts-description">
                                       The pie chart titled "Faculty Evaluation Result By Category" presents the performance
                                       evaluation of faculty members in the BSIT Department, highlighting strengths and areas
                                       for improvement across key categories: Commitment, Knowledge of Subjects, Management of
                                       Learning, and Teaching for Independent Learning.
-                                  </p>
+                                  </p> --}}
                                   <hr>
                                   <div class="my_listing">
 
@@ -187,11 +187,11 @@ Highcharts.chart("container2", {
         },
     ],
     title: {
-        text: "Wordcloud of Alice's Adventures in Wonderland",
+        text: "Most Commonly Used Word",
         align: "left",
     },
     subtitle: {
-        text: "An excerpt from chapter 1: Down the Rabbit-Hole",
+        text: "By student in this faculty",
         align: "left",
     },
     tooltip: {
@@ -241,8 +241,7 @@ Highcharts.chart("container2", {
                     if (points[point.index + 1]) {
                       fanAnimate(points[point.index + 1], args.end);
                     }
-                    // On the last point, fade in the data labels, then
-                    // apply the inner size
+
                     if (point.index === series.points.length - 1) {
                       series.dataLabelsGroup.animate(
                         {
@@ -286,16 +285,22 @@ Highcharts.chart("container2", {
         };
       })(Highcharts);
 
+      let neutral = @json($neutralCount);
+      let negative = @json($negativeCount);
+      let positive = @json($positiveCount);
+
+
+
       Highcharts.chart("container", {
         chart: {
           type: "pie",
         },
         title: {
-          text: "Departamental Strength of the Company",
+          text: "Statistics for sentiment analysis",
           align: "left",
         },
         subtitle: {
-          text: "Custom animation of pie series",
+          text: "BSIT Faculty: Janeth Aclao",
           align: "left",
         },
         tooltip: {
@@ -318,11 +323,12 @@ Highcharts.chart("container2", {
             cursor: "pointer",
             dataLabels: {
               enabled: true,
-              format: "<b>{point.name}</b><br>{point.percentage}%",
+              format: "<b>{point.name}</b><br>{point.percentage:.1f}%",
               distance: 20,
             },
           },
         },
+
         series: [
           {
             // Disable mouse tracking on load, enable after custom animation
@@ -334,16 +340,16 @@ Highcharts.chart("container2", {
             data: [
               {
                 name: "Neutral",
-                y: 18,
+                y: neutral,
               },
               {
                 name: "Negative",
-                y: 50.4,
+                y: negative,
               },
               {
                 name: "Positive",
-                y: 99,
-              },
+                y: positive,
+              }
             ],
           },
         ],

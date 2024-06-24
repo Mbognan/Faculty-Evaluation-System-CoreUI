@@ -6,6 +6,7 @@ use App\Models\Comment;
 use App\Models\Comments;
 use App\Models\Sentiment;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -49,7 +50,8 @@ class CommentsDataTable extends DataTable
      */
     public function query(Sentiment $model): QueryBuilder
     {
-        return $model->newQuery();
+        $faculty = Auth::user();
+            return $model->newQuery()->where('faculty_id', $faculty->id);
     }
 
     /**

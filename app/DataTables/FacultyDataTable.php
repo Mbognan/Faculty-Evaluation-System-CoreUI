@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\Faculty;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -44,7 +45,8 @@ class FacultyDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
-        return $model->newQuery()->where('user_type','faculty');
+        $user = Auth::user();
+        return $model->newQuery()->where('user_type','faculty')->where('department_id', $user->department_id);
     }
 
     /**

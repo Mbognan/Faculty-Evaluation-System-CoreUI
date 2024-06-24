@@ -11,4 +11,8 @@ class AdminAuthController extends Controller
     public function login():View{
         return view('admin.auth.login');
     }
+
+    public function superLogin():View{
+        return view();
+    }
 }

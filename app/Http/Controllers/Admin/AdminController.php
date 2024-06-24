@@ -14,43 +14,93 @@ class AdminController extends Controller
 {
     public function index():View{
 
+    $departmentHead = Auth::user();
 
           // Fetch faculty members
-    $facultyMembers = User::where('user_type', 'faculty')->get();
+    $facultyMembers = User::where('user_type', 'faculty')->where('department_id', $departmentHead->department_id)->get();
     $facultyName = User::where('user_type', 'faculty')->pluck('first_name');
 
 
 
-
-    // Initialize an array to store average results for each faculty
     $facultyAverages = [];
     $categoryAverages = [];
+    $facultytable = [];
 
-    // Iterate through each faculty member
     foreach ($facultyMembers as $faculty) {
-        // Fetch the results for the faculty
         $results = ResultByCategory::where('faculty_id', $faculty->id)->pluck('results_by_category');
-
 
         $sum = $results->map(function ($result) {
             return $result ?? 0;
         })->sum();
-
-        // Calculate the average, taking care of division by zero
         $count = $results->count();
         $average = $count > 0 ? $sum / $count : 0;
 
+        $formattedAverage = number_format($average, 1);
 
-     // Format the average to one decimal place
-     $formattedAverage = number_format($average, 1);
+        // Calculate the percentage
+        $percentage = ($average / 25) * 100;
+        $formattedPercentage = number_format($percentage, 2);
 
-     // Store the formatted average in the array
-     $facultyAverages[$faculty->first_name] = $formattedAverage;
-     $facultyAveragesBarChart[$faculty->first_name] = $formattedAverage;
+        $facultyAverages[$faculty->first_name] = $formattedAverage;
+        $facultyAveragesBarChart[$faculty->first_name] = $formattedPercentage;
+
     }
 
-       // Fetch all categories
+
        $categories = Category::all();
+
+
+foreach ($facultyMembers as $faculty) {
+    $facultyResults = [
+        'avatar' => $faculty->avatar ?? 'default.jpg',
+        'firstName' => $faculty->first_name,
+        'lastName' => $faculty->last_name,
+
+    ];
+
+    $categoryAverages = [];
+    $totalSum = 0;
+    $totalCount = 0;
+
+    foreach ($categories as $category) {
+        $results = ResultByCategory::where('faculty_id', $faculty->id)
+            ->where('category_id', $category->id)
+            ->pluck('results_by_category');
+
+        $sum = $results->map(function ($result) {
+            return $result ?? 0;
+        })->sum();
+        $count = $results->count();
+        $average = $count > 0 ? $sum / $count : 0;
+        $formattedAverage = number_format($average, 1);
+
+        $percentage = ($average / 25) * 100;
+        $formattedPercentage = number_format($percentage, 2);
+
+        $firstWord = strtok($category->title, ' ');
+
+        $facultyResults[strtolower($firstWord) . '_avg'] = $formattedAverage;
+        $facultyResults[strtolower($firstWord) . '_percent'] = $formattedPercentage;
+
+        $totalSum += $sum;
+        $totalCount += $count;
+    }
+
+
+
+
+
+    $totalAverage = $totalCount > 0 ? $totalSum / $totalCount : 0;
+    $facultyResults['total'] = number_format($totalAverage, 1);
+
+    $totalPercentage = ($totalAverage / 25) * 100;
+    $facultyResults ['totalPercentage'] = number_format($totalPercentage, 2);
+
+    $facultyData[] = $facultyResults;
+}
+
+
+
 
        $facultyCategoryAverages = [];
        foreach ($facultyMembers as $faculty) {
@@ -72,6 +122,9 @@ class AdminController extends Controller
            $facultyCategoryAverages[$faculty->first_name] = $categoryAverages;
        }
        arsort($facultyAveragesBarChart);
+
+
+
 
        $categorySumCounts=[];
 
@@ -110,10 +163,17 @@ class AdminController extends Controller
        $totalStudents = User::where('user_type', 'user')->count();
 
 
+
         $facultyResult = User::where('user_type', 'faculty')->pluck('id');
         $facultyCount = User::where('user_type', 'faculty')->count();
-        $totalSudent = User::where('user_type', 'user')->count();
-        return view('admin.index',compact(['facultyResult', 'totalSudent','facultyCount','facultyAverages','categoryAverages','categories','facultyCategoryAverages','facultyAveragesBarChart','overallCategoryAverages']));
+        $totalSudent = User::where('user_type', 'user')->where('department_id', $departmentHead->department_id)->count();
+
+
+
+        $facultybyDepartment = User::with('department')->where('user_type', 'faculty')->where('department_id',$departmentHead->department_id)->get();
+       $Department = User::with('department')->where('department_id', $departmentHead->department_id)->first();
+
+        return view('admin.index',compact(['facultyData','Department','facultybyDepartment','facultyResult', 'totalSudent','facultyCount','facultyAverages','categoryAverages','categories','facultyCategoryAverages','facultyAveragesBarChart','overallCategoryAverages']));
 
     }
 }

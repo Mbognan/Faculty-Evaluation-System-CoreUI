@@ -46,6 +46,10 @@
     .highcharts-data-table tr:hover {
         background: #f1f7ff;
     }
+
+
+
+
 </style>
 @section('home')
     @auth
@@ -66,7 +70,8 @@
                                         <h3>116</h3>
                                         <p>Total Comments</p>
                                     </div>
-                                </div>
+
+                                        </div>
                                 <div class="col-xl-4 col-12 col-sm-6 col-lg-6 col-xxl-3">
                                     <div class="manage_dashboard_single orange">
                                         <i class="fas fa-list-ul" aria-hidden="true"></i>
@@ -83,39 +88,41 @@
                                 </div>
 
                                 <div class="col-xl-12">
-                                    <div class="active_package" >
+                                    <div class="active_package">
                                         <h4>Faculty Evaluation</h4>
                                         <div class="table-responsive">
                                             <table class="table dashboard_table">
                                                 <tbody>
                                                     <tr>
-                                                        <td class="active_left">Total Evaluators</td>
+                                                        <td class="active_left">Number of Student who evaluated</td>
                                                         <td class="package_right">100</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="active_left">Department</td>
+                                                        <td class="package_right">BSIT</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="active_left">Position</td>
+                                                        <td class="package_right">Faculty</td>
                                                     </tr>
                                                     <tr>
                                                         <td class="active_left">Date</td>
                                                         <td class="package_right">1st Semester 2021-2022</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="active_left">Overall Result</td>
-                                                        <td class="package_right">89%</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="active_left">Current Status</td>
-                                                        <td class="package_right">Excellent</td>
-                                                    </tr>
-                                                    <tr>
                                                         <td class="active_left">Evaluation Status</td>
                                                         <td class="package_right">Ongoing</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="active_left">Maximum Listings</td>
-                                                        <td class="package_right">10</td>
+                                                        <td class="active_left">Overall Result</td>
+                                                        <td class="package_right text-danger">49%</td>
                                                     </tr>
+
                                                     <tr>
-                                                        <td class="active_left">Maximum Amenities</td>
-                                                        <td class="package_right">5</td>
+                                                        <td class="active_left">Result Status</td>
+                                                        <td class="package_right text-danger">Very Poor</td>
                                                     </tr>
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -130,23 +137,25 @@
                 <div class="col-lg-12 mb-4">
                     <div class="dashboard_content">
                         <div class="manage_dashboard">
-                            <div class="active_package shadow p-3 mb-5 bg-white rounded" >
+                            <div class="active_package shadow p-3 mb-5 bg-white rounded">
                                 <h4>Data Visualizations</h4>
 
-                                <div id="container"></div>
-                                <p class="highcharts-description">
+
+                                        <div id="container"></div>
+
+                                {{-- <p class="highcharts-description">
                                     The pie chart titled "Faculty Evaluation Result By Category" presents the performance
                                     evaluation of faculty members in the BSIT Department, highlighting strengths and areas
                                     for improvement across key categories: Commitment, Knowledge of Subjects, Management of
                                     Learning, and Teaching for Independent Learning.
-                                </p>
+                                </p> --}}
                                 <hr>
                                 <div id="container2" class="mt-4"></div>
-                                <p class="highcharts-description">
+                                {{-- <p class="highcharts-description">
                                     Bar chart showing horizontal columns. This chart type is often
                                     beneficial for smaller screens, as the user can scroll through the data
                                     vertically, and axis labels are easy to read.
-                                </p>
+                                </p> --}}
 
                                 <hr>
 
@@ -185,12 +194,33 @@
     <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
     <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
     <script src="{{ asset('admin/code/modules/histogram-bellcurve.js') }}"></script>
+    <script src="{{ asset('dist/circularProgressBar.min.js') }}"></script>
 
 
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            // 'pie' is class name div
+            const circle = new CircularProgressBar("pie");
+            circle.initial();
+
+            setTimeout(() => {
+                const options = {
+                    // item number you want to update
+                    // read data-pie-index from the element
+                    index: 1,
+                    // update props
+                    percent: 90,
+                    colorSlice: "#fff",
+                    fontColor: "black",
+                    fontSize: "1.2rem",
+                    fontWeight: 600,
+
+                };
+                circle.animationTo(options);
+            }, 500); // after 3s update
+
             //totall mean by subject
             var totalMeanByCategory = @json($totalMeanByCategory);
             var subjects = Object.keys(totalMeanByCategory);
@@ -211,23 +241,18 @@
 
             });
 
-
-
-
-
             //totalSum by category
-            var totalSumByCategory = @json($totalSumByCategory);
-            var data = [];
+            var OveralltotalMeanByCategory = @json($OveralltotalMeanByCategory);
 
 
-            for (var category in totalSumByCategory) {
-                if (totalSumByCategory.hasOwnProperty(category)) {
-                    data.push({
-                        name: category,
-                        y: parseFloat(totalSumByCategory[category])
-                    })
+            let piedata = Object.keys(OveralltotalMeanByCategory).map(function(category) {
+                return {
+                    name: category,
+                    y: OveralltotalMeanByCategory[category] || [],
                 }
-            }
+            })
+
+
 
             Highcharts.chart("container", {
                 chart: {
@@ -271,7 +296,7 @@
                 series: [{
                     name: "mean",
                     colorByPoint: true,
-                    data: data,
+                    data: piedata,
                 }, ],
             });
 
@@ -316,7 +341,9 @@
                     title: {
                         text: 'Total Rating'
                     },
-                    alignTicks: false
+                    alignTicks: false,
+                    min: 5,
+                    max: 25,
                 },
                 yAxis: {
                     title: {
@@ -356,7 +383,9 @@
                     title: {
                         text: 'Total Rating'
                     },
-                    alignTicks: false
+                    alignTicks: false,
+                    min: 5,
+                    max: 25,
                 },
                 yAxis: {
                     title: {
@@ -397,7 +426,9 @@
                     title: {
                         text: 'Total Rating'
                     },
-                    alignTicks: false
+                    alignTicks: false,
+                    min: 5,
+                    max: 25,
                 },
                 yAxis: {
                     title: {
@@ -438,7 +469,9 @@
                     title: {
                         text: 'Total Rating'
                     },
-                    alignTicks: false
+                    alignTicks: false,
+                    min: 5,
+                    max: 25,
                 },
                 yAxis: {
                     title: {
@@ -471,6 +504,9 @@
                     showInLegend: false
                 }]
             });
+
+
+
         });
     </script>
 @endpush

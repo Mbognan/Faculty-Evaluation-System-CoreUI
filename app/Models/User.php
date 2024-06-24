@@ -56,4 +56,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Category::class, 'evaluation_results');
     }
+    public function department(){
+        return $this->belongsTo(Department::class);
+    }
 }

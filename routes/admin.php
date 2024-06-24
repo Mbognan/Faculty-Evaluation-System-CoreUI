@@ -16,7 +16,7 @@ use App\Http\Controllers\Admin\VerifiedAccountController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin/login', [AdminAuthController::class, 'login']);
-
+Route::get('superlofin/', [AdminAuthController::class, 'superLogin']);
 Route::group([
     'middleware' => ['auth', 'user.type:admin'],
     'prefix' => 'admin',

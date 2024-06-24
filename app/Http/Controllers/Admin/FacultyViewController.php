@@ -11,6 +11,7 @@ use App\Models\EvaluationResult;
 use App\Models\ResultByCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
@@ -19,8 +20,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class FacultyViewController extends Controller
 {
     public function index():View{
-        $users = User::where('user_type', 'faculty')->get();
-        $facultyCount = User::where('user_type', 'faculty')->count();
+        $admin  = Auth::user();
+        $users = User::where('user_type', 'faculty')->where('department_id', $admin->department_id)->get();
+        $facultyCount = User::where('user_type', 'faculty')->where('department_id',$admin->department_id )->count();
         return view('admin.faculty.view',compact(['users','facultyCount']));
     }
 
@@ -215,6 +217,7 @@ class FacultyViewController extends Controller
         ->where('by_subject', $subject)
         ->with('category')
         ->get();
+
 
 
 

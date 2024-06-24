@@ -172,28 +172,15 @@
                 <div class="col-md-12 ">
                     <div class="card mb-4">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between">
-                                <div>
-                                    <h4 class="card-title mb-0">The Overall Evaluation Result By Category </h4>
-                                    <div class="small text-medium-emphasis text-disabled">1st Semester - July 2022 </div>
-                                </div>
-                                <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
-                                    <form method="POST" action="{{ route('admin.export-excel', ['id' => $user->id]) }}">
-                                        @csrf
-                                        <button class="btn btn-info text-white" type="submit">
-                                            <svg class="icon">
-                                                <use
-                                                    xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
-                                                </use>
-                                            </svg>
-                                        </button>
-                                    </form>
 
-                                </div>
-                            </div>
                             <div class="col-md-12 mb-4">
-                                <canvas class="chart" id="myChart" height="450" width="1377"
+                                {{-- <canvas class="chart" id="myChart" height="450" width="1377"
                                     style="display: block; box-sizing: border-box; height: 300px; width: 918px;"></canvas>
+                                    --}}
+                                <figure class="highcharts-figure">
+                                    <div id="containerDrilldown"></div>
+
+                                </figure>
                             </div>
 
                         </div>
@@ -268,9 +255,9 @@
 
                                 </li>
                                 <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                        data-bs-target="#profile" type="button" role="tab" aria-controls="profile"
-                                        aria-selected="false"><i class="fas fa-diagram-project fa-fw me-2"></i>Radar
+                                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
+                                        type="button" role="tab" aria-controls="profile" aria-selected="false"><i
+                                            class="fas fa-diagram-project fa-fw me-2"></i>Radar
                                         Chart</button>
 
                                 </li>
@@ -296,20 +283,24 @@
 
                                         </div>
 
-                                        <div class="btn-toolbar d-none d-md-block" role="toolbar" aria-label="Toolbar with buttons">
-                                            <form method="POST" action="{{ route('admin.export.raw_result', ['id' => $user->id]) }}">
+                                        <div class="btn-toolbar d-none d-md-block" role="toolbar"
+                                            aria-label="Toolbar with buttons">
+                                            <form method="POST"
+                                                action="{{ route('admin.export.raw_result', ['id' => $user->id]) }}">
                                                 @csrf
                                                 <div class="d-flex align-items-center">
                                                     <select name="subject" class="form-select me-2">
                                                         <option>Select Subject</option>
-                                                        @foreach ($subjects as $subject )
-                                                        <option value="{{ $subject }}">{{ $subject }}</option>
+                                                        @foreach ($subjects as $subject)
+                                                            <option value="{{ $subject }}">{{ $subject }}
+                                                            </option>
                                                         @endforeach
 
                                                     </select>
                                                     <button class="btn btn-info text-white" type="submit">
                                                         <svg class="icon">
-                                                            <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
+                                                            <use
+                                                                xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-cloud-download') }}">
                                                             </use>
                                                         </svg>
                                                     </button>
@@ -661,10 +652,13 @@
 @endsection
 
 @push('scripts')
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
-    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="{{ asset('admin/code/highcharts.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/data.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/drilldown.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/exporting.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/histogram-bellcurve.js') }}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -918,48 +912,131 @@
             });
 
 
-        });
 
+        });
 
         // Histogram Chart
         const data = @json($histogramData);
 
-Highcharts.chart('container', {
-    title: {
-        text: 'Faculty Performance Evaluation Histogram'
-    },
-    xAxis: {
-        title: { text: 'Total Rating' },
-        alignTicks: false
-    },
-    yAxis: {
-        title: { text: 'Number of Evaluator' },
-        alignTicks: false
-    },
-    plotOptions: {
-        histogram: {
-            binWidth: 1, // Set the bin width to 4
-            accessibility: {
-                point: {
-                    valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+        Highcharts.chart('container', {
+            title: {
+                text: 'Faculty Performance Evaluation Histogram'
+            },
+            xAxis: {
+                title: {
+                    text: 'Total Rating'
+                },
+                alignTicks: false
+            },
+            yAxis: {
+                title: {
+                    text: 'Number of Evaluator'
+                },
+                alignTicks: false
+            },
+            plotOptions: {
+                histogram: {
+                    binWidth: 1, // Set the bin width to 4
+                    accessibility: {
+                        point: {
+                            valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
+                        }
+                    }
                 }
-            }
-        }
-    },
-    series: [{
-        name: 'Histogram',
-        type: 'histogram',
-        baseSeries: 's1',
-        zIndex: -1
-    }, {
-        name: 'Data',
-        type: 'scatter',
-        data: data,
-        id: 's1',
-        visible: false,
-        showInLegend: false
-    }]
-});
+            },
+            series: [{
+                name: 'Histogram',
+                type: 'histogram',
+                baseSeries: 's1',
+                zIndex: -1
+            }, {
+                name: 'Data',
+                type: 'scatter',
+                data: data,
+                id: 's1',
+                visible: false,
+                showInLegend: false
+            }]
+        });
+
+        Highcharts.chart("containerDrilldown", {
+        chart: {
+            type: "column",
+        },
+        title: {
+            align: "left",
+            text: "Browser market shares. January, 2022",
+        },
+        subtitle: {
+            align: "left",
+            text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>',
+        },
+        accessibility: {
+            announceNewData: {
+                enabled: true,
+            },
+        },
+        xAxis: {
+            type: "category",
+        },
+        yAxis: {
+            title: {
+                text: "Total percent market share",
+            },
+        },
+        legend: {
+            enabled: false,
+        },
+        plotOptions: {
+            series: {
+                borderWidth: 0,
+                dataLabels: {
+                    enabled: true,
+                    format: "{point.y:.1f}%",
+                    style: {
+                    textDecoration: 'none' // Remove underline from labels
+                }
+                },
+            },
+        },
+
+        tooltip: {
+            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+            pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                "<b>{point.y:.2f}%</b> of total<br/>",
+        },
+
+        series: [{
+            name: "Browsers",
+            colorByPoint: true,
+            data: [{
+                    name: "Commitment",
+                    y: 44,
+
+                },
+                {
+                    name: "Knowledge of the Subject",
+                    y: 19.84,
+
+                },
+                {
+                    name: "Teaching of Independent Learning",
+                    y: 88,
+
+                },
+                {
+                    name: "Management of Learning",
+                    y: 67,
+
+                },
+
+            ],
+        }, ],
+
+        });
+
+
+
 
     </script>
 @endpush

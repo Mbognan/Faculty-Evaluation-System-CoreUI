@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FacultyProfileRequest;
 use App\Models\Category;
+use App\Models\ClassList;
+use App\Models\Comments;
 use App\Models\EvaluationResult;
 use App\Models\ResultByCategory;
 use App\Models\User;
@@ -41,37 +43,57 @@ class FacultyController extends Controller
 
 
 
-    // New logic: Calculate the overall sum of each category for the faculty
-    $totalSumByCategory = [];
-    $resultsByCategoryAllSubjects = ResultByCategory::where('faculty_id', $userId)
-        ->select('category_id', DB::raw('SUM(results_by_category) as total'))
-        ->groupBy('category_id')
-        ->get();
 
-    $categoryTitles = $allCategories->pluck('title', 'id')->toArray();
-    $totalResultsByCategoryAllSubjects = $resultsByCategoryAllSubjects->pluck('total', 'category_id')->toArray();
+// Initialize arrays to store sums and counts
+$totalSumByCategory = [];
+$OveralltotalMeanByCategory = [];
+$countsByCategory = [];
 
-    foreach ($totalResultsByCategoryAllSubjects as $categoryId => $total) {
-        $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
-        $totalSumByCategory[$categoryTitle] = $total;
-    }
+// Fetch results by category
+$resultsByCategoryAllSubjects = ResultByCategory::where('faculty_id', $userId)
+    ->select('category_id', DB::raw('SUM(results_by_category) as total'))
+    ->groupBy('category_id')
+    ->get();
 
-    // Check if the total sum is empty or not
-    if (!empty($totalSumByCategory)) {
-        $totalSumOfAllCategories = array_sum($totalSumByCategory);
+$categoryTitles = $allCategories->pluck('title', 'id')->toArray();
+$totalResultsByCategoryAllSubjects = $resultsByCategoryAllSubjects->pluck('total', 'category_id')->toArray();
 
-        if ($totalSumOfAllCategories > 0) {
-            foreach ($totalSumByCategory as $categoryTitle => $total) {
-                $percentage = ($total / $totalSumOfAllCategories) * 100;
-                $totalPercentageByCategoryUsingSum[$categoryTitle] = $percentage;
-            }
-        } else {
-            $totalPercentageByCategoryUsingSum = [];
+// Calculate total sums and initialize counts
+foreach ($totalResultsByCategoryAllSubjects as $categoryId => $total) {
+    $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
+    $totalSumByCategory[$categoryTitle] = $total;
+    $countsByCategory[$categoryTitle] = ResultByCategory::where('faculty_id', $userId)
+        ->where('category_id', $categoryId)
+        ->count();
+}
+
+// Calculate means for each category
+foreach ($totalSumByCategory as $categoryTitle => $total) {
+    $count = $countsByCategory[$categoryTitle];
+    $OveralltotalMeanByCategory[$categoryTitle] = $total / $count;
+}
+
+// Check if the total sum is empty or not
+if (!empty($totalSumByCategory)) {
+    $totalSumOfAllCategories = array_sum($totalSumByCategory);
+
+    if ($totalSumOfAllCategories > 0) {
+        foreach ($totalSumByCategory as $categoryTitle => $total) {
+            $percentage = ($total / $totalSumOfAllCategories) * 100;
+            $totalPercentageByCategoryUsingSum[$categoryTitle] = $percentage;
         }
     } else {
-        $totalSumByCategory = [];
         $totalPercentageByCategoryUsingSum = [];
     }
+} else {
+    $totalSumByCategory = [];
+    $totalPercentageByCategoryUsingSum = [];
+    $OveralltotalMeanByCategory = [];
+}
+
+
+
+
 
     // Assuming $overallPercentageBySubject is calculated somewhere else
     if (!empty($overallPercentageBySubject)) {
@@ -213,11 +235,16 @@ foreach ($categoryTitles as $categoryId => $categoryTitle) {
     ->toArray();
 
 
+    $totalFeedback =  Comments::where('faculty_id', $userId)->count();
+    $totalStudent = ClassList::where('user_id', $userId)->count();
+
+
+    $totalFeedback = $totalFeedback ?? 0;
+    $totalStudent = $totalStudent ?? 0;
 
 
 
-
-        return view('frontend.home.dashboard', compact(['category', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData']));
+        return view('frontend.home.dashboard', compact(['category','totalStudent','totalFeedback', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData','OveralltotalMeanByCategory']));
     }
 
     public function profile():View{
