@@ -7,7 +7,7 @@ from nltk.corpus import stopwords
 from collections import Counter
 import nltk
 
-# Ensure you have the required NLTK data files
+# NLTK files
 nltk.download('punkt')
 nltk.download('stopwords')
 

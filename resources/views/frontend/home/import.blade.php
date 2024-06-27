@@ -10,7 +10,7 @@
                 <div class="col-lg-9">
                     <div class="dashboard_content">
                         <div class="my_listing" style="border: solid">
-                            <h4 >Import Excel File<span class="text-danger">*note it is recommended to follow the format of the DataTable</span>
+                            <h4 >Import Excel File<span class="text-danger">*Note it is recommended to follow the format of the DataTable</span>
                             </h4>
                             <form method="POST" action="{{ route('faculty.class-list.upload') }}"  enctype="multipart/form-data">
                                 @csrf

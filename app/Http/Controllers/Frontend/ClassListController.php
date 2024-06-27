@@ -6,6 +6,7 @@ use App\DataTables\ClassListDataTable;
 use App\Http\Controllers\Controller;
 use App\Imports\ClassListImport;
 use App\Models\ClassList;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +39,7 @@ class ClassListController extends Controller
         $faculty =  Auth::user();
 
         if (ClassList::where('subject', $request->subject)
-                 ->where('student_id', $request->StudentId)
+                 ->where('student_id', $request->StudentId)->where('faculty_id', $faculty->faculty_id)
                  ->exists()) {
 
         return redirect()->back()->with('warning',  'Student is already enrolled in this subject!');
@@ -46,6 +47,9 @@ class ClassListController extends Controller
 
     try {
         $subject = ClassList::where('subject', $request->subject)->firstOrFail();
+
+        $user = User::where('student_id', $request->StudentId)->get();
+
 
         $request->validate([
             'first_name' => 'required',

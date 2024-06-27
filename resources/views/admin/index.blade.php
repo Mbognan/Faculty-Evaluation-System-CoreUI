@@ -2,81 +2,74 @@
 
 
 <style>
-       @import url("https://code.highcharts.com/css/highcharts.css");
+    @import url("https://code.highcharts.com/css/highcharts.css");
 
-.highcharts-figure,
-.highcharts-data-table table {
-  min-width: 310px;
-  max-width: 800px;
-  margin: 1em auto;
-}
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
 
-.highcharts-data-table table {
-  font-family: Verdana, sans-serif;
-  border-collapse: collapse;
-  border: 1px solid #ebebeb;
-  margin: 10px auto;
-  text-align: center;
-  width: 100%;
-  max-width: 500px;
-}
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
 
-.highcharts-data-table caption {
-  padding: 1em 0;
-  font-size: 1.2em;
-  color: #555;
-}
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
 
-.highcharts-data-table th {
-  font-weight: 600;
-  padding: 0.5em;
-}
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
 
-.highcharts-data-table td,
-.highcharts-data-table th,
-.highcharts-data-table caption {
-  padding: 0.5em;
-}
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
 
-.highcharts-data-table thead tr,
-.highcharts-data-table tr:nth-child(even) {
-  background: #f8f8f8;
-}
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
 
-.highcharts-data-table tr:hover {
-  background: #f1f7ff;
-}
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
 
-.highcharts-yaxis .highcharts-axis-line {
-  stroke-width: 2px;
-}
+    .highcharts-yaxis .highcharts-axis-line {
+        stroke-width: 2px;
+    }
 
-/* Link the series colors to axis colors */
-.highcharts-color-p {
-  fill: #7cb5ec;
-  stroke: #7cb5ec;
-}
+    /* Link the series colors to axis colors */
+    .highcharts-color-p {
+        fill: #7cb5ec;
+        stroke: #7cb5ec;
+    }
 
-.highcharts-axis.highcharts-color-p .highcharts-axis-line {
-  stroke: #7cb5ec;
-}
+    .highcharts-axis.highcharts-color-p .highcharts-axis-line {
+        stroke: #7cb5ec;
+    }
 
-.highcharts-axis.highcharts-color-p text {
-  fill: #7cb5ec;
-}
+    .highcharts-axis.highcharts-color-p text {
+        fill: #7cb5ec;
+    }
 
-.highcharts-color-1 {
-  fill: #e55353;
-  stroke: #e55353;
-}
+    .highcharts-color-1 {}
 
-.highcharts-axis.highcharts-color-1 .highcharts-axis-line {
-  stroke: #e55353;
-}
+    .highcharts-axis.highcharts-color-1 .highcharts-axis-line {}
 
-.highcharts-axis.highcharts-color-1 text {
-  fill: #e55353;
-}
+    .highcharts-axis.highcharts-color-1 text {}
 </style>
 
 @section('contents')
@@ -244,7 +237,7 @@
                                         </td>
 
 
-                                        <td  align="right">
+                                        <td align="right">
                                             {{ $faculty['commitment_percent'] }}%
                                         </td>
                                         <td align="right">
@@ -264,17 +257,28 @@
 
 
                             </tbody>
-                            <tfoot class="table-light fw-semibold">
-                                <tr class="align-middle fw-bold">
-                                    <td colspan="2" class="fw-bold">Overall Result per Category:</td>
-                                    <td align="right" id="overall-commitment">40%</td>
-                                    <td align="right" id="overall-knowledge">69%</td>
-                                    <td align="right" id="overall-teaching">36%</td>
-                                    <td align="right" id="overall-management">58%</td>
-                                    <td align="right" id="overall-total">89%</td>
-                                </tr>
-                            </tfoot>
+
                         </table>
+                    </div>
+                    <div class="row mt-4">
+
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-body p-4">
+
+                                    <div id="container"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="card mb-4">
+                                <div class="card-body p-4">
+
+
+                                    <div id="container3"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -282,122 +286,50 @@
         </div>
     </div>
     {{-- bar chart and pie --}}
-    <div class="row mt-4">
 
-        <div class="col-xl-6">
-            <div class="card mb-4">
-                <div class="card-body p-4">
-
-                    <div id="container"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-6">
-            <div class="card mb-4">
-                <div class="card-body p-4">
-
-
-                    <div id="container3"></div>
-                </div>
-            </div>
-        </div>
-    </div>
     {{-- bar sentiment analysis --}}
     <div class="row">
-        <div class="col-xl-9">
+        <div class="col-xl-6 mb-4">
             <div id="containerSentiment"></div>
         </div>
-        <div class="col-xl-3">
+        <div class="col-xl-6">
             <div class="row">
                 <div class="col-md-4 col-xl-12">
-                    <div class="card mb-4 text-white bg-primary-gradient">
-                        <div class="card-body p-4 pb-0 d-flex justify-content-between align-items-start">
-                            <div>
-                                <div class="fs-4 fw-semibold">26K <span class="fs-6 fw-normal">(-12.4%
-                                        <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
-                                        </svg>)</span></div>
-                                <div data-coreui-i18n="users">Users</div>
+                    <div class="card mb-4 text-black bg-primary-gradient">
+                        <div id="wordcloudContainer"></div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="border-start border-start-4 border-start-success px-3 mb-3"><small
+                                        class="text-medium-emphasis">Postive</small>
+                                    <div class="fs-5 fw-semibold">9.123</div>
+                                </div>
                             </div>
-                            <div class="dropdown">
-                                <button class="btn btn-transparent text-white p-0" type="button"
-                                    data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="icon">
-                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="action">Action</a><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="anotherAction">Another action</a><a class="dropdown-item"
-                                        href="#" data-coreui-i18n="somethingElseHere">Something else here</a></div>
+                            <div class="col-4">
+                                <div class="border-start border-start-4 border-start-danger px-3 mb-3"><small
+                                        class="text-medium-emphasis">Negative</small>
+                                    <div class="fs-5 fw-semibold">22.643</div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="chart-wrapper mt-3 mx-3" style="height:80px;">
-                            <canvas class="chart" id="card-chart1" height="90" width="299"
-                                style="display: block; box-sizing: border-box; height: 80px; width: 266px;"></canvas>
+                            <div class="col-4">
+                                <div class="border-start border-start-4 border-start-warning px-3 mb-3"><small
+                                        class="text-medium-emphasis">Neutral</small>
+                                    <div class="fs-5 fw-semibold">22.643</div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 col-xl-12">
-                    <div class="card mb-4 text-white bg-warning-gradient">
-                        <div class="card-body p-4 pb-0 d-flex justify-content-between align-items-start">
-                            <div>
-                                <div class="fs-4 fw-semibold">2.49% <span class="fs-6 fw-normal">(84.7%
-                                        <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-top"></use>
-                                        </svg>)</span></div>
-                                <div data-coreui-i18n="conversionRate">Conversion Rate</div>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-transparent text-white p-0" type="button"
-                                    data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="icon">
-                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="action">Action</a><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="anotherAction">Another action</a><a class="dropdown-item"
-                                        href="#" data-coreui-i18n="somethingElseHere">Something else here</a></div>
-                            </div>
-                        </div>
-                        <div class="chart-wrapper mt-3" style="height:80px;">
-                            <canvas class="chart" id="card-chart3" height="90" width="335"
-                                style="display: block; box-sizing: border-box; height: 80px; width: 298px;"></canvas>
-                        </div>
+                {{-- <div class="col-md-4 col-xl-12">
+                    <div class="card mb-4 text-black bg-warning-gradient">
+                        <div id="halfpie"></div>
                     </div>
-                </div>
-                <div class="col-md-4 col-xl-12">
-                    <div class="card mb-4 text-white bg-danger-gradient">
-                        <div class="card-body p-4 pb-0 d-flex justify-content-between align-items-start">
-                            <div>
-                                <div class="fs-4 fw-semibold">44K <span class="fs-6 fw-normal">(-23.6%
-                                        <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-arrow-bottom"></use>
-                                        </svg>)</span></div>
-                                <div data-coreui-i18n="sessions">Sessions</div>
-                            </div>
-                            <div class="dropdown">
-                                <button class="btn btn-transparent text-white p-0" type="button"
-                                    data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="icon">
-                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-options"></use>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="action">Action</a><a class="dropdown-item" href="#"
-                                        data-coreui-i18n="anotherAction">Another action</a><a class="dropdown-item"
-                                        href="#" data-coreui-i18n="somethingElseHere">Something else here</a></div>
-                            </div>
-                        </div>
-                        <div class="chart-wrapper mt-3 mx-3" style="height:80px;">
-                            <canvas class="chart" id="card-chart4" height="90" width="299"
-                                style="display: block; box-sizing: border-box; height: 80px; width: 266px;"></canvas>
-                        </div>
-                    </div>
-                </div>
+                </div> --}}
             </div>
+
         </div>
+    </div>
     </div>
 @endsection
 @push('scripts')
@@ -406,45 +338,51 @@
     <script src="{{ asset('admin/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
     <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
-
+    <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 
+            document.getElementById('switch').addEventListener('click', function() {
+                const tableBody = document.querySelector('#data-table tbody');
+                const isDefaultData = tableBody.dataset.toggle === 'default';
+
+                // Data sets
+                const defaultData = @json($facultyData)
+
+                const alternateData = defaultData.map(faculty => ({
+                    ...faculty,
+                    commitment_avg: faculty.commitment_percent + '%',
+                    knowledge_avg: faculty.knowledge_percent + '%',
+                    teaching_avg: faculty.teaching_percent + '%',
+                    management_avg: faculty.management_percent + '%',
+                    total: faculty.totalPercentage + '%'
+                }))
 
 
 
-
-            document.getElementById('switch').addEventListener('click', function () {
-    const tableBody = document.querySelector('#data-table tbody');
-    const isDefaultData = tableBody.dataset.toggle === 'default';
-
-    // Data sets
-    const defaultData = @json($facultyData)
-
-    const alternateData = defaultData.map(faculty => ({
-        ...faculty,
-        commitment_avg: faculty.commitment_percent + '%',
-        knowledge_avg: faculty.knowledge_percent + '%',
-        teaching_avg: faculty.teaching_percent + '%',
-        management_avg: faculty.management_percent + '%',
-        total: faculty.totalPercentage + '%'
-    }))
+                const dataToUse = isDefaultData ? alternateData : defaultData;
+                const overallResults = isDefaultData ? {
+                    commitment: '50%',
+                    knowledge: '70%',
+                    teaching: '46%',
+                    management: '68%',
+                    total: '79%'
+                } : {
+                    commitment: '40%',
+                    knowledge: '69%',
+                    teaching: '36%',
+                    management: '58%',
+                    total: '89%'
+                };
 
 
+                tableBody.innerHTML = '';
 
-    const dataToUse = isDefaultData ? alternateData : defaultData;
-    const overallResults = isDefaultData ?
-        { commitment: '50%', knowledge: '70%', teaching: '46%', management: '68%', total: '79%' } :
-        { commitment: '40%', knowledge: '69%', teaching: '36%', management: '58%', total: '89%' };
-
-
-    tableBody.innerHTML = '';
-
-    // Populate table with data
-    dataToUse.forEach(faculty => {
-        const row = document.createElement('tr');
-        row.classList.add('align-middle');
-        row.innerHTML = `
+                // Populate table with data
+                dataToUse.forEach(faculty => {
+                    const row = document.createElement('tr');
+                    row.classList.add('align-middle');
+                    row.innerHTML = `
 
 
             <td class="text-center">
@@ -460,19 +398,12 @@
             <td class="" align="right">${faculty.management_avg}</td>
             <td align="right">${faculty.total}</td>
         `;
-        tableBody.appendChild(row);
-    });
+                    tableBody.appendChild(row);
+                });
 
-    // Update the overall result
-    document.getElementById('overall-commitment').innerText = overallResults.commitment;
-    document.getElementById('overall-knowledge').innerText = overallResults.knowledge;
-    document.getElementById('overall-teaching').innerText = overallResults.teaching;
-    document.getElementById('overall-management').innerText = overallResults.management;
-    document.getElementById('overall-total').innerText = overallResults.total;
-
-    // Toggle data attribute
-    tableBody.dataset.toggle = isDefaultData ? 'alternate' : 'default';
-});
+                // Toggle data attribute
+                tableBody.dataset.toggle = isDefaultData ? 'alternate' : 'default';
+            });
 
 
 
@@ -535,6 +466,11 @@
                 tooltip: {
                     valueSuffix: ' Average'
                 },
+                exporting: {
+                    enabled: false,
+                },
+
+
                 plotOptions: {
                     series: {
                         borderRadius: '25%'
@@ -613,6 +549,11 @@
                 tooltip: {
                     valueSuffix: '%'
                 },
+                exporting: {
+                    enabled: false,
+                },
+
+
 
             });
 
@@ -720,6 +661,11 @@
                 tooltip: {
                     valueSuffix: '%'
                 },
+                exporting: {
+                    enabled: false,
+                },
+
+
                 subtitle: {
                     text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
                 },
@@ -758,69 +704,136 @@
                 }]
             });
 
-        // bar chart sentiment
-        Highcharts.chart("containerSentiment", {
-        chart: {
-          type: "column",
-          styledMode: true,
-        },
+            // bar chart sentiment
+            Highcharts.chart("containerSentiment", {
+                chart: {
+                    type: "column",
+                    styledMode: true,
+                },
 
-        title: {
-          text: "Sentimet Analysis Per Faulty",
-          align: "left",
-        },
+                title: {
+                    text: "Sentimet Analysis Per Faulty",
+                    align: "left",
+                },
+
+                exporting: {
+                    enabled: false,
+                },
 
 
 
-        xAxis: {
-          categories: ["Tokelau", "Ireland", "Italy", "Timor-Leste","leee-me",'tae-nasan',"lemnia"],
-        },
+                xAxis: {
+                    categories: ["Tokelau", "Ireland", "Italy", "Timor-Leste", "leee-me", 'tae-nasan',
+                        "lemnia"
+                    ],
+                },
 
-        yAxis: [
-          {
-            // Primary axis
-            min:0,
-            max:100,
-            tickInterval: 10,
-            className: "highcharts-color-p",
-            title: {
-              text: "Positive",
-            },
-          },
-          {
-            // Secondary axis
-            min:0,
-            max:100,
-            tickInterval: 10,
-            className: "highcharts-color-1",
-            opposite: true,
-            title: {
-              text: "Negative",
-            },
-          },
-        ],
+                yAxis: [{
+                        // Primary axis
+                        min: 0,
+                        max: 100,
+                        tickInterval: 10,
+                        className: "highcharts-color-0",
+                        title: {
+                            text: "Positive",
+                        },
+                    },
+                    {
+                        // Secondary axis
+                        min: 0,
+                        max: 100,
+                        tickInterval: 10,
+                        className: "highcharts-color-1",
+                        opposite: true,
+                        title: {
+                            text: "Negative",
+                        },
+                    },
+                ],
 
-        plotOptions: {
-          column: {
-            borderRadius: 5,
-          },
-        },
+                plotOptions: {
+                    column: {
+                        borderRadius: 5,
+                    },
+                },
 
-        series: [
-          {
-            name: "Postive",
-            data: [92.5, 73.1, 64.8, 49.0,89.9,30,7],
-            tooltip: {
-              valueSuffix: "%",
-            },
-          },
-          {
-            name: "Negative",
-            data: [33.7, 27.1, 24.9, 21.2,21.5,70,89],
-            yAxis: 1,
-          },
-        ],
-      });
+                series: [{
+                        name: "Postive",
+                        data: [92.5, 73.1, 64.8, 49.0, 89.9, 30, 7],
+                        tooltip: {
+                            valueSuffix: "%",
+                        },
+                    },
+                    {
+                        name: "Negative",
+                        data: [33.7, 27.1, 24.9, 21.2, 21.5, 70, 89],
+                        yAxis: 1,
+                    },
+                ],
+            });
+
+               //wordcloud
+               const text =
+                "Chapter 1. Down the Rabbit-Hole " +
+                "Alice was beginning to get very tired of sitting by her sister on " +
+                "the bank, and of having nothing to do: " +
+                "once or twice she had peeped into the book her sister was reading, " +
+                "but it had no pictures or conversations " +
+                "in it, 'and what is the use of a book,' thought Alice " +
+                "'without pictures or conversation?'" +
+                "So she was considering in her own mind (as well as she could, for " +
+                "the hot day made her feel very sleepy " +
+                "and stupid), whether the pleasure of making a daisy-chain would be " +
+                "worth the trouble of getting up and picking " +
+                "the daisies, when suddenly a White Rabbit with pink eyes ran close " +
+                "by her.",
+                lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
+                data = lines.reduce((arr, word) => {
+                    let obj = Highcharts.find(arr, (obj) => obj.name === word);
+                    if (obj) {
+                        obj.weight += 1;
+                    } else {
+                        obj = {
+                            name: word,
+                            weight: 1,
+                        };
+                        arr.push(obj);
+                    }
+                    return arr;
+                }, []);
+
+            console.log(data);
+
+            Highcharts.chart("wordcloudContainer", {
+                accessibility: {
+                    screenReaderSection: {
+                        beforeChartFormat: "<h5>{chartTitle}</h5>" +
+                            "<div>{chartSubtitle}</div>" +
+                            "<div>{chartLongdesc}</div>" +
+                            "<div>{viewTableButton}</div>",
+                    },
+                },
+                series: [{
+                    type: "wordcloud",
+                    data,
+                    name: "Occurrences",
+                }, ],
+                title: {
+                    text: "Most Common words",
+                    align: "left",
+                },
+                subtitle: {
+                    text: "Sentiment Analysis",
+                    align: "left",
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size: 16px"><b>{point.key}</b>' + "</span><br>",
+                },
+                exporting: {
+                    enabled: false,
+                }
+            });
+
 
         });
     </script>

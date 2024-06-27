@@ -150,6 +150,8 @@ const stopWords = [
 
 const isStopWord = (word) => stopWords.includes(word.toLowerCase());
 
+
+
 const lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g);
 const filteredLines = lines.filter(word => word && !isStopWord(word));
 
@@ -182,8 +184,12 @@ Highcharts.chart("container2", {
     series: [
         {
             type: "wordcloud",
-            data,
+            data: data,
             name: "Occurrences",
+            spiral: 'rectangular', // Use rectangular spiral for tighter packing
+            rotation: {
+                orientations: 1 // Keep orientation fixed to help with tight packing
+            }
         },
     ],
     title: {
