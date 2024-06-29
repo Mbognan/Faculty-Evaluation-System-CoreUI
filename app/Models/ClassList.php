@@ -9,14 +9,17 @@ class ClassList extends Model
 {
     use HasFactory;
 
+
+
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'middle_initials',
+        'user_id',
         'subject',
         'student_id',
-        'semester',
-        'year',
-        'user_id'
+        'evaluation_schedule_id',
+
     ];
+
+    public function evaluationSchedule(){
+       return $this->belongsTo(EvaluationSchedule::class , 'evaluation_schedule_id');
+    }
 }

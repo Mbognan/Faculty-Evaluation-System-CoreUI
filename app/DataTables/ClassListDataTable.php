@@ -23,6 +23,15 @@ class ClassListDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', 'classlist.action')
+            ->editColumn('evaluation_schedule_id',function($query){
+                if($query->evaluationSchedule){
+                    return $query->evaluationSchedule->semester . ' - ' . $query->evaluationSchedule->academic_year;
+
+                }else{
+                    return 'no schedule available';
+                }
+            })
+
             ->setRowId('id');
     }
 
@@ -31,7 +40,9 @@ class ClassListDataTable extends DataTable
      */
     public function query(ClassList $model): QueryBuilder
     {
-        return $model->newQuery()->where('user_id', auth()->id());
+        return $model->newQuery()
+        ->with('evaluationSchedule')
+        ->where('user_id', auth()->id());
     }
 
     /**
@@ -63,13 +74,14 @@ class ClassListDataTable extends DataTable
     {
         return [
 
-            Column::make('first_name'),
-            Column::make('last_name'),
-            Column::make('middle_initials')->width(20),
-            Column::make('subject'),
+            // Column::make('first_name'),
+            // Column::make('last_name'),
+            // Column::make('middle_initials')->width(20),
             Column::make('student_id'),
-            Column::make('semester'),
-            Column::make('year'),
+            Column::make('subject'),
+            Column::make('evaluation_schedule_id')->title('Academic Year'),
+
+            // Column::make('year'),
         ];
     }
 

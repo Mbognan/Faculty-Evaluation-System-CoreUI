@@ -17,7 +17,13 @@ class ClassListImport implements ToModel,WithHeadingRow
     */
 
     protected $facultyId;
+    protected $schedule;
 
+    public function withSchedule($schedule){
+        $this->schedule = $schedule;
+
+        return $this;
+    }
     public function withFacultyId($facultyId)
     {
         $this->facultyId = $facultyId;
@@ -27,22 +33,13 @@ class ClassListImport implements ToModel,WithHeadingRow
     public function model(array $row)
     {
 
-    $firstName = $row['first_name'];
-    $lastName =  $row['last_name'] ;
-    $middleInitials =  $row['middle_initials'] ;
+
     $subject = $row['subject'];
     $studentId =  $row['student_id'] ;
-    $semester =  $row['semester'] ;
-    $year = $row['year'] ;
-
         return new ClassList([
-            "first_name" => $firstName,
-            "last_name" => $lastName,
-            "middle_initials" =>  $middleInitials,
             "subject" => $subject,
             "student_id" => $studentId,
-            "semester" =>  $semester,
-            "year" => $year,
+            "evaluation_schedule_id" => $this->schedule,
             "user_id" => $this->facultyId
         ]);
 

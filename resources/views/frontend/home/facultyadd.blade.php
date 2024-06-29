@@ -17,33 +17,6 @@
                             <div class="row">
                                 <div class="col-xl-8 col-md-12">
                                     <div class="row">
-                                        <div class="col-xl-4 col-md-4">
-                                            <div class="my_listing_single">
-                                                <label>First Name<span class="text-danger">*</span></label>
-                                                <div class="input_area">
-                                                    <input type="text" placeholder="Enter your name.." name="first_name"
-                                                        value="" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-md-4">
-                                            <div class="my_listing_single">
-                                                <label>Middle Initials <span class="text-danger">*</span></label>
-                                                <div class="input_area">
-                                                    <input type="text" placeholder="Your middle initials.." name="middle_initials"
-                                                        value="" required >
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-md-4">
-                                            <div class="my_listing_single">
-                                                <label>Last Name<span class="text-danger">*</span></label>
-                                                <div class="input_area">
-                                                    <input type="text" placeholder="Your last name.." name="last_name"
-                                                        value="" required>
-                                                </div>
-                                            </div>
-                                        </div>
 
                                         <div class="col-xl-12">
                                             <div class="my_listing_single">
@@ -54,35 +27,32 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-md-4">
+                                        <div class="col-xl-6 col-md-6">
                                             <div class="my_listing_single">
                                                 <label>Subject<span class="text-danger">*</span></label>
+                                                @forelse ($subjects as $subject)
                                                 <div class="input_area">
-                                                    <input type="text" placeholder="Input subject" name="subject"
-                                                        value="" required>
+                                                    <div>{{ $subject }}</div>
                                                 </div>
+
+                                            @empty
+                                                <!-- Display a message when there are no subjects -->
+                                                <div class="text-danger">No subjects found for the given faculty ID.</div>
+                                            @endforelse
+
+
                                             </div>
                                         </div>
-                                        <div class="col-xl-4 col-md-4">
-                                            <div class="my_listing_single">
-                                                <label>Select Semester<span class="text-danger">*</span></label>
-                                                <div class="input_area">
-                                                   <select class="form-group" name="semester">
-                                                    <option>1st Semester</option>
-                                                    <option>2nd Semester</option>
-                                                   </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4 col-md-4">
+                                        <div class="col-xl-6 col-md-6">
                                             <div class="my_listing_single">
                                                 <label>Academic Year<span class="text-danger">*</span></label>
                                                 <div class="input_area">
-                                                    <input type="text" placeholder="Academic Year" name="academic_year"
-                                                        value="" required>
+                                                    <input type="text" placeholder="Input subject" name="Academic_Year"
+                                                        value="{{ $schedule->semester }} {{ $schedule->academic_year }}" required disabled>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
                                 <div class="col-xl-4 col-md-5">
@@ -96,7 +66,8 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="read_btn">Add</button>
+
+                                    <button type="submit" class="read_btn" @if($subjects->isEmpty()) disabled @endif>Add</button>
                                 </div>
                             </div>
                         </form>

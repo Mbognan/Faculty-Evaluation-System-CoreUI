@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EvaluationSchedule extends Model
 {
     use HasFactory;
+
+    public function evaluation_schedules(){
+       return  $this->hasMany(ClassList::class);
+    }
 }
