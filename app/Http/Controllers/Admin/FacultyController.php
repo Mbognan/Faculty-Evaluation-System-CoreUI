@@ -11,6 +11,7 @@ use App\Traits\FileUploadTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class FacultyController extends Controller
@@ -37,6 +38,8 @@ class FacultyController extends Controller
      */
     public function store(FacultyRequest $request):RedirectResponse
     {
+        $admin = Auth::user();
+
         $imagePath = $this->uploadImage($request,'avatar');
         $user = new User();
         $user->avatar = $imagePath;
@@ -46,6 +49,7 @@ class FacultyController extends Controller
         $user->password = $request->password;
         $user->status = $request->status;
         $user->gender = $request->gender;
+        $user->department_id = $admin->department_id;
         $user->user_type = $request->user_type;
 
         $user->save();

@@ -1,30 +1,32 @@
 @extends('frontend.layouts.master')
 
 @section('home')
-    <section id="dashboard">
+    <section id="">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
                     @include('frontend.home.sidebar')
                 </div>
                 <div class="col-lg-9">
-                    <div class="dashboard_content">
-                        <div class="my_listing " style="border:solid">
+                    <div class="dashboard_content ">
+                        <div class="my_listing active_package shadow p-3 mb-5 bg-white rounded">
                             <h4>student profile</h4>
-                            @if($user->status === 0)
-                            <div class="alert alert-warning" role="alert">
-                                <h7>Account Pending</h7>
-                              </div>
+                            @if ($user->status === 0)
+                                <div class="alert alert-warning" role="alert">
+                                    <h7>Account Pending</h7>
+                                </div>
                             @elseif ($user->status === 2)
-                            <div class="alert alert-danger" role="alert">
-                                <h7>Account Rejected <span>*note please go the the IT Department for confirmation</span></h7>
-                              </div>
-                              @else
-                              <div class="alert alert-success" role="alert">
-                                <h7>Account Verified <span>*IT1002897</span></h7>
-                              </div>
+                                <div class="alert alert-danger" role="alert">
+                                    <h7>Account Rejected <span>*note please go the the IT Department for confirmation</span>
+                                    </h7>
+                                </div>
+                            @else
+                                <div class="alert alert-success" role="alert">
+                                    <h7>Account Verified <span>*IT1002897</span></h7>
+                                </div>
                             @endif
-                            <form action="{{ route('faculty.profile-update') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('faculty.profile-update') }}" method="POST"
+                                enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
                                 <div class="row">
@@ -72,7 +74,8 @@
                                         <div class="my_listing_single">
                                             <label>Avatar</label>
                                             <div class="profile_pic_upload">
-                                                <img src="{{ asset($user->avatar) }}" alt="img" class="imf-fluid w-100" name="avatar">
+                                                <img src="{{ asset($user->avatar) }}" alt="img" class="imf-fluid w-100"
+                                                    name="avatar">
                                                 <input type="file" name="avatar">
                                                 <input type="hidden" name="oldAvatar" value="{{ $user->avatar }}">
                                             </div>
@@ -84,7 +87,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="my_listing list_mar "  style="border:solid">
+                        <div class="my_listing list_mar  active_package shadow p-3 mb-5 bg-white rounded" >
                             <h4 class="text-danger">change password</h4>
                             <form action="#" method="POST">
                                 @csrf
@@ -130,5 +133,4 @@
     </section>
 @endsection
 @push('scripts')
-
 @endpush

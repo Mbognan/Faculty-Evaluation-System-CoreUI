@@ -21,7 +21,7 @@
         </div>
         <div class="card-body">
             <table id="example" class="uk-table uk-table-hover uk-table-striped" style="width:100%">
-            {{ $dataTable->table() }}
+            {{ $dataTable->table(['id' => 'user-table']) }}
             </table>
         </div>
     </div>
@@ -60,5 +60,20 @@
 <script src="https://cdn.datatables.net/2.0.0/js/dataTables.js"></script>
 <script src="https://cdn.datatables.net/2.0.0/js/dataTables.tailwindcss.js"></script>
 
+
     {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+    <script>
+
+
+        $(document).ready(function() {
+        // Custom message for no data available
+        $('#user-table').on('init.dt', function() {
+            var table = $('#user-table').DataTable();
+            if (table.data().count() === 0) {
+                $('#user-table tbody').append('<tr class="odd"><td valign="top" colspan="5" class="dataTables_empty">No data shown</td></tr>');
+            }
+        });
+    });
+    </script>
 @endpush

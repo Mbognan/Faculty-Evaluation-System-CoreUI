@@ -1,4 +1,7 @@
 @extends('frontend.layouts.master')
+ <link rel="stylesheet" href="{{ asset('frontend/assets/css-profile/css/select2.min.css') }}">
+ <link rel="stylesheet" href="{{ asset('frontend/assets/css-profile/css/nice-select.css') }}">
+
 
 @section('home')
 <section >
@@ -30,14 +33,23 @@
                                         <div class="col-xl-6 col-md-6">
                                             <div class="my_listing_single">
                                                 <label>Subject<span class="text-danger">*</span></label>
-                                                @forelse ($subjects as $subject)
                                                 <div class="input_area">
-                                                    <div>{{ $subject }}</div>
-                                                </div>
+                                                    <div class="wsus__search_area">
+                                                      <select class="select_2" name="state">
+                                                        <option value="">Choose Subject</option>
+                                                        @foreach ($subjects as $subject)
+                                                        <option value="{{ $subject }}">{{ $subject }}</option>
+                                                        @endforeach
+                                                      </select>
+                                                    </div>
+                                                  </div>
+
+                                                @forelse ($subjects as $subject)
+
 
                                             @empty
                                                 <!-- Display a message when there are no subjects -->
-                                                <div class="text-danger">No subjects found for the given faculty ID.</div>
+                                                <div class="">No subjects found for the given faculty ID. <span class="text-danger">*note please import first</span></div>
                                             @endforelse
 
 
@@ -49,6 +61,8 @@
                                                 <div class="input_area">
                                                     <input type="text" placeholder="Input subject" name="Academic_Year"
                                                         value="{{ $schedule->semester }} {{ $schedule->academic_year }}" required disabled>
+                                                        <input type="hidden" name="semester" value="{{ $schedule->semester }}">
+                                                        <input type="hidden" name="academic_year" value="{{ $schedule->academic_year }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -80,3 +94,9 @@
 </section>
 
 @endsection
+
+@push('scripts')
+<script src="{{ asset('frontend/assets/js-profile/js/jquery.countup.min.js') }}"></script>
+<script src="{{ asset('frontend/assets/js-profile/js/select2.min.js') }}"></script>
+<script src="{{ asset('frontend/assets/js-profile/js/jquery.nice-select.min.js') }}"></script>
+@endpush

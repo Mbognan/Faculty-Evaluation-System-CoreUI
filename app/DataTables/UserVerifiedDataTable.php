@@ -5,6 +5,7 @@ namespace App\DataTables;
 use App\Models\User;
 use App\Models\UserVerified;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
@@ -52,10 +53,13 @@ class UserVerifiedDataTable extends DataTable
      */
     public function query(User $model): QueryBuilder
     {
+
+        $admin = Auth::user();
         return $model->newQuery()
         ->select(['id', 'first_name', 'last_name', 'email', 'student_id', \DB::raw("CONCAT(first_name, ' ', last_name) AS full_name")])
         ->where('status', 1)
-        ->where('user_type', 'user');
+        ->where('user_type', 'user')
+        ->where('department_id' , $admin->department_id);
         }
 
 

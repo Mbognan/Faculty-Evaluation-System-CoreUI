@@ -11,4 +11,5 @@ class Comments extends Model
     public function sentiments(){
         return $this->hasMany(Sentiment::class);
     }
+
 }

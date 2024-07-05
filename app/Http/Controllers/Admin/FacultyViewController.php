@@ -57,11 +57,10 @@ class FacultyViewController extends Controller
 
             $resultsByCategoryArray = $resultsByCategory->pluck('total', 'category_id')->toArray();
 
-            // Calculate the total score for this subject schedule
             $totalScore = array_sum($resultsByCategoryArray);
             $totalScoreForAllSubjects += $totalScore;
 
-            // Calculate the maximum possible sum for this subject schedule
+
             $numEvaluationsForSubject = ResultByCategory::where('faculty_id', $user->id)
                 ->where('by_subject', $subjectSchedule)
                 ->select(DB::raw('COUNT(DISTINCT id) as num_students'))
@@ -107,35 +106,33 @@ class FacultyViewController extends Controller
         }
 
         // New logic: Calculate the overall sum of each category for the faculty
-        $totalSumByCategory = [];
+        $overAllMean = [];
         $resultsByCategoryAllSubjects = ResultByCategory::where('faculty_id', $user->id)
-            ->select('category_id', DB::raw('SUM(results_by_category) as total'))
-            ->groupBy('category_id')
-            ->get();
+        ->select('category_id', DB::raw('SUM(results_by_category) as total'), DB::raw('COUNT(results_by_category) as count'))
+        ->groupBy('category_id')
+        ->get();
+
+        foreach ($resultsByCategoryAllSubjects as $result) {
+            $categoryId = $result->category_id;
+            $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
+            $total = $result->total;
+            $count = $result->count ?? 0; // Ensure count is not null
+
+            // Calculate mean
+            $mean = $count > 0 ? $total / $count : 0; // Calculate the mean
+            $percentage = $mean > 0 ? ($mean / 25 )*100: 0;
+            $overAllMean[$categoryTitle] = number_format($percentage, 2); // Format the mean to one decimal
+        }
+
 
         $totalResultsByCategoryAllSubjects = $resultsByCategoryAllSubjects->pluck('total', 'category_id')->toArray();
+
 
         foreach ($totalResultsByCategoryAllSubjects as $categoryId => $total) {
             $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
             $totalSumByCategory[$categoryTitle] = $total;
         }
 
-        // Check if the total sum is empty or not
-        if (!empty($totalSumByCategory)) {
-            $totalSumOfAllCategories = array_sum($totalSumByCategory);
-
-            if ($totalSumOfAllCategories > 0) {
-                foreach ($totalSumByCategory as $categoryTitle => $total) {
-                    $percentage = ($total / $totalSumOfAllCategories) * 100;
-                    $totalPercentageByCategoryUsingSum[$categoryTitle] = $percentage;
-                }
-            } else {
-                $totalPercentageByCategoryUsingSum = [];
-            }
-        } else {
-            $totalSumByCategory = [];
-            $totalPercentageByCategoryUsingSum = [];
-        }
 
         if (!empty($overallPercentageBySubject)) {
             $values = array_values($overallPercentageBySubject);
@@ -170,6 +167,30 @@ class FacultyViewController extends Controller
 
         // dd($histogramData);
 
+        $distinctSubject = ResultByCategory::where('faculty_id', $user->id)
+        ->distinct()
+        ->pluck('by_subject');
+
+    // New logic: Calculate the total mean of each category by subject
+    $totalMeanByCategory = [];
+
+    foreach ($distinctSubject as $subjectSchedule) {
+        $resultsByCategory = ResultByCategory::where('faculty_id', $user->id)
+            ->where('by_subject', $subjectSchedule)
+            ->select('category_id', DB::raw('SUM(results_by_category) as total'), DB::raw('COUNT(DISTINCT id) as count'))
+            ->groupBy('category_id')
+            ->get();
+
+        foreach ($resultsByCategory as $result) {
+            $categoryTitle = $categoryTitles[$result->category_id] ?? 'Unknown Category';
+            $mean = $result->total / $result->count;
+
+            if (!isset($totalMeanByCategory[$subjectSchedule])) {
+                $totalMeanByCategory[$subjectSchedule] = [];
+            }
+            $totalMeanByCategory[$subjectSchedule][$categoryTitle] = $mean;
+        }
+    }
 
 
         return view('admin.faculty.result', compact(
@@ -187,9 +208,9 @@ class FacultyViewController extends Controller
             'highestKey',
             'lowestKey',
             'subjects',
-            'totalSumByCategory',
-            'totalPercentageByCategoryUsingSum',
-            'histogramData'
+            'totalMeanByCategory',
+            'histogramData',
+            'overAllMean'
         ));
 
 

@@ -4,6 +4,66 @@
 <style>
     @import url("https://code.highcharts.com/css/highcharts.css");
 
+
+    .custom-link {
+        color: black;
+        text-decoration: none;
+        transition: color 0.4s ease;
+    }
+
+    .custom-link:hover {
+        color: #6f42c1;
+        text-decoration: underline;
+    }
+
+    .progress-bar-container {
+        display: flex;
+        width: 100%;
+        height: 10px;
+        background-color: #f1f7ff;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        margin-left: 10px
+    }
+
+    .progress-bar {
+        height: 100%;
+        margin-right: 3px;
+    }
+
+
+
+
+    .labels {
+        display: flex;
+        /* justify-content: space-between; */
+        flex-wrap: wrap;
+    }
+
+    .labels ul {
+
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .labels li {
+        display: flex;
+        align-items: center;
+    }
+
+    .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 5px;
+        margin-left: 30px
+    }
+
     .highcharts-figure,
     .highcharts-data-table table {
         min-width: 310px;
@@ -70,195 +130,315 @@
     .highcharts-axis.highcharts-color-1 .highcharts-axis-line {}
 
     .highcharts-axis.highcharts-color-1 text {}
+
+    .btn {
+        background-color: transparent;
+        /* Remove background color */
+        color: white;
+        /* Text color */
+        border: 2px solid #17a2b8;
+        /* Border color */
+        padding: 10px 20px;
+        /* Padding */
+        font-size: 16px;
+        /* Font size */
+        cursor: pointer;
+        /* Cursor pointer */
+        transition: box-shadow 0.3s ease;
+        /* Smooth transition for shadow */
+        border-radius: 5px;
+        /* Rounded corners */
+        display: inline-flex;
+        /* Centering content horizontally */
+        align-items: center;
+        /* Centering content vertically */
+        gap: 5px;
+        /* Space between text and icon */
+    }
+
+    .btn:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        /* Shadow on hover */
+    }
+    .center-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
 </style>
 
 @section('contents')
-    <div class="row">
-        <div class="col-sm-6 col-lg-3">
-            <div class="card mb-4 text-white bg-primary">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="fs-4 fw-semibold">{{ $totalSudent }} <span class="fs-6 fw-normal">
-                                <i class="fas fa-user-graduate"></i></span></div>
-                        <div>Evaluators</div>
+    @if ($allDataEmpty)
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card mb-4 text-white bg-primary">
+                    <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fs-4 fw-semibold">{{ $totalSudent }} <span class="fs-6 fw-normal">
+                                    <i class="fas fa-user-graduate"></i></span></div>
+                            <div>All Student Registered</div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
+                                    </use>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
+                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
+                                    class="dropdown-item" href="#">Something else here</a></div>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}"></use>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Action</a><a
-                                class="dropdown-item" href="#">Another action</a><a class="dropdown-item"
-                                href="#">Something else here</a></div>
+                    <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+                        <canvas class="chart" id="card-chart1" height="70"></canvas>
                     </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                    <canvas class="chart" id="card-chart1" height="70"></canvas>
                 </div>
             </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
-            <div class="card mb-4 text-white bg-info">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="fs-4 fw-semibold">{{ $facultyCount }} <span class="fs-6 fw-normal">
-                                <i class="fas fa-chalkboard-teacher"></i></span></div>
-                        <div>BSIT Department faculty</div>
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card mb-4 text-white bg-info">
+                    <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fs-4 fw-semibold">{{ $facultyCount }} <span class="fs-6 fw-normal">
+                                    <i class="fas fa-chalkboard-teacher"></i></span></div>
+                            <div>BSIT Department faculty</div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
+                                    </use>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
+                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
+                                    class="dropdown-item" href="#">Something else here</a></div>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}"></use>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Action</a><a
-                                class="dropdown-item" href="#">Another action</a><a class="dropdown-item"
-                                href="#">Something else here</a></div>
+                    <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+                        <canvas class="chart" id="card-chart2" height="70"></canvas>
                     </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                    <canvas class="chart" id="card-chart2" height="70"></canvas>
                 </div>
             </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
-            <div class="card mb-4 text-white bg-warning">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="fs-4 fw-semibold">46 <span class="fs-6 fw-normal">
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card mb-4 text-white bg-warning">
+                    <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fs-4 fw-semibold">46 <span class="fs-6 fw-normal">
 
-                            </span></div>
-                        <div>Average for this Semester</div>
+                                </span></div>
+                            <div>Average for this Semester</div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
+                                    </use>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
+                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
+                                    class="dropdown-item" href="#">Something else here</a></div>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}"></use>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Action</a><a
-                                class="dropdown-item" href="#">Another action</a><a class="dropdown-item"
-                                href="#">Something else here</a></div>
+                    <div class="c-chart-wrapper mt-3" style="height:70px;">
+                        <canvas class="chart" id="card-chart3" height="70"></canvas>
                     </div>
-                </div>
-                <div class="c-chart-wrapper mt-3" style="height:70px;">
-                    <canvas class="chart" id="card-chart3" height="70"></canvas>
                 </div>
             </div>
-        </div>
-        <!-- /.col-->
-        <div class="col-sm-6 col-lg-3">
-            <div class="card mb-4 text-white bg-danger">
-                <div class="card-body pb-0 d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="fs-4 fw-semibold">44%</span></div>
-                        <div>Satisfactory of the Student</div>
+            <!-- /.col-->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card mb-4 text-white bg-danger">
+                    <div class="card-body pb-0 d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="fs-4 fw-semibold">44%</span></div>
+                            <div>Satisfactory of the Student</div>
+                        </div>
+                        <div class="dropdown">
+                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <svg class="icon">
+                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
+                                    </use>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
+                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
+                                    class="dropdown-item" href="#">Something else here</a></div>
+                        </div>
                     </div>
-                    <div class="dropdown">
-                        <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg class="icon">
-                                <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
-                                </use>
-                            </svg>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item" href="#">Action</a><a
-                                class="dropdown-item" href="#">Another action</a><a class="dropdown-item"
-                                href="#">Something else here</a></div>
+                    <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
+                        <canvas class="chart" id="card-chart4" height="70"></canvas>
                     </div>
-                </div>
-                <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
-                    <canvas class="chart" id="card-chart4" height="70"></canvas>
                 </div>
             </div>
+            <!-- /.col-->
         </div>
-        <!-- /.col-->
-    </div>
-    {{-- combine bar and line chart --}}
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card mb-4">
-                <div class="card-body p-4">
-                    <div id="container2"></div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="card-title fs-4 fw-semibold">Summary Report</div>
-                            <div class="card-subtitle text-secondary mb-4">
-                                <button id="switch" class="btn btn-info text-white">
-                                    switch <i class="fas fa-exchange-alt"></i>
-                                </button>
+        {{-- combine bar and line chart --}}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <div id="container2"></div>
+                        <div class="row">
+                            <div class="col">
+                                <div class="card-title fs-4 fw-semibold">Summary Report</div>
+                                <div class="card-subtitle text-secondary mb-4">
+                                    <button id="switch" class="btn btn-info text-white ">
+                                        switch <i class=" cil-loop-circular"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-auto ms-auto">
+
                             </div>
                         </div>
-                        <div class="col-auto ms-auto">
+                        <div class="row">
+                            <div class="col-xl-9">
+                                <div class="table-responsive">
+                                    <table id="data-table" class="table mb-0 table border" data-toggle="default"
+                                        style="border: 5px">
+                                        <thead class=" table-light fw-semibold">
+                                            <tr class="align-middle">
+                                                <th class="text-center">
+                                                    <svg class="icon">
+                                                        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-people">
+                                                        </use>
+                                                    </svg>
+                                                </th>
+                                                <th>User</th>
+                                                <th class="">Avg. for Commitment</th>
+                                                <th>Avg. for Knowledge of the Subject</th>
+                                                <th>Avg. for Teaching of Effectiveness</th>
+                                                <th>Avg. for Management of learning</th>
+                                                <th align="right">Total Average</th>
+                                            </tr>
+                                        </thead>
 
+
+                                        <tbody class="">
+                                            @foreach ($facultyData as $faculty)
+                                                <tr class="align-middle">
+                                                    <td class="text-center">
+                                                        <div class="avatar avatar-lg"><img class="avatar-img"
+                                                                src="{{ $faculty['avatar'] }}" alt="user@email.com"><span
+                                                                class="avatar-status bg-success"></span></div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="text-nowrap">{{ $faculty['firstName'] }}
+                                                            {{ $faculty['lastName'] }}
+                                                        </div>
+                                                        <div class="small text-body-secondary text-nowrap"><span
+                                                                data-coreui-i18n="new">BSIT</span> | <span
+                                                                data-coreui-i18n="registered">Registered: </span><span
+                                                                data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan
+                                                                10, 2023</span></div>
+                                                    </td>
+
+
+                                                    <td align="right">
+                                                        {{ $faculty['commitment_percent'] }}%
+                                                    </td>
+                                                    <td align="right">
+                                                        {{ $faculty['knowledge_percent'] }}%
+                                                    </td>
+                                                    <td align="right">
+                                                        {{ $faculty['teaching_percent'] }}%
+                                                    </td>
+                                                    <td class="" align="right">
+                                                        {{ $faculty['management_percent'] }}%
+                                                    </td>
+                                                    <td align="right">
+                                                        {{ $faculty['totalPercentage'] }}%
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+
+
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 ">
+                                <h5>About</h5>
+                                <div class="text-italic text-secondary">No brief description, or topic provided.</div>
+                                <div class="mt-4">
+                                    <a class="custom-link" href="{{ route('admin.evaluation_schedule.index') }}">
+                                        <i class="icon  cil-star"></i> Evaluation Date: January 1, 2024</a>
+                                </div>
+
+                                    <hr>
+                                    <div class="mt-2 center-container">
+                                        <h5>BSIT Department Result</h5>
+                                        <div class="pie" data-pie='{ "percent": 75, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }' data-pie-index="2" style="width:200px;height:200px;"></div>
+                                        <div class="labels">
+                                            <li>
+                                            <span class="dot" style="background-color: #24ACFE;"></span> Percentage
+                                        </li>
+
+
+                                    </div>
+                                    </div>
+                                    <hr>
+                                    <div class="mt-2 center-container">
+                                        <h6>BSIT Students</h6>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-bar" style="width: 40%; background-color: #6f42c1;"
+                                                title="Positive 40%"></div>
+                                            <div class="progress-bar" style="width: 50%; background-color: #e34c26;"
+                                                title="Negative 50%"></div>
+                                            <div class="progress-bar" style="width: 10%; background-color: #f1e05a;"
+                                                title="Neutral 10%"></div>
+                                        </div>
+                                        <div class="labels">
+                                            <li>
+                                            <span class="dot" style="background-color: #6f42c1;"></span> Verified 67
+                                        </li>
+                                        <li>
+                                            <span class="dot" style="background-color: #e34c26;"></span> Unverified 170
+                                        </li>
+
+                                        <li>
+                                            <span class="dot" style="background-color: #f1e05a;"></span> Pending 5
+                                        </li>
+
+                                    </div>
+                                </div>
+
+
+                                {{-- <hr>
+                            <h5 class="mb-4 text-bold">Sentiment Analysis</h5>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" style="width: 80%; background-color: #26e34c;"
+                                    title="Positive 80%"></div>
+                                <div class="progress-bar" style="width: 15%; background-color: #e34c26;"
+                                    title="Negative 15%"></div>
+                                <div class="progress-bar" style="width: 5%; background-color: #f1e05a;"
+                                    title="Neutral 5%"></div>
+                            </div>
+                            <div class="labels">
+                                <li>
+                                    <span class="dot" style="background-color: #26e34c;"></span> Positive 80%
+                                </li>
+                                <li>
+                                    <span class="dot" style="background-color: #e34c26;"></span> Negative 15%
+                                </li>
+
+                                <li>
+                                    <span class="dot" style="background-color: #f1e05a;"></span> Neutral 5%
+                                </li>
+
+                            </div> --}}
+                            </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="data-table" class="table mb-0 table border" data-toggle="default">
-                            <thead class=" table-light fw-semibold">
-                                <tr class="align-middle">
-                                    <th class="text-center">
-                                        <svg class="icon">
-                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-people"></use>
-                                        </svg>
-                                    </th>
-                                    <th>User</th>
-                                    <th class="">Avg. for Commitment</th>
-                                    <th>Avg. for Knowledge of the Subject</th>
-                                    <th>Avg. for Teaching of Effectiveness</th>
-                                    <th>Avg. for Management of learning</th>
-                                    <th align="right">Total Average</th>
-                                </tr>
-                            </thead>
-
-
-                            <tbody class="">
-                                @foreach ($facultyData as $faculty)
-                                    <tr class="align-middle">
-                                        <td class="text-center">
-                                            <div class="avatar avatar-lg"><img class="avatar-img"
-                                                    src="{{ $faculty['avatar'] }}" alt="user@email.com"><span
-                                                    class="avatar-status bg-success"></span></div>
-                                        </td>
-                                        <td>
-                                            <div class="text-nowrap">{{ $faculty['firstName'] }} {{ $faculty['lastName'] }}
-                                            </div>
-                                            <div class="small text-body-secondary text-nowrap"><span
-                                                    data-coreui-i18n="new">BSIT</span> | <span
-                                                    data-coreui-i18n="registered">Registered: </span><span
-                                                    data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan
-                                                    10, 2023</span></div>
-                                        </td>
-
-
-                                        <td align="right">
-                                            {{ $faculty['commitment_percent'] }}%
-                                        </td>
-                                        <td align="right">
-                                            {{ $faculty['knowledge_percent'] }}%
-                                        </td>
-                                        <td align="right">
-                                            {{ $faculty['teaching_percent'] }}%
-                                        </td>
-                                        <td class="" align="right">
-                                            {{ $faculty['management_percent'] }}%
-                                        </td>
-                                        <td align="right">
-                                            {{ $faculty['totalPercentage'] }}%
-                                        </td>
-                                    </tr>
-                                @endforeach
-
-
-                            </tbody>
-
-                        </table>
                     </div>
                     <div class="row mt-4">
 
@@ -273,8 +453,6 @@
                         <div class="col-xl-6">
                             <div class="card mb-4">
                                 <div class="card-body p-4">
-
-
                                     <div id="container3"></div>
                                 </div>
                             </div>
@@ -284,55 +462,63 @@
             </div>
 
         </div>
-    </div>
-    {{-- bar chart and pie --}}
-
-    {{-- bar sentiment analysis --}}
-    <div class="row">
-        <div class="col-xl-6 mb-4">
-            <div id="containerSentiment"></div>
         </div>
-        <div class="col-xl-6">
-            <div class="row">
-                <div class="col-md-4 col-xl-12">
-                    <div class="card mb-4 text-black bg-primary-gradient">
-                        <div id="wordcloudContainer"></div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="border-start border-start-4 border-start-success px-3 mb-3"><small
-                                        class="text-medium-emphasis">Postive</small>
-                                    <div class="fs-5 fw-semibold">9.123</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="border-start border-start-4 border-start-danger px-3 mb-3"><small
-                                        class="text-medium-emphasis">Negative</small>
-                                    <div class="fs-5 fw-semibold">22.643</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="border-start border-start-4 border-start-warning px-3 mb-3"><small
-                                        class="text-medium-emphasis">Neutral</small>
-                                    <div class="fs-5 fw-semibold">22.643</div>
-                                </div>
-                            </div>
+        {{-- bar chart and pie --}}
 
+        {{-- bar sentiment analysis --}}
+        <div class="row">
+            <div class="col-xl-6 mb-4">
+                <div id="containerSentiment"></div>
+            </div>
+            <div class="col-xl-6">
+                <div class="row">
+                    <div class="col-md-4 col-xl-12">
+                        <div class="card mb-4 text-black bg-primary-gradient">
+                            <div id="wordcloudContainer"></div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="border-start border-start-4 border-start-success px-3 mb-3"><small
+                                            class="text-medium-emphasis">Postive</small>
+                                        <div class="fs-5 fw-semibold">9.123</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border-start border-start-4 border-start-danger px-3 mb-3"><small
+                                            class="text-medium-emphasis">Negative</small>
+                                        <div class="fs-5 fw-semibold">22.643</div>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="border-start border-start-4 border-start-warning px-3 mb-3"><small
+                                            class="text-medium-emphasis">Neutral</small>
+                                        <div class="fs-5 fw-semibold">22.643</div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                </div>
-                {{-- <div class="col-md-4 col-xl-12">
+                    {{-- <div class="col-md-4 col-xl-12">
                     <div class="card mb-4 text-black bg-warning-gradient">
                         <div id="halfpie"></div>
                     </div>
                 </div> --}}
-            </div>
+                </div>
 
+            </div>
         </div>
-    </div>
-    </div>
+        </div>
+    @else
+        <div class="alert alert-primary" role="alert">
+            <i class="fas fa-info-circle"></i> No data available. Please check back later or contact support if you believe
+            this is an error.
+        </div>
+    @endif
+
 @endsection
 @push('scripts')
+    <script src="{{ asset('dist/circularProgressBar.min.js') }}"></script>
     <script src="{{ asset('admin/code/highcharts.js') }}"></script>
     <script src="{{ asset('admin/code/modules/series-label.js') }}"></script>
     <script src="{{ asset('admin/code/modules/exporting.js') }}"></script>
@@ -341,8 +527,13 @@
     <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const circle = new CircularProgressBar('pie');
+            circle.initial();
+
 
             document.getElementById('switch').addEventListener('click', function() {
+
+
                 const tableBody = document.querySelector('#data-table tbody');
                 const isDefaultData = tableBody.dataset.toggle === 'default';
 
@@ -704,6 +895,18 @@
                 }]
             });
 
+            const sentimentAnalysis = @json($overallSentimentAnalysisByFaculty);
+            const sentimentName = Object.keys(sentimentAnalysis);
+            const sentiments = Object.values(sentimentAnalysis);
+
+            const negativeData = sentiments.map(s => s.negative)
+            const positiveData = sentiments.map(s => s.positive)
+
+            console.log(positiveData)
+            console.log(negativeData)
+
+
+
             // bar chart sentiment
             Highcharts.chart("containerSentiment", {
                 chart: {
@@ -723,9 +926,7 @@
 
 
                 xAxis: {
-                    categories: ["Tokelau", "Ireland", "Italy", "Timor-Leste", "leee-me", 'tae-nasan',
-                        "lemnia"
-                    ],
+                    categories: sentimentName,
                 },
 
                 yAxis: [{
@@ -759,35 +960,26 @@
 
                 series: [{
                         name: "Postive",
-                        data: [92.5, 73.1, 64.8, 49.0, 89.9, 30, 7],
+                        data: positiveData,
                         tooltip: {
                             valueSuffix: "%",
                         },
                     },
                     {
                         name: "Negative",
-                        data: [33.7, 27.1, 24.9, 21.2, 21.5, 70, 89],
+                        data: negativeData,
                         yAxis: 1,
                     },
                 ],
             });
 
-               //wordcloud
-               const text =
-                "Chapter 1. Down the Rabbit-Hole " +
-                "Alice was beginning to get very tired of sitting by her sister on " +
-                "the bank, and of having nothing to do: " +
-                "once or twice she had peeped into the book her sister was reading, " +
-                "but it had no pictures or conversations " +
-                "in it, 'and what is the use of a book,' thought Alice " +
-                "'without pictures or conversation?'" +
-                "So she was considering in her own mind (as well as she could, for " +
-                "the hot day made her feel very sleepy " +
-                "and stupid), whether the pleasure of making a daisy-chain would be " +
-                "worth the trouble of getting up and picking " +
-                "the daisies, when suddenly a White Rabbit with pink eyes ran close " +
-                "by her.",
-                lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
+
+
+            //wordcloud
+
+            const comments = @json($comments);
+            const text = comments.join(" ");
+            lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
                 data = lines.reduce((arr, word) => {
                     let obj = Highcharts.find(arr, (obj) => obj.name === word);
                     if (obj) {

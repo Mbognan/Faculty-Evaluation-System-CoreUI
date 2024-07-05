@@ -39,8 +39,7 @@ class ClassListController extends Controller
 
     public function addStudent():View{
         $facultyId = auth()->id();
-        $subjects = ClassList::where('user_id',$facultyId)->pluck('subject');
-
+        $subjects = ClassList::where('user_id',$facultyId)->distinct()->pluck('subject');
         $schedule = EvaluationSchedule::where('evaluation_status', 2)->first();
         return view('frontend.home.facultyadd',compact(['schedule','subjects']));
     }
@@ -83,7 +82,7 @@ class ClassListController extends Controller
         return to_route('faculty.class-list.index')->with('success',  'Student added successfully!');
     } catch (ModelNotFoundException $e) {
 
-        return redirect()->back()->with('warning','Subject does not exist!');
+        return redirect()->back()->with('warning','All field is required!');
     }
 
     }

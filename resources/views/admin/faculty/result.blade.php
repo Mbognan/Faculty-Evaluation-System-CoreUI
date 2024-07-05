@@ -1,5 +1,7 @@
 @extends('admin.layouts.master')
 <style>
+    @import url("https://code.highcharts.com/css/highcharts.css");
+
     .profile-social a {
         margin-right: 10px;
         /* Adjust as needed */
@@ -159,8 +161,7 @@
                             <hr>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <a class="btn btn-info text-white" target="__blank"
-                                        href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                                    <a class="btn btn-info text-white" target="__blank" href="#">Edit</a>
                                 </div>
                             </div>
                         </div>
@@ -174,9 +175,7 @@
                         <div class="card-body">
 
                             <div class="col-md-12 mb-4">
-                                {{-- <canvas class="chart" id="myChart" height="450" width="1377"
-                                    style="display: block; box-sizing: border-box; height: 300px; width: 918px;"></canvas>
-                                    --}}
+
                                 <figure class="highcharts-figure">
                                     <div id="containerDrilldown"></div>
 
@@ -184,49 +183,6 @@
                             </div>
 
                         </div>
-
-                        {{--
-                        <div class="card-footer">
-                            <div class="row row-cols-1 row-cols-md-4 text-center">
-                                @foreach ($allCategories as $index => $cat)
-                                    @php
-                                        $result = $resultsByCategory[$cat->title] ?? 0;
-                                        $percentage = ($result * 100) / 100;
-                                        $progressColor =
-                                            $percentage <= 40
-                                                ? 'bg-danger'
-                                                : ($percentage <= 60
-                                                    ? 'bg-warning'
-                                                    : ($percentage <= 80
-                                                        ? 'bg-primary'
-                                                        : ($percentage <= 90
-                                                            ? 'bg-info'
-                                                            : 'bg-success')));
-                                        $progressRate =
-                                            $percentage <= 40
-                                                ? 'Poor'
-                                                : ($percentage <= 60
-                                                    ? 'Fair'
-                                                    : ($percentage <= 80
-                                                        ? 'Satisfactory'
-                                                        : ($percentage <= 90
-                                                            ? 'Very Satisfactory'
-                                                            : 'Outstanding')));
-                                    @endphp
-                                    <div class="col mb-sm-2 mb-0">
-                                        <div class="text-medium-emphasis">{{ $cat->title }}</div>
-                                        <div class="fw-semibold">{{ $progressRate }} ({{ $result }} %)</div>
-                                        <div class="progress progress-thin mt-2">
-                                            <div class="progress-bar progress-bar1 {{ $progressColor }}"
-                                                role="progressbar" style="width: {{ $percentage }}%"
-                                                aria-valuenow="{{ $percentage }}" aria-valuemin="0"
-                                                aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div> --}}
-
                     </div>
                 </div>
 
@@ -277,12 +233,10 @@
                                 <div class="tab-pane fade show active" id="home"
                                     role="tabpanel"aria-labelledby="home-tab">
                                     <div class="d-flex justify-content-between mt-4">
-                                        <div>
-                                            <h4 class="card-title mb-0">Detailed Faculty Evaluation by Subject and Category
-                                                Percentage Breakdown</h4>
 
-                                        </div>
+                                        <diV>
 
+                                        </diV>
                                         <div class="btn-toolbar d-none d-md-block" role="toolbar"
                                             aria-label="Toolbar with buttons">
                                             <form method="POST"
@@ -310,14 +264,15 @@
 
                                     </div>
                                     <div class="col-lg-12 mt-4">
-                                        <div class="card-body">
-                                            <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1000">
-                                                <div class="c-chart-wrapper">
+                                        <div class="">
+
+                                            <div id="container2" class="mt-4"></div>
+                                            {{-- <div class="c-chart-wrapper">
                                                     <canvas class="chart" id="myChartStack" height="800"
                                                         width="1377"
                                                         style="display: block; box-sizing: border-box; height: 500px; width: 918px;"></canvas>
-                                                </div>
-                                            </div>
+                                                </div> --}}
+
                                         </div>
                                     </div>
                                 </div>
@@ -329,6 +284,7 @@
                                         </div>
                                     </div>
 
+
                                     <div class="row">
                                         <div class="col-md-6 mt-4">
                                             <div class="card mb-4">
@@ -336,13 +292,8 @@
 
                                                     <div class="example">
                                                         <div class="tab-content rounded-bottom">
-                                                            <div class="tab-pane p-3 active preview" role="tabpanel"
-                                                                id="preview-1002">
-                                                                <div class="c-chart-wrapper">
-                                                                    <canvas class="chart" id="canvas-4" height="800"
-                                                                        width="1377"
-                                                                        style="display: block; box-sizing: border-box; height: 500px; width: 918px;"></canvas>
-                                                                </div>
+                                                            <div class="c-chart-wrapper">
+                                                                <div id="containerRadar"></div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -390,10 +341,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                                     <div id="container"></div>
-                                    <p class="highcharts-description">
-                                        Chart showing how Highcharts can automatically compute a histogram from
-                                        source data.
-                                    </p>
+
                                 </div>
 
 
@@ -410,18 +358,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
         <div class="col-md-12">
             <div class="card mb-4">
                 <div class="card-header" data-coreui-i18n="trafficAndSales">Sentiment Analysis Section</div>
@@ -429,21 +365,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Sentiment Analysis -->
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <div class="card-title fs-4 fw-semibold">Setiment Analysis By Percentage</div>
-                                    <div class="card-subtitle text-disabled">1st Semester - 2024</div>
-                                    <div class="example">
-                                        <div class="tab-content rounded-bottom">
-                                            <div class="tab-pane p-3 active preview" role="tabpanel" id="preview-1002">
-                                                <div class="c-chart-wrapper">
-                                                    <canvas id="piecanva"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
+                                <div id="containerSentiment"></div>
+                                <hr>
+                                <div id="containerWord"></div>
+
+
+
                         </div>
                         <div class="col-lg-6">
                             <div class="card mb-4 bg-info text-white">
@@ -659,6 +587,8 @@
     <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
     <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
     <script src="{{ asset('admin/code/modules/histogram-bellcurve.js') }}"></script>
+    <script src="{{ asset('admin/code/highcharts-more.js') }}"></script>
+    <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -677,246 +607,105 @@
                 };
             });
 
-            combineData.sort((a, b) => b.mean - a.mean);
 
-            const sortedCategories = combineData.map(data => data.category);
-            const sortedResults = combineData.map(data => data.mean);
-
-            const data = {
-                labels: sortedCategories,
-                datasets: [{
-                    label: 'The Mean of each Category',
-                    data: sortedResults,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.5)',
-                        'rgba(255, 159, 64, 0.5)',
-                        'rgba(255, 205, 86, 0.5)',
-                        'rgba(75, 192, 192, 0.5)',
-                        'rgba(54, 162, 235, 0.5)',
-                        'rgba(153, 102, 255, 0.5)',
-                        'rgba(201, 203, 207, 0.5)'
-                    ],
-                    borderColor: [
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 159, 64)',
-                        'rgb(255, 205, 86)',
-                        'rgb(75, 192, 192)',
-                        'rgb(54, 162, 235)',
-                        'rgb(153, 102, 255)',
-                        'rgb(201, 203, 207)'
-                    ],
-
-                    borderWidth: 1
-                }]
-            };
-
-            const config = {
-                type: 'bar',
-                data: data,
-                options: {
-                    indexAxis: 'y',
-                    responsive: true,
-
-                    scales: {
-                        x: {
-                            beginAtZero: true,
-                            barPercentage: 0.5, // Adjust bar width (0.0 to 1.0)
-                            categoryPercentage: 0.5 // Adjust category width (0.0 to 1.0)
-                        },
-                        y: {
-                            beginAtZero: true,
-                            grace: 5,
-                        }
-                    }
-                }
-            };
-
-            const myChart = new Chart(
-                document.getElementById('myChart'),
-                config
-            );
-            // Pie Chart
-
-            const data2 = {
-                labels: ['Positive', 'Negative', 'Neutral'],
-                datasets: [{
-                    label: 'Number of Students',
-                    data: [200, 109, 77],
-                    backgroundColor: [
-                        'rgb(40, 167, 69)',
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    hoverOffset: 40
-                }]
-            };
-
-            const doughnutLabel = {
-                id: 'doughnutLabel',
-                beforeDatasetsDraw(chart, args, pluginOption) {
-                    const {
-                        ctx,
-                        data
-                    } = chart;
-                    ctx.save();
-                    const xCoor = chart.getDatasetMeta(0).data[0].x;
-                    const yCoor = chart.getDatasetMeta(0).data[0].y;
-
-                    ctx.font = 'bold 25px Arial';
-                    ctx.fillStyle = 'black';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(`${data2.labels[0]}:${data2.datasets[0].data[0]}`, xCoor, yCoor);
-                }
-            }
-
-            const config2 = {
-                type: 'doughnut',
-                data: data2,
-                options: {
-                    responsive: true,
-                    scales: {
-
-                    },
-                    plugins: {
-                        datalabels: {
-
-                            color: 'black',
-                            formatter: (value, context) => {
-                                const datapoints = context.chart.data.datasets[0].data;
-
-                                function totalSum(total, datapoint) {
-                                    return total + datapoint
-                                }
-                                const totalValue = datapoints.reduce(totalSum, 0)
-                                const totalPercentage = (value / totalValue * 100).toFixed(2)
-                                return `${totalPercentage}%`
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels, doughnutLabel, ]
-            };
-
-            const ctx = document.getElementById('piecanva').getContext('2d');
-            new Chart(ctx, config2);
-
-            const progressBars = document.querySelectorAll('.progress-bar1');
-            progressBars.forEach((progressBar, index) => {
-                const percentage = data.datasets[0].data[index] * 100 / 100;
-                if (percentage <= 40) {
-                    progressBar.classList.add('bg-danger');
-                } else if (percentage <= 60) {
-                    progressBar.classList.add('bg-warning');
-                } else if (percentage <= 80) {
-                    progressBar.classList.add('bg-primary');
-                } else {
-                    progressBar.classList.add('bg-success');
-                }
-            });
-
-            const colors = [
-                'rgba(255, 99, 132, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(54, 162, 235, 1)'
-            ];
-
-
-            const ctx3 = document.getElementById('myChartStack').getContext('2d');
-
-            const distinctSubjectSchedules = @json($distinctSubject);
-            const percentagesBySubjectAndCategory = @json($percentagesBySubjectAndCategory);
-            const categoryTitles = @json(array_values($categoryTitles));
-            const datasets = categoryTitles.map((categoryTitle, index) => {
-                return {
-                    label: categoryTitle,
-                    data: distinctSubjectSchedules.map(subject => {
-
-                        return (percentagesBySubjectAndCategory[subject][categoryTitle] || 0)
-                            .toFixed(2);
-                    }),
-                    backgroundColor: colors[index],
-                    borderColor: colors[index],
-                    borderWidth: 1,
-                    barThickness: 100
-                };
-            });
-
-            new Chart(ctx3, {
-                type: 'bar',
-                data: {
-                    labels: distinctSubjectSchedules,
-                    datasets: datasets
-                },
-                options: {
-                    plugins: {
-                        datalabels: {
-                            color: 'black' // Set the text color to black
-                        }
-                    },
-                    responsive: true,
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            stacked: true,
-                            beginAtZero: true,
-                            grace: 4
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-
-            function getRandomColor() {
-                const r = Math.floor(Math.random() * 255);
-                const g = Math.floor(Math.random() * 255);
-                const b = Math.floor(Math.random() * 255);
-                return `rgba(${r}, ${g}, ${b}, 1)`;
-            }
+            //radar chart
             const chartData = @json($overallPercentageBySubject);
 
             const labelsRadar = Object.keys(chartData);
             const dataRadar = Object.values(chartData);
 
-            const radarChart = new Chart(document.getElementById('canvas-4'), {
-                type: 'radar',
-                data: {
-                    labels: labelsRadar,
-                    datasets: [{
-                        label: 'Radar Chart',
-                        backgroundColor: 'rgba(151, 187, 205, 0.2)',
-                        borderColor: 'rgba(151, 187, 205, 1)',
-                        pointBackgroundColor: 'rgba(151, 187, 205, 1)',
-                        pointBorderColor: '#fff',
-                        pointHighlightFill: '#fff',
-                        pointHighlightStroke: 'rgba(151, 187, 205, 1)',
-                        data: dataRadar
-                    }]
+
+            Highcharts.chart("containerRadar", {
+                chart: {
+                    polar: true,
+                    type: "line",
                 },
-                options: {
-                    responsive: true,
-                    scales: {
-                        r: {
-                            beginAtZero: true,
-                            max: 100,
-                            ticks: {
-                                beginAtZero: true,
-                                max: 100
-                            }
-                        }
-                    }
-                }
+
+                accessibility: {
+                    description: "A spiderweb chart compares the allocated budget " +
+                        "against actual spending within an organization. The spider " +
+                        "chart has six spokes. Each spoke represents one of the 6 " +
+                        "departments within the organization: sales, marketing, " +
+                        "development, customer support, information technology and " +
+                        "administration. The chart is interactive, and each data point " +
+                        "is displayed upon hovering. The chart clearly shows that 4 of " +
+                        "the 6 departments have overspent their budget with Marketing " +
+                        "responsible for the greatest overspend of $20,000. The " +
+                        "allocated budget and actual spending data points for each " +
+                        "department are as follows: Sales. Budget equals $43,000; " +
+                        "spending equals $50,000. Marketing. Budget equals $19,000; " +
+                        "spending equals $39,000. Development. Budget equals $60,000; " +
+                        "spending equals $42,000. Customer support. Budget equals $35," +
+                        "000; spending equals $31,000. Information technology. Budget " +
+                        "equals $17,000; spending equals $26,000. Administration. Budget " +
+                        "equals $10,000; spending equals $14,000.",
+                },
+
+                title: {
+                    text: "Radar Chart",
+                    x: -80,
+                },
+
+                pane: {
+                    size: "80%",
+                },
+
+                xAxis: {
+                    categories: labelsRadar,
+                    tickmarkPlacement: "on",
+                    lineWidth: 0,
+                },
+
+                yAxis: {
+                    gridLineInterpolation: "polygon",
+                    lineWidth: 0,
+                    min: 0,
+                    max: 100,
+                    tickInterval: 20,
+                },
+
+                tooltip: {
+                    shared: true,
+                    pointFormat: '<span style="color:{series.color}">{series.name}: <b>' +
+                        "%{point.y:,.0f}</b><br/>",
+                },
+
+                legend: {
+                    align: "right",
+                    verticalAlign: "middle",
+                    layout: "vertical",
+                },
+
+                series: [{
+                    name: "Percentage",
+                    type: "area",
+                    data: dataRadar,
+                    pointPlacement: "on",
+                }, ],
+
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 500,
+                        },
+                        chartOptions: {
+                            legend: {
+                                align: "center",
+                                verticalAlign: "bottom",
+                                layout: "horizontal",
+                            },
+                            pane: {
+                                size: "70%",
+                            },
+                        },
+                    }, ],
+                },
             });
-
-
 
         });
 
         // Histogram Chart
-        const data = @json($histogramData);
+        const data9 = @json($histogramData);
 
         Highcharts.chart('container', {
             title: {
@@ -926,13 +715,19 @@
                 title: {
                     text: 'Total Rating'
                 },
-                alignTicks: false
+                alignTicks: false,
+                min: 0,
+                max: 25
+
+
             },
             yAxis: {
                 title: {
                     text: 'Number of Evaluator'
                 },
-                alignTicks: false
+                alignTicks: false,
+                min: 0,
+
             },
             plotOptions: {
                 histogram: {
@@ -952,91 +747,344 @@
             }, {
                 name: 'Data',
                 type: 'scatter',
-                data: data,
+                data: data9,
                 id: 's1',
                 visible: false,
                 showInLegend: false
             }]
         });
 
+
+        //over alll result by category bar chart
+
+        const drilldownData = @json($overAllMean);
+
+        var seriesData = [];
+        for (let key in drilldownData) {
+            let numericValue = parseFloat(drilldownData[key]);
+            seriesData.push({
+                name: key,
+                y: numericValue,
+
+            });
+        }
+
+
         Highcharts.chart("containerDrilldown", {
-        chart: {
-            type: "column",
-        },
-        title: {
-            align: "left",
-            text: "Browser market shares. January, 2022",
-        },
-        subtitle: {
-            align: "left",
-            text: 'Click the columns to view versions. Source: <a href="http://statcounter.com" target="_blank">statcounter.com</a>',
-        },
-        accessibility: {
-            announceNewData: {
-                enabled: true,
+            chart: {
+                type: "column",
             },
-        },
-        xAxis: {
-            type: "category",
-        },
-        yAxis: {
             title: {
-                text: "Total percent market share",
+                align: "left",
+                text: "Overall Evaluation Result",
             },
-        },
-        legend: {
-            enabled: false,
-        },
-        plotOptions: {
-            series: {
-                borderWidth: 0,
-                dataLabels: {
+            subtitle: {
+                align: "left",
+                text: '1st Semester January, 2022',
+            },
+            accessibility: {
+                announceNewData: {
                     enabled: true,
-                    format: "{point.y:.1f}%",
-                    style: {
-                    textDecoration: 'none' // Remove underline from labels
-                }
                 },
             },
-        },
-
-        tooltip: {
-            headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-            pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
-                "<b>{point.y:.2f}%</b> of total<br/>",
-        },
-
-        series: [{
-            name: "Browsers",
-            colorByPoint: true,
-            data: [{
-                    name: "Commitment",
-                    y: 44,
-
+            xAxis: {
+                type: "category",
+            },
+            yAxis: {
+                title: {
+                    text: "Overall Evaluation Result",
                 },
-                {
-                    name: "Knowledge of the Subject",
-                    y: 19.84,
-
+                min: 0,
+                max: 100
+            },
+            legend: {
+                enabled: false,
+            },
+            plotOptions: {
+                series: {
+                    borderWidth: 0,
+                    dataLabels: {
+                        enabled: true,
+                        format: "{point.y:.1f}%",
+                        style: {
+                            textDecoration: 'none' // Remove underline from labels
+                        }
+                    },
                 },
-                {
-                    name: "Teaching of Independent Learning",
-                    y: 88,
+            },
 
-                },
-                {
-                    name: "Management of Learning",
-                    y: 67,
+            tooltip: {
+                headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                pointFormat: '<span style="color:{point.color}">{point.name}</span>: ' +
+                    "<b>{point.y:.2f}%</b> of total<br/>",
+            },
 
-                },
+            series: [{
+                name: "Browsers",
+                colorByPoint: true,
+                data: seriesData
+            }, ],
 
-            ],
-        }, ],
+        });
+        // bar stacked
+        var totalMeanByCategory = @json($totalMeanByCategory);
+        console.log(totalMeanByCategory);
+        var subjects = Object.keys(totalMeanByCategory);
+        var categories = Object.keys(totalMeanByCategory[subjects[0]]);
+        var seriesData = [];
+
+        categories.forEach(function(category) {
+            var data = [];
+            subjects.forEach(function(subject) {
+                var meanValue = totalMeanByCategory[subject][category] ? totalMeanByCategory[
+                    subject][category].toFixed(2) : 0.00;
+                data.push(parseFloat(meanValue));
+            })
+            seriesData.push({
+                name: category,
+                data: data,
+            });
 
         });
 
+        Highcharts.chart('container2', {
+            chart: {
+                type: 'bar'
+            },
+            title: {
+                text: 'Average Faculty Performance Evaluation Scores by Subject and Category'
+            },
+            xAxis: {
+                categories: subjects,
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Goals'
+                }
+            },
+            legend: {
+                reversed: true
+            },
+            exporting: {
+                enabled: false,
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal',
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: seriesData,
+        });
 
 
+        (function(H) {
+            H.seriesTypes.pie.prototype.animate = function(init) {
+                const series = this,
+                    chart = series.chart,
+                    points = series.points,
+                    {
+                        animation
+                    } = series.options,
+                    {
+                        startAngleRad
+                    } = series;
 
+                function fanAnimate(point, startAngleRad) {
+                    const graphic = point.graphic,
+                        args = point.shapeArgs;
+
+                    if (graphic && args) {
+                        graphic
+                            // Set inital animation values
+                            .attr({
+                                start: startAngleRad,
+                                end: startAngleRad,
+                                opacity: 1,
+                            })
+                            // Animate to the final position
+                            .animate({
+                                    start: args.start,
+                                    end: args.end,
+                                }, {
+                                    duration: animation.duration / points.length,
+                                },
+                                function() {
+                                    // On complete, start animating the next point
+                                    if (points[point.index + 1]) {
+                                        fanAnimate(points[point.index + 1], args.end);
+                                    }
+                                    // On the last point, fade in the data labels, then
+                                    // apply the inner size
+                                    if (point.index === series.points.length - 1) {
+                                        series.dataLabelsGroup.animate({
+                                                opacity: 1,
+                                            },
+                                            void 0,
+                                            function() {
+                                                points.forEach((point) => {
+                                                    point.opacity = 1;
+                                                });
+                                                series.update({
+                                                        enableMouseTracking: true,
+                                                    },
+                                                    false
+                                                );
+                                                chart.update({
+                                                    plotOptions: {
+                                                        pie: {
+                                                            innerSize: "40%",
+                                                            borderRadius: 8,
+                                                        },
+                                                    },
+                                                });
+                                            }
+                                        );
+                                    }
+                                }
+                            );
+                    }
+                }
+
+                if (init) {
+                    // Hide points on init
+                    points.forEach((point) => {
+                        point.opacity = 0;
+                    });
+                } else {
+                    fanAnimate(points[0], startAngleRad);
+                }
+            };
+        })(Highcharts);
+
+        Highcharts.chart("containerSentiment", {
+            chart: {
+                type: "pie",
+            },
+            title: {
+                text: "Departamental Strength of the Company",
+                align: "left",
+            },
+            subtitle: {
+                text: "Custom animation of pie series",
+                align: "left",
+            },
+            exporting:{
+                enabled: false,
+            },
+            tooltip: {
+                pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: "%",
+                },
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    borderWidth: 2,
+                    cursor: "pointer",
+                    dataLabels: {
+                        enabled: true,
+                        format: "<b>{point.name}</b><br>{point.percentage:.1f}%",
+                        distance: 20,
+                    },
+                },
+            },
+
+            series: [{
+                // Disable mouse tracking on load, enable after custom animation
+                enableMouseTracking: false,
+                animation: {
+                    duration: 2000,
+                },
+
+
+                data: [{
+                        name: "Neutral",
+                        y: 190,
+                        color:"#FF0000 "
+                    },
+                    {
+                        name: "Negative",
+                        y: 50.4,
+                        color: "##FFA500"
+                    },
+                    {
+                        name: "Positive",
+                        y: 99,
+                    },
+                ],
+            }, ],
+        });
+
+        const text =
+          "Chapter 1. Down the Rabbit-Hole " +
+          "Alice was beginning to get very tired of sitting by her sister on " +
+          "the bank, and of having nothing to do: " +
+          "once or twice she had peeped into the book her sister was reading, " +
+          "but it had no pictures or conversations " +
+          "in it, 'and what is the use of a book,' thought Alice " +
+          "'without pictures or conversation?'" +
+          "So she was considering in her own mind (as well as she could, for " +
+          "the hot day made her feel very sleepy " +
+          "and stupid), whether the pleasure of making a daisy-chain would be " +
+          "worth the trouble of getting up and picking " +
+          "the daisies, when suddenly a White Rabbit with pink eyes ran close " +
+          "by her.",
+        lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
+        data = lines.reduce((arr, word) => {
+          let obj = Highcharts.find(arr, (obj) => obj.name === word);
+          if (obj) {
+            obj.weight += 1;
+          } else {
+            obj = {
+              name: word,
+              weight: 1,
+            };
+            arr.push(obj);
+          }
+          return arr;
+        }, []);
+
+      console.log(data);
+
+      Highcharts.chart("containerWord", {
+        accessibility: {
+          screenReaderSection: {
+            beforeChartFormat:
+              "<h5>{chartTitle}</h5>" +
+              "<div>{chartSubtitle}</div>" +
+              "<div>{chartLongdesc}</div>" +
+              "<div>{viewTableButton}</div>",
+          },
+        },
+        series: [
+          {
+            type: "wordcloud",
+            data,
+            name: "Occurrences",
+          },
+        ],
+        title: {
+          text: "Wordcloud Most Common Words use ",
+          align: "left",
+        },
+        exporting:{
+            enabled: false,
+        },
+        subtitle: {
+          text: "keywords",
+          align: "left",
+        },
+        tooltip: {
+          headerFormat:
+            '<span style="font-size: 16px"><b>{point.key}</b>' + "</span><br>",
+        },
+      });
     </script>
 @endpush

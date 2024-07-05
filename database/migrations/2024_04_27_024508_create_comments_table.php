@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('faculty_id');
             $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
+            $table->foreignId('department_id')->constrained('departments');
             $table->string('post_comment');
             $table->foreignId('user_id')->constrained('users');
             $table->boolean('status')->default(0);
