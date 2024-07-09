@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Tokenform extends Model
 {
     use HasFactory;
+    protected $fillable = ['user_id','faculty_id','subject','evaluation_schedules_id'];
 }

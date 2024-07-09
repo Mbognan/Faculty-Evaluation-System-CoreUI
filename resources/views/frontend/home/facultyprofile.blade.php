@@ -1,7 +1,7 @@
 @extends('frontend.layouts.master')
 
 @section('home')
-    <section id="dashboard">
+    <section id="">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">

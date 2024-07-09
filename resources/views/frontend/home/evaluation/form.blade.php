@@ -24,7 +24,7 @@
     </style>
 
     @section('home')
-        <section class="mt-4">
+        <section class="mt-4 blog_pages">
             <div id="smartwizard">
                 <ul class="nav nav-progress">
                     @foreach ($categories as $category)
@@ -238,7 +238,7 @@
                         showPreviousButton: true,
                         showSubmitButton: true,
                         position: 'bottom',
-                        extraHtml: `<button class="btn btn-success" id="btnFinish" disabled onclick="submitEvaluation()"><span id="btnText">Submit</span>  <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span></button>`,
+                        extraHtml: `<button class="read_btn" id="btnFinish" disabled onclick="submitEvaluation()"><span id="btnText">Submit</span>  <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span></button>`,
                     },
                     anchor: {
                         enableNavigation: true,

@@ -1594,7 +1594,7 @@
                 <div class="alert alert-warning text-black">
                     <h6><i class="fas fa-exclamation-triangle"></i> Faculty Evaluation is not Available right now</h6>
                 </div>
-                @elseif ($valid === true && !empty($faculties) && $student->status === 1)
+                @elseif ($valid === false && !empty($faculties) && $student->status === 1)
                     <div class="alert alert-success text-black">
                         <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available as of the moment..</h6>
                     </div>

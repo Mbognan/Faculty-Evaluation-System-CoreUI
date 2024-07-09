@@ -15,4 +15,12 @@ class ResultByCategory extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function faculty(){
+        return $this->belongsTo(User::class, 'faculty_id');
+    }
+
+    public function evaluation_schedule(){
+        return $this->belongsTo(EvaluationSchedule::class, 'semester_id');
+    }
+
 }

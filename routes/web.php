@@ -7,9 +7,12 @@ use App\Http\Controllers\Frontend\AuthLoginController;
 use App\Http\Controllers\Frontend\ClassListController;
 use App\Http\Controllers\Frontend\EvaluationController;
 use App\Http\Controllers\Frontend\EvaluationFormController;
+
 use App\Http\Controllers\Frontend\FacultyController as FrontendFacultyController;
+use App\Http\Controllers\Frontend\HistoryEvaluationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SentimentAnalysisController;
+use App\Http\Controllers\Frontned\EvaluationHistoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +43,7 @@ Route::group(['middleware' => 'auth','user.type:user', 'prefix' => 'user', 'as' 
     Route::post('dashboard/evaluation-submit', [EvaluationFormController::class, 'store'])->name('evaluation-submit');
     Route::get('dashboard/evaluation-success', [EvaluationFormController::class, 'success'])->name('evaluation-success');
     Route::get('dashboard/evalutaion-subject/{id}', [EvaluationController::class, 'subject_choose'])->name('evaluation-subject');
+    Route::get('evaluation-history', [HistoryEvaluationController::class, 'index'])->name('index.evaluation-history');
 });
 
 
@@ -57,6 +61,7 @@ Route::group([
             Route::post('class-list-import', [ClassListController::class, 'uploadData'])->name('class-list.upload');
             Route::get('class-list-add', [ClassListController::class, 'addStudent'])->name('addStudent.index');
             Route::post('class-list-add-student', [ClassListController::class, 'store'])->name('store.index');
+
         });
 
 

@@ -19,7 +19,9 @@
 </head>
 <body>
     <style>
-
+        body{
+            background-color: #ECEFF1;
+        }
     </style>
     <!-- Header news -->
     @include('frontend.layouts.header')

@@ -6,14 +6,6 @@
         margin-right: 10px;
         /* Adjust as needed */
     }
-
-    .link-muted {
-        color: #aaa;
-    }
-
-    .link-muted:hover {
-        color: #1266f1;
-    }
 </style>
 @section('contents')
     <div class="fs-2 fw-semibold">Faculty</div>
@@ -366,9 +358,9 @@
                         <div class="col-lg-6">
                             <!-- Sentiment Analysis -->
 
-                                <div id="containerSentiment"></div>
-                                <hr>
-                                <div id="containerWord"></div>
+                            <div id="containerSentiment"></div>
+                            <hr>
+                            <div id="containerWord"></div>
 
 
 
@@ -589,6 +581,7 @@
     <script src="{{ asset('admin/code/modules/histogram-bellcurve.js') }}"></script>
     <script src="{{ asset('admin/code/highcharts-more.js') }}"></script>
     <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.umd.min.js"></script>
@@ -597,6 +590,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
             const category = {!! json_encode(array_keys($totalPercentageByCategory)) !!};
             const resultsByCategory = {!! json_encode(array_values($totalPercentageByCategory)) !!};
 
@@ -732,6 +726,7 @@
             plotOptions: {
                 histogram: {
                     binWidth: 1, // Set the bin width to 4
+                    color: '#0070c0',
                     accessibility: {
                         point: {
                             valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
@@ -881,210 +876,127 @@
         });
 
 
-        (function(H) {
-            H.seriesTypes.pie.prototype.animate = function(init) {
-                const series = this,
-                    chart = series.chart,
-                    points = series.points,
-                    {
-                        animation
-                    } = series.options,
-                    {
-                        startAngleRad
-                    } = series;
-
-                function fanAnimate(point, startAngleRad) {
-                    const graphic = point.graphic,
-                        args = point.shapeArgs;
-
-                    if (graphic && args) {
-                        graphic
-                            // Set inital animation values
-                            .attr({
-                                start: startAngleRad,
-                                end: startAngleRad,
-                                opacity: 1,
-                            })
-                            // Animate to the final position
-                            .animate({
-                                    start: args.start,
-                                    end: args.end,
-                                }, {
-                                    duration: animation.duration / points.length,
-                                },
-                                function() {
-                                    // On complete, start animating the next point
-                                    if (points[point.index + 1]) {
-                                        fanAnimate(points[point.index + 1], args.end);
-                                    }
-                                    // On the last point, fade in the data labels, then
-                                    // apply the inner size
-                                    if (point.index === series.points.length - 1) {
-                                        series.dataLabelsGroup.animate({
-                                                opacity: 1,
-                                            },
-                                            void 0,
-                                            function() {
-                                                points.forEach((point) => {
-                                                    point.opacity = 1;
-                                                });
-                                                series.update({
-                                                        enableMouseTracking: true,
-                                                    },
-                                                    false
-                                                );
-                                                chart.update({
-                                                    plotOptions: {
-                                                        pie: {
-                                                            innerSize: "40%",
-                                                            borderRadius: 8,
-                                                        },
-                                                    },
-                                                });
-                                            }
-                                        );
-                                    }
-                                }
-                            );
-                    }
-                }
-
-                if (init) {
-                    // Hide points on init
-                    points.forEach((point) => {
-                        point.opacity = 0;
-                    });
-                } else {
-                    fanAnimate(points[0], startAngleRad);
-                }
-            };
-        })(Highcharts);
-
-        Highcharts.chart("containerSentiment", {
+        Highcharts.chart('containerSentiment', {
             chart: {
-                type: "pie",
+                type: 'pie'
             },
             title: {
-                text: "Departamental Strength of the Company",
-                align: "left",
-            },
-            subtitle: {
-                text: "Custom animation of pie series",
-                align: "left",
-            },
-            exporting:{
-                enabled: false,
+                text: 'Egg Yolk Composition'
             },
             tooltip: {
-                pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>",
+                valueSuffix: '%'
             },
-            accessibility: {
-                point: {
-                    valueSuffix: "%",
-                },
+            subtitle: {
+                text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
             },
             plotOptions: {
-                pie: {
+                series: {
                     allowPointSelect: true,
-                    borderWidth: 2,
-                    cursor: "pointer",
-                    dataLabels: {
+                    cursor: 'pointer',
+                    dataLabels: [{
                         enabled: true,
-                        format: "<b>{point.name}</b><br>{point.percentage:.1f}%",
-                        distance: 20,
-                    },
-                },
+                        distance: 20
+                    }, {
+                        enabled: true,
+                        distance: -40,
+                        format: '{point.percentage:.1f}%',
+                        style: {
+                            fontSize: '1.2em',
+                            textOutline: 'none',
+                            opacity: 0.7
+                        },
+                        filter: {
+                            operator: '>',
+                            property: 'percentage',
+                            value: 10
+                        }
+                    }]
+                }
             },
-
             series: [{
-                // Disable mouse tracking on load, enable after custom animation
-                enableMouseTracking: false,
-                animation: {
-                    duration: 2000,
-                },
-
+                name: 'Percentage',
 
                 data: [{
-                        name: "Neutral",
-                        y: 190,
-                        color:"#FF0000 "
-                    },
-                    {
-                        name: "Negative",
-                        y: 50.4,
-                        color: "##FFA500"
-                    },
-                    {
-                        name: "Positive",
-                        y: 99,
-                    },
-                ],
-            }, ],
+                    name: 'Water',
+                y: 55.02,
+               color: Highcharts.getOptions().colors[5]
+            },
+            {
+                name: 'Fat',
+                sliced: true,
+                selected: true,
+                y: 26.71,
+                color: '#434348' // Custom color for Fat
+            },
+            {
+                name: 'Carbohydrates',
+                y: 20,
+                color: '#2ca02c' // Custom color for Carbohydrates
+            },
+
+                ]
+            }]
         });
 
         const text =
-          "Chapter 1. Down the Rabbit-Hole " +
-          "Alice was beginning to get very tired of sitting by her sister on " +
-          "the bank, and of having nothing to do: " +
-          "once or twice she had peeped into the book her sister was reading, " +
-          "but it had no pictures or conversations " +
-          "in it, 'and what is the use of a book,' thought Alice " +
-          "'without pictures or conversation?'" +
-          "So she was considering in her own mind (as well as she could, for " +
-          "the hot day made her feel very sleepy " +
-          "and stupid), whether the pleasure of making a daisy-chain would be " +
-          "worth the trouble of getting up and picking " +
-          "the daisies, when suddenly a White Rabbit with pink eyes ran close " +
-          "by her.",
-        lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
-        data = lines.reduce((arr, word) => {
-          let obj = Highcharts.find(arr, (obj) => obj.name === word);
-          if (obj) {
-            obj.weight += 1;
-          } else {
-            obj = {
-              name: word,
-              weight: 1,
-            };
-            arr.push(obj);
-          }
-          return arr;
-        }, []);
+            "Chapter 1. Down the Rabbit-Hole " +
+            "Alice was beginning to get very tired of sitting by her sister on " +
+            "the bank, and of having nothing to do: " +
+            "once or twice she had peeped into the book her sister was reading, " +
+            "but it had no pictures or conversations " +
+            "in it, 'and what is the use of a book,' thought Alice " +
+            "'without pictures or conversation?'" +
+            "So she was considering in her own mind (as well as she could, for " +
+            "the hot day made her feel very sleepy " +
+            "and stupid), whether the pleasure of making a daisy-chain would be " +
+            "worth the trouble of getting up and picking " +
+            "the daisies, when suddenly a White Rabbit with pink eyes ran close " +
+            "by her.",
+            lines = text.replace(/[():'?0-9]+/g, "").split(/[,\. ]+/g),
+            data = lines.reduce((arr, word) => {
+                let obj = Highcharts.find(arr, (obj) => obj.name === word);
+                if (obj) {
+                    obj.weight += 1;
+                } else {
+                    obj = {
+                        name: word,
+                        weight: 1,
+                    };
+                    arr.push(obj);
+                }
+                return arr;
+            }, []);
 
-      console.log(data);
+        console.log(data);
 
-      Highcharts.chart("containerWord", {
-        accessibility: {
-          screenReaderSection: {
-            beforeChartFormat:
-              "<h5>{chartTitle}</h5>" +
-              "<div>{chartSubtitle}</div>" +
-              "<div>{chartLongdesc}</div>" +
-              "<div>{viewTableButton}</div>",
-          },
-        },
-        series: [
-          {
-            type: "wordcloud",
-            data,
-            name: "Occurrences",
-          },
-        ],
-        title: {
-          text: "Wordcloud Most Common Words use ",
-          align: "left",
-        },
-        exporting:{
-            enabled: false,
-        },
-        subtitle: {
-          text: "keywords",
-          align: "left",
-        },
-        tooltip: {
-          headerFormat:
-            '<span style="font-size: 16px"><b>{point.key}</b>' + "</span><br>",
-        },
-      });
+        Highcharts.chart("containerWord", {
+            accessibility: {
+                screenReaderSection: {
+                    beforeChartFormat: "<h5>{chartTitle}</h5>" +
+                        "<div>{chartSubtitle}</div>" +
+                        "<div>{chartLongdesc}</div>" +
+                        "<div>{viewTableButton}</div>",
+                },
+            },
+            series: [{
+                type: "wordcloud",
+                data,
+                name: "Occurrences",
+            }, ],
+            title: {
+                text: "Wordcloud Most Common Words use ",
+                align: "left",
+            },
+            exporting: {
+                enabled: false,
+            },
+            subtitle: {
+                text: "keywords",
+                align: "left",
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size: 16px"><b>{point.key}</b>' + "</span><br>",
+            },
+        });
     </script>
 @endpush

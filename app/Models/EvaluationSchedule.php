@@ -12,4 +12,9 @@ class EvaluationSchedule extends Model
     public function evaluation_schedules(){
        return  $this->hasMany(ClassList::class);
     }
+
+    public function evaluation_schedule(){
+        return  $this->hasMany(ResultByCategory::class);
+     }
+
 }

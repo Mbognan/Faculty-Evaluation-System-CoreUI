@@ -40,85 +40,56 @@ class EvaluationFormController extends Controller
 
     public function store(Request $request)
     {
-
-        // dd($request->all());
-        // $anlyszer = new Analyzer;
-        // $tr = new GoogleTranslate();
-
         $userId = $request->input('user_id');
         $facultyId = $request->input('faculty_id');
         $subject = $request->input('subject');
         $schedule = $request->input('schedule');
+        $comment = $request->input('comment');
 
-        //Tokenform
-        $token = new Tokenform();
-        $token->user_id = $userId;
-        $token->faculty_id = $facultyId;
-        $token->subject = $subject;
-        $token->evaluation_schedules_id = $schedule;
-        $token->save();
+        $userDepartment = User::findOrFail($userId);
+        $department_id = $userDepartment->department_id;
 
-        //comment store raw
-        $commentStore = new Comments();
-        $commentStore->user_id = $userId;
-        $commentStore->faculty_id = $facultyId;
-        $commentStore->post_comment = $request->comment;
-        $commentStore->evaluation_schedules_id = $schedule;
-        $commentStore->save();
+        // Tokenform
+        Tokenform::create([
+            'user_id' => $userId,
+            'faculty_id' => $facultyId,
+            'subject' => $subject,
+            'evaluation_schedules_id' => $schedule,
+        ]);
 
-        $commentsId = $commentStore->id;
+        // Comment store raw
+        $commentStore = Comments::create([
+            'user_id' => $userId,
+            'faculty_id' => $facultyId,
+            'post_comment' => $comment,
+            'evaluation_schedules_id' => $schedule,
+            'department_id' => $department_id,
+        ]);
 
-       //comment analysis
-       $sentiment = new Sentiment();
-        // $tr->setSource('tl');
-        // $tr->setTarget('en');
-
-        // $translatedText = $tr->translate($request->comment);
-        // $output = $anlyszer->getSentiment($translatedText);
-        // $mood = '';
-        // if ($output['compound'] < -0.05) {
-        //     $mood = 'Negative';
-        // } elseif ($output['compound'] > 0.05) {
-        //     $mood = 'Positive';
-        // } else {
-        //     $mood = 'Neutral';
-        // }
-
-
+        // Sentiment analysis
         $pythonPath = 'C:\laragon\bin\python\python-3.10\python.exe';
         $pythonScriptPath = base_path('app/Http/PythonScripts/sentiment_analyze.py');
+        $text = escapeshellarg($comment);
+        $command = "$pythonPath $pythonScriptPath $text";
+        $output = shell_exec($command);
+        $mood = 'neutral';
+        if ($output !== null) {
+            $result = json_decode($output, true);
+            $mood = ucfirst(strtolower($result['sentiment']['label']));
+        }
 
-            $text = escapeshellarg($request->comment);
-            $command = "$pythonPath $pythonScriptPath $text";
-            $output = shell_exec($command);
-            if ($output !== null) {
-                $result = json_decode($output, true);
+        Sentiment::create([
+            'faculty_id' => $facultyId,
+            'comments_id' => $commentStore->id,
+            'sentiment' => $mood,
+            'user_id' => $userId,
+            'evaluation_schedules_id' => $schedule,
+        ]);
 
-                // Process sentiment and keywords
-                if ($result['sentiment']['label'] === 'NEGATIVE') {
-                    $mood = 'Negative';
-
-                } elseif ($result['sentiment']['label'] === 'POSITIVE') {
-                    $mood = 'Positive';
-                } else {
-                    $mood = 'neutral';
-                }
-            }
-
-
-
-        $sentiment->faculty_id = $facultyId;
-        $sentiment->comments_id = $commentsId;
-        $sentiment->sentiment = $mood;
-        $sentiment->user_id = $userId;
-        $sentiment->evaluation_schedules_id = $schedule;
-        $sentiment->save();
-
-
-
-        // evaluationresult
+        // Evaluation result
         $categoryTotal = [];
-        foreach ($request->except('_token', 'user_id', 'faculty_id','schedule') as $key => $rating) {
+        $rawEvaluationResults = [];
+        foreach ($request->except('_token', 'user_id', 'faculty_id', 'schedule', 'comment') as $key => $rating) {
             if (preg_match('/^q(\d+)_(\d+)$/', $key, $matches)) {
                 $categoryId = $matches[1];
                 $questionId = $matches[2];
@@ -128,53 +99,32 @@ class EvaluationFormController extends Controller
                 }
                 $categoryTotal[$categoryId] += $rating;
 
-                RawEvaluationResult::create([
+                $rawEvaluationResults[] = [
                     'question_id' => $questionId,
                     'user_id' => $userId,
                     'faculty_id' => $facultyId,
                     'category_id' => $categoryId,
                     'rating' => $rating,
                     'evaluation_schedules_id' => $schedule,
-                ]);
+                ];
             }
         }
+        RawEvaluationResult::insert($rawEvaluationResults);
 
-        //result by category ,by faculty , by student
-
+        // Result by category
+        $resultByCategory = [];
         foreach ($categoryTotal as $categoryId => $totalRating) {
-            ResultByCategory::create([
-                'by_subject' =>  $subject, // Replace with actual subject data if available
+            $resultByCategory[] = [
+                'by_subject' => $subject,
                 'results_by_category' => $totalRating,
                 'category_id' => $categoryId,
                 'user_id' => $userId,
                 'faculty_id' => $facultyId,
                 'semester_id' => $schedule,
-            ]);
+            ];
         }
+        ResultByCategory::insert($resultByCategory);
 
-        // Update existing results with new ratings
-        foreach ($categoryTotal as $categoryId => $totalRating) {
-            $existingResult = EvaluationResult::where('user_id', $facultyId)
-                ->where('category_id', $categoryId)
-                ->where('by_subject', $subject)
-                ->where('evaluation_schedules_id', $schedule)
-                ->first();
-
-            if ($existingResult) {
-                $existingResult->results_by_category += $totalRating;
-                $existingResult->save();
-            } else {
-                EvaluationResult::create([
-                    'user_id' => $facultyId,
-                    'category_id' => $categoryId,
-                    'results_by_category' => $totalRating,
-                    'by_subject' => $subject,
-                    'evaluation_schedules_id' => $schedule,
-                ]);
-            }
-        }
-
-        //
 
 
         toastr()->success('Form Submitted Successfully!');
