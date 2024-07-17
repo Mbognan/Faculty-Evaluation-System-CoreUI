@@ -21,8 +21,10 @@ class ResultByCategoryDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
+
             ->addColumn('action', function($query){
-                $view = '<a href="" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> View Details</a>';
+
+                $view = '<a href="'.route('user.viewPdf.index',['subject' => $query->by_subject,'faculty_id' => $query->faculty_id, 'semester_id' => $query->semester_id]).'" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> View Details</a>';
                 return $view;
             })
             ->editColumn('faculty_id' , function($query){

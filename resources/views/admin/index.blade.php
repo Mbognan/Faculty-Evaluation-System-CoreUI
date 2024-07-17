@@ -378,7 +378,7 @@
                                     <hr>
                                     <div class="mt-2 center-container">
                                         <h5>BSIT Department Result</h5>
-                                        <div class="pie" data-pie='{ "percent": 75, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }' data-pie-index="2" style="width:200px;height:200px;"></div>
+                                        <div class="pie" data-pie='{ "percent": {{ $OverallDepartmentPercentage }}, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }' data-pie-index="2" style="width:200px;height:200px;"></div>
                                         <div class="labels">
                                             <li>
                                             <span class="dot" style="background-color: #24ACFE;"></span> Percentage
@@ -391,23 +391,23 @@
                                     <div class="mt-2 center-container">
                                         <h6>BSIT Students</h6>
                                         <div class="progress-bar-container">
-                                            <div class="progress-bar" style="width: 40%; background-color: #6f42c1;"
-                                                title="Positive 40%"></div>
-                                            <div class="progress-bar" style="width: 50%; background-color: #e34c26;"
-                                                title="Negative 50%"></div>
-                                            <div class="progress-bar" style="width: 10%; background-color: #f1e05a;"
-                                                title="Neutral 10%"></div>
+                                            <div class="progress-bar" style="width: {{ $verifiedper }}%; background-color: #3399FF;"
+                                                title="{{ $verifiedper }}%"></div>
+                                            <div class="progress-bar" style="width: {{ $pendingper }}%; background-color: #f1e05a;"
+                                                title="{{ $pendingper }}%"></div>
+                                                <div class="progress-bar" style="width: {{ $rejectedper }}%; background-color: #e34c26;"
+                                                title="{{ $rejectedper }}%"></div>
                                         </div>
                                         <div class="labels">
                                             <li>
-                                            <span class="dot" style="background-color: #6f42c1;"></span> Verified 67
+                                            <span class="dot" style="background-color: #3399FF;"></span> Verified {{ $verified }}
                                         </li>
                                         <li>
-                                            <span class="dot" style="background-color: #e34c26;"></span> Unverified 170
+                                            <span class="dot" style="background-color: #e34c26;"></span> rejected {{ $rejected }}
                                         </li>
 
                                         <li>
-                                            <span class="dot" style="background-color: #f1e05a;"></span> Pending 5
+                                            <span class="dot" style="background-color: #f1e05a;"></span> Pending {{ $pending }}
                                         </li>
 
                                     </div>

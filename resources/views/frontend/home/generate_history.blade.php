@@ -2,8 +2,8 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>487adfe9-fdcf-4468-b716-ffadb23f9415</title>
-    <meta name="author" content="pitad21.labastidamilojr@gmail.com">
+    <title>Raw Evaluation Result</title>
+    <meta name="author" content="pitad21.simpakliw33@gmail.com">
     <style type="text/css">
         * {
             margin: 0;
@@ -242,14 +242,15 @@
             </tr>
         </tbody>
     </table>
+
     <p style="text-indent: 0pt;text-align: left;"><br></p>
-    <p class="s7" style="text-indent: 0pt;text-align: center;">Rating Period: SY<u>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </u>to<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </u>Term:<u> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
+    <p class="s7" style="text-indent: 0pt;text-align: center;">Rating Period: SY <u>&nbsp;&nbsp;&nbsp;{{ $sy }}
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </u>to <u>&nbsp;&nbsp;&nbsp; {{ $to }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </u>Term:<u> &nbsp;&nbsp;&nbsp; {{ $year->semester }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u></p>
     <p style="text-indent: 0pt;text-align: left;"><br></p>
-    <p class="s9" style="padding-left: 11pt;text-indent: 0pt;text-align: left; margin-left:20pt;">Name of Faculty:<u>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</u>
+    <p class="s9" style="padding-left: 11pt;text-indent: 0pt;text-align: left; margin-left:20pt;">Name of Faculty: <u>
+         {{ $faculty->first_name }} {{ $faculty->last_name }} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </u>
     </p>
     <p class="s9" style="padding-top: 9pt;padding-left: 11pt;text-indent: 0pt;text-align: left;margin-left:20pt;">Instruction:
         Please Evaluate the faculty using the scale below. Encircle your rating.</p>
@@ -354,187 +355,43 @@
     <p style="text-indent: 0pt;text-align: left;"><br></p>
     <table style="border-collapse:collapse;margin-left:20pt" cellspacing="0">
         <tbody>
-            @foreach ( $categories as $category )
-            <tr style="height:14pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                        A. {{ $category->title }}</p>
-                </td>
-                <td style="width:102pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                    colspan="5">
-                    <p class="s5" style="text-indent: 0pt;line-height: 12pt;text-align: center;">Scale</p>
-                </td>
-            </tr>
-            @foreach ($questions->where('category_id', $category->id) as $question )
-            <tr style="">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                        {{ $question->position + 1 }}. {{ $question->question }}</p>
-                </td>
-                <td
-                    style="width:27pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">5</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">4</p>
-                </td>
-                <td
-                    style="width:19pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">3</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">2</p>
-                </td>
-                <td
-                    style="width:20pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">1</p>
-                </td>
-            </tr>
+            @foreach ($categories as $category)
+                <tr style="height:14pt">
+                    <td style="width:465pt;border:1pt solid;">
+                        <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
+                            A. {{ $category->title }}</p>
+                    </td>
+                    <td style="width:102pt;border:1pt solid;" colspan="5">
+                        <p class="s5" style="text-indent: 0pt;line-height: 12pt;text-align: center;">Scale</p>
+                    </td>
+                </tr>
+                @foreach ($questions->where('category_id', $category->id) as $question)
+                    @php
+                        $rating = $rawdata->firstWhere('question_id', $question->id)->rating ?? null;
+                    @endphp
+                    <tr style="">
+                        <td style="width:465pt;border:1pt solid;">
+                            <p id="{{ $question->id }}" class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
+                                {{ $question->position + 1 }}. {{ $question->question }}</p>
+                        </td>
+                        @for ($i = 5; $i >= 1; $i--)
+                            <td style="width:{{ $i === 5 ? 27 : ($i === 4 || $i === 2 ? 18 : 19) }}pt;border:1pt solid;{{ $rating == $i ? 'background-color:#737171' : '' }}">
+                                <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">{{ $i }}</p>
+                            </td>
+                        @endfor
+                    </tr>
+                @endforeach
+                <tr style="height:14pt">
+                    <td style="width:465pt;border:1pt solid;">
+                        <p class="s5" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">Total Score</p>
+                    </td>
+                    <td style="width:102pt;border:1pt solid;" colspan="5">
+                        <p style="text-indent: 0pt;text-align: left;"><br></p>
+                    </td>
+                </tr>
             @endforeach
-            <tr style="height:14pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s5"
-                        style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">Total Score
-                    </p>
-                </td>
-                <td style="width:102pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                    colspan="5">
-                    <p style="text-indent: 0pt;text-align: left;"><br></p>
-                </td>
-            </tr>
-            @endforeach
-
-            {{-- <tr style="">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                        2. Integrates sensitively to his/her learning objectives with those of the students in a
-                        collaborative proccess</p>
-
-                </td>
-                <td
-                    style="width:27pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">5</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">4</p>
-                </td>
-                <td
-                    style="width:19pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">3</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">2</p>
-                </td>
-                <td
-                    style="width:20pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">1</p>
-                </td>
-            </tr> --}}
-            {{-- <tr style="height:14pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                        3. Make self available to students beyond official time</p>
-                </td>
-                <td
-                    style="width:27pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">5</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">4</p>
-                </td>
-                <td
-                    style="width:19pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">3</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">2</p>
-                </td>
-                <td
-                    style="width:20pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">1</p>
-                </td>
-            </tr>
-            <tr style="height:27pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                        4. Regularly comes to class on time will ground and well prepared to complete assigned</p>
-                    <p class="s11" style="padding-left: 23pt;text-indent: 0pt;line-height: 13pt;text-align: left;">
-                        responsibilities</p>
-                </td>
-                <td
-                    style="width:27pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">5</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">4</p>
-                </td>
-                <td
-                    style="width:19pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">3</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">2</p>
-                </td>
-                <td
-                    style="width:20pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="padding-top: 7pt;text-indent: 0pt;text-align: center;">1</p>
-                </td>
-            </tr>
-            <tr style="height:14pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s11" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
-                        5. Keeps accurate records of student’s performance and from submission of the same</p>
-                </td>
-                <td
-                    style="width:27pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">5</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">4</p>
-                </td>
-                <td
-                    style="width:19pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">3</p>
-                </td>
-                <td
-                    style="width:18pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">2</p>
-                </td>
-                <td
-                    style="width:20pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s3" style="text-indent: 0pt;line-height: 12pt;text-align: center;">1</p>
-                </td>
-            </tr>
-            <tr style="height:14pt">
-                <td
-                    style="width:465pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s5"
-                        style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">Total Score
-                    </p>
-                </td>
-                <td style="width:102pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt"
-                    colspan="5">
-                    <p style="text-indent: 0pt;text-align: left;"><br></p>
-                </td>
-            </tr> --}}
-
         </tbody>
+
     </table>
     <h1 style="padding-left: 25pt;text-indent: 0pt;text-align: left;">Legend for the Formula/Equation:</h1>
     <p style="margin-left:20pt; padding-top: 9pt;text-indent: 0pt;text-align: ;">

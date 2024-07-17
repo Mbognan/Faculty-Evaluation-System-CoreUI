@@ -109,14 +109,15 @@ class QuestionController extends Controller
 
     public function viewPdf(){
         $questions = Question::orderBy('position', 'asc')->get();
-
         $categories = Category::all();
-        $pdf = Pdf::loadView('admin.question.generate', ['questions' => $questions, 'categories' => $categories]);
+        $pdf = Pdf::loadView('admin.question.generate', ['questions' => $questions, 'categories' => $categories])
+        ->setPaper([0, 0,  8.5 * 72, 14.25 * 72], 'portrait');
         return $pdf->stream();
     }
 
     public function generatePdf(){
         $questions = Question::orderBy('position', 'asc')->get();
+
 
         $categories = Category::all();
 

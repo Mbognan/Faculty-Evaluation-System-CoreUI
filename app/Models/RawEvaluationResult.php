@@ -15,6 +15,7 @@ class RawEvaluationResult extends Model
         'category_id',
         'rating',
         'faculty_id',
+        'subject',
         'evaluation_schedule_id',
     ];
 }

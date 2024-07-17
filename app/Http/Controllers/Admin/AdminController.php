@@ -149,7 +149,7 @@ class AdminController extends Controller
         }
 
         $facultyCount = $facultyMembers->count();
-        $totalStudents = User::where('user_type', 'user')->where('department_id', $departmentHead->department_id)->count();
+        // $totalStudents = User::where('user_type', 'user')->where('department_id', $departmentHead->department_id)->count();
 
         $facultyResult = User::where('user_type', 'faculty')->pluck('id');
         $totalSudent = User::where('user_type', 'user')
@@ -176,15 +176,59 @@ class AdminController extends Controller
             !empty($overallCategoryAverages);
 
 
+            $departmentResults = ResultByCategory::whereIn('faculty_id', $facultyMembers->pluck('id'))->pluck('results_by_category');
+        $departmentSum = $departmentResults->map(function ($result) {
+            return $result ?? 0;
+        })->sum();
+        $departmentCount = $departmentResults->count();
+        $departmentAverage = $departmentCount > 0 ? $departmentSum / $departmentCount : 0;
+        $formattedDepartmentAverage = number_format($departmentAverage, 2);
+        $OverallDepartmentPercentage = $formattedDepartmentAverage > 0 ? ($formattedDepartmentAverage / 25 ) * 100: 0;
+
+
             $comments = Comments::where('evaluation_schedules_id', $schedule->id)
             ->where('status',1)
             ->where('department_id',$departmentHead->department_id)
             ->pluck('post_comment')
             ->toArray();
 
+            $status = [
+
+                'verified' => 1,
+                'rejected' => 2,
+                'pending' => 0,
+            ];
+            $result = [];
+
+            foreach( $status as $key => $stat){
+                $result[$key] = User::where('user_type', 'user')
+                ->where('department_id', $departmentHead->department_id)
+                ->where('status', $stat)
+                ->count();
+            }
+
+
+            $verified = $result['verified'];
+            $pending = $result['pending'];
+            $rejected = $result['rejected'];
+
+            $verifiedper = ($result['verified'] / $totalSudent) * 100;
+            $pendingper = ($result['pending'] / $totalSudent) * 100;
+            $rejectedper = ($result['rejected'] / $totalSudent) * 100;
+
+
+
+
 
         return view('admin.index', compact([
+            'verifiedper',
+            'pendingper',
+            'rejectedper',
+            'verified',
+            'pending',
+            'rejected',
             'facultyData',
+            'OverallDepartmentPercentage',
             'Department',
             'facultybyDepartment',
             'facultyResult',

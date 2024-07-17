@@ -105,6 +105,7 @@ class EvaluationFormController extends Controller
                     'faculty_id' => $facultyId,
                     'category_id' => $categoryId,
                     'rating' => $rating,
+                    'subject' => $subject,
                     'evaluation_schedules_id' => $schedule,
                 ];
             }

@@ -24,7 +24,7 @@
     </style>
 
     @section('home')
-        <section class="mt-4 blog_pages">
+        <section class=" ">
             <div id="smartwizard">
                 <ul class="nav nav-progress">
                     @foreach ($categories as $category)

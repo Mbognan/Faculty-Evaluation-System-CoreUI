@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth','user.type:user', 'prefix' => 'user', 'as' 
     Route::get('dashboard/evaluation-success', [EvaluationFormController::class, 'success'])->name('evaluation-success');
     Route::get('dashboard/evalutaion-subject/{id}', [EvaluationController::class, 'subject_choose'])->name('evaluation-subject');
     Route::get('evaluation-history', [HistoryEvaluationController::class, 'index'])->name('index.evaluation-history');
+    Route::get('evaluation-history-generate-result/{subject}/{faculty_id}/{semester_id}', [HistoryEvaluationController::class, 'viewPdf'])->name('viewPdf.index');
 });
 
 
