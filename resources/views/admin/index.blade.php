@@ -160,13 +160,13 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         /* Shadow on hover */
     }
-    .center-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
 
+    .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
 </style>
 
 @section('contents')
@@ -375,39 +375,47 @@
                                         <i class="icon  cil-star"></i> Evaluation Date: January 1, 2024</a>
                                 </div>
 
-                                    <hr>
-                                    <div class="mt-2 center-container">
-                                        <h5>BSIT Department Result</h5>
-                                        <div class="pie" data-pie='{ "percent": {{ $OverallDepartmentPercentage }}, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }' data-pie-index="2" style="width:200px;height:200px;"></div>
-                                        <div class="labels">
-                                            <li>
+                                <hr>
+                                <div class="mt-2 center-container">
+                                    <h5>BSIT Department Result</h5>
+                                    <div class="pie"
+                                        data-pie='{ "percent": {{ $OverallDepartmentPercentage }}, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }'
+                                        data-pie-index="2" style="width:200px;height:200px;"></div>
+                                    <div class="labels">
+                                        <li>
                                             <span class="dot" style="background-color: #24ACFE;"></span> Percentage
                                         </li>
 
 
                                     </div>
+                                </div>
+                                <hr>
+                                <div class="mt-2 center-container">
+                                    <h6>BSIT Students</h6>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar"
+                                            style="width: {{ $verifiedper }}%; background-color: #3399FF;"
+                                            title="{{ $verifiedper }}%"></div>
+                                        <div class="progress-bar"
+                                            style="width: {{ $pendingper }}%; background-color: #f1e05a;"
+                                            title="{{ $pendingper }}%"></div>
+                                        <div class="progress-bar"
+                                            style="width: {{ $rejectedper }}%; background-color: #e34c26;"
+                                            title="{{ $rejectedper }}%"></div>
                                     </div>
-                                    <hr>
-                                    <div class="mt-2 center-container">
-                                        <h6>BSIT Students</h6>
-                                        <div class="progress-bar-container">
-                                            <div class="progress-bar" style="width: {{ $verifiedper }}%; background-color: #3399FF;"
-                                                title="{{ $verifiedper }}%"></div>
-                                            <div class="progress-bar" style="width: {{ $pendingper }}%; background-color: #f1e05a;"
-                                                title="{{ $pendingper }}%"></div>
-                                                <div class="progress-bar" style="width: {{ $rejectedper }}%; background-color: #e34c26;"
-                                                title="{{ $rejectedper }}%"></div>
-                                        </div>
-                                        <div class="labels">
-                                            <li>
-                                            <span class="dot" style="background-color: #3399FF;"></span> Verified {{ $verified }}
+                                    <div class="labels">
+                                        <li>
+                                            <span class="dot" style="background-color: #3399FF;"></span> Verified
+                                            {{ $verified }}
                                         </li>
                                         <li>
-                                            <span class="dot" style="background-color: #e34c26;"></span> rejected {{ $rejected }}
+                                            <span class="dot" style="background-color: #e34c26;"></span> rejected
+                                            {{ $rejected }}
                                         </li>
 
                                         <li>
-                                            <span class="dot" style="background-color: #f1e05a;"></span> Pending {{ $pending }}
+                                            <span class="dot" style="background-color: #f1e05a;"></span> Pending
+                                            {{ $pending }}
                                         </li>
 
                                     </div>
@@ -749,151 +757,117 @@
             });
 
 
-            (function(H) {
-                H.seriesTypes.pie.prototype.animate = function(init) {
-                    const series = this,
-                        chart = series.chart,
-                        points = series.points,
-                        {
-                            animation
-                        } = series.options,
-                        {
-                            startAngleRad
-                        } = series;
 
-                    function fanAnimate(point, startAngleRad) {
-                        const graphic = point.graphic,
-                            args = point.shapeArgs;
-
-                        if (graphic && args) {
-
-                            graphic
-                                // Set inital animation values
-                                .attr({
-                                    start: startAngleRad,
-                                    end: startAngleRad,
-                                    opacity: 1
-                                })
-                                // Animate to the final position
-                                .animate({
-                                    start: args.start,
-                                    end: args.end
-                                }, {
-                                    duration: animation.duration / points.length
-                                }, function() {
-                                    // On complete, start animating the next point
-                                    if (points[point.index + 1]) {
-                                        fanAnimate(points[point.index + 1], args.end);
-                                    }
-                                    // On the last point, fade in the data labels, then
-                                    // apply the inner size
-                                    if (point.index === series.points.length - 1) {
-                                        series.dataLabelsGroup.animate({
-                                                opacity: 1
-                                            },
-                                            void 0,
-                                            function() {
-                                                points.forEach(point => {
-                                                    point.opacity = 1;
-                                                });
-                                                series.update({
-                                                    enableMouseTracking: true
-                                                }, false);
-                                                chart.update({
-                                                    plotOptions: {
-                                                        pie: {
-                                                            innerSize: '40%',
-                                                            borderRadius: 8
-                                                        }
-                                                    }
-                                                });
-                                            });
-                                    }
-                                });
-                        }
-                    }
-
-                    if (init) {
-                        // Hide points on init
-                        points.forEach(point => {
-                            point.opacity = 0;
-                        });
-                    } else {
-                        fanAnimate(points[0], startAngleRad);
-                    }
-                };
-            }(Highcharts));
             //pie chart
 
             var overallCategoryResult = @json($overallCategoryAverages);
-            var dataPie = [];
-
-
-            for (var categoryResult in overallCategoryResult) {
-                if (overallCategoryResult.hasOwnProperty(categoryResult)) {
-
-                    dataPie.push({
-                        name: categoryResult,
-                        y: parseFloat(overallCategoryResult[categoryResult])
-                    })
-                }
-            }
-
+            console.log(overallCategoryResult);
+            var labelsRadar = Object.keys(overallCategoryResult);
+            var dataRadar = Object.values(overallCategoryResult);
 
 
             Highcharts.chart('container3', {
-                chart: {
-                    type: 'pie',
-                    height: 600
-                },
-                title: {
-                    text: 'BSIT Department Overall Results'
-                },
-                tooltip: {
-                    valueSuffix: '%'
-                },
-                exporting: {
-                    enabled: false,
-                },
+    chart: {
+        type: 'pie',
+        height:600,
+        custom: {},
+        events: {
+            render() {
+                const chart = this,
+                    series = chart.series[0];
+                let customLabel = chart.options.chart.custom.label;
+
+                if (!customLabel) {
+                    customLabel = chart.options.chart.custom.label =
+                        chart.renderer.label(
+                            'Overall<br/>' +
+                            '<strong>75.31 %</strong>'
+                        )
+                            .css({
+                                color: '#000',
+                                textAnchor: 'middle'
+                            })
+                            .add();
+                }
+
+                const x = series.center[0] + chart.plotLeft,
+                    y = series.center[1] + chart.plotTop -
+                    (customLabel.attr('height') / 2);
+
+                customLabel.attr({
+                    x,
+                    y
+                });
+                // Set font size based on chart diameter
+                customLabel.css({
+                    fontSize: `${series.center[2] / 12}px`
+                });
+            }
+        }
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    title: {
+        text: 'BSIT Department Overall Evaluation'
+    },
+    exporting: {
+        enabled:false
+    },
+    subtitle: {
+        text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">2021-2022 1st Semester</a>'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+    },
+    legend: {
+        enabled: false
+    },
+    plotOptions: {
+        series: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            borderRadius: 8,
+            dataLabels: [{
+                enabled: true,
+                distance: 20,
+                format: '{point.name}'
+            }, {
+                enabled: true,
+                distance: -15,
+                format: '{point.percentage:.0f}%',
+                style: {
+                    fontSize: '0.9em'
+                }
+            }],
+            showInLegend: true
+        }
+    },
+    series: [{
+        name: 'Registrations',
+        colorByPoint: true,
+        innerSize: '65%',
+        data: [{
+            name: 'Commitment',
+            y: 23.9
+        }, {
+            name: 'Knowledge of the subject',
+            y: 12.6
+        }, {
+            name: 'Management Learning',
+            y: 37.0
+        }, {
+            name: 'Teaching Effectiveness',
+            y: 26.4
+        }]
+    }]
+});
 
 
-                subtitle: {
-                    text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
-                },
-                plotOptions: {
-                    series: {
-                        allowPointSelect: true,
-                        cursor: 'pointer',
-                        dataLabels: [{
-                            enabled: true,
-                            distance: 20
-                        }, {
-                            enabled: true,
-                            distance: -40,
-                            format: '{point.percentage:.1f}%',
-                            style: {
-                                fontSize: '1.2em',
-                                textOutline: 'none',
-                                opacity: 0.7
-                            },
-                            filter: {
-                                operator: '>',
-                                property: 'percentage',
-                                value: 10
-                            }
-                        }]
-                    }
-                },
-                series: [{
-                    name: 'Average',
-                    enableMouseTracking: false,
-                    animation: {
-                        duration: 2000
-                    },
-                    colorByPoint: true,
-                    data: dataPie
-                }]
-            });
+
+
 
             const sentimentAnalysis = @json($overallSentimentAnalysisByFaculty);
             const sentimentName = Object.keys(sentimentAnalysis);
@@ -902,8 +876,7 @@
             const negativeData = sentiments.map(s => s.negative)
             const positiveData = sentiments.map(s => s.positive)
 
-            console.log(positiveData)
-            console.log(negativeData)
+
 
 
 
@@ -994,7 +967,10 @@
                     return arr;
                 }, []);
 
-            console.log(data);
+
+            const minWeight = 2; // You can adjust this value as needed
+            const filteredData = data.filter(word => word.weight >= minWeight);
+
 
             Highcharts.chart("wordcloudContainer", {
                 accessibility: {
@@ -1007,7 +983,7 @@
                 },
                 series: [{
                     type: "wordcloud",
-                    data,
+                    data: filteredData,
                     name: "Occurrences",
                 }, ],
                 title: {

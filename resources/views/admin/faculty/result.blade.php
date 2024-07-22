@@ -881,13 +881,13 @@
                 type: 'pie'
             },
             title: {
-                text: 'Egg Yolk Composition'
+                text: 'Sentiment Analysis PIE'
             },
             tooltip: {
                 valueSuffix: '%'
             },
             subtitle: {
-                text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">MDPI</a>'
+                text: 'Source:<a href="" target="_default">Student Response</a>'
             },
             plotOptions: {
                 series: {
@@ -917,22 +917,25 @@
                 name: 'Percentage',
 
                 data: [{
-                    name: 'Water',
+                    name: 'Negative',
                 y: 55.02,
-               color: Highcharts.getOptions().colors[5]
+               color: Highcharts.getOptions().colors[3]
             },
             {
-                name: 'Fat',
+                name: 'Neutral',
                 sliced: true,
                 selected: true,
                 y: 26.71,
-                color: '#434348' // Custom color for Fat
+                color: Highcharts.getOptions().colors[2]
+
             },
             {
-                name: 'Carbohydrates',
+                name: 'Positive',
                 y: 20,
-                color: '#2ca02c' // Custom color for Carbohydrates
+                color: Highcharts.getOptions().colors[1]
+
             },
+
 
                 ]
             }]
