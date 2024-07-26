@@ -1,117 +1,93 @@
 @extends('frontend.layouts.master')
-<style>
-    .highcharts-figure,
-    .highcharts-data-table table {
-        min-width: 310px;
-        max-width: 800px;
-        margin: 1em auto;
-    }
 
-    #container {
-        height: 400px;
-    }
-
-    .highcharts-data-table table {
-        font-family: Verdana, sans-serif;
-        border-collapse: collapse;
-        border: 1px solid #ebebeb;
-        margin: 10px auto;
-        text-align: center;
-        width: 100%;
-        max-width: 500px;
-    }
-
-    .highcharts-data-table caption {
-        padding: 1em 0;
-        font-size: 1.2em;
-        color: #555;
-    }
-
-    .highcharts-data-table th {
-        font-weight: 600;
-        padding: 0.5em;
-    }
-
-    .highcharts-data-table td,
-    .highcharts-data-table th,
-    .highcharts-data-table caption {
-        padding: 0.5em;
-    }
-
-    .highcharts-data-table thead tr,
-    .highcharts-data-table tr:nth-child(even) {
-        background: #f8f8f8;
-    }
-
-    .highcharts-data-table tr:hover {
-        background: #f1f7ff;
-    }
-</style>
 @section('home')
     @auth
-    <div class="container mt-4 mb-4">
-        <div class="row">
-            <div class="col-lg-3">
-                @include('frontend.home.sidebar')
+
+
+
+<section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
+    <div class="fp__breadcrumb_overlay">
+        <div class="container">
+            <div class="fp__breadcrumb_text">
+                <h1>user dashboard</h1>
+                <ul>
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="#">dashboard</a></li>
+                </ul>
             </div>
+        </div>
+    </div>
+</section>
 
-            <div class="col-lg-9 ">
-                <div class="dashboard_content">
-                    <div class="manage_dashboard">
-                        <div class="row">
+<section class="fp__dashboard mt_70 xs_mt_90 mb_100 xs_mb_70">
+    <div class="container">
+        <div class="fp__dashboard_area">
+            <div class="row">
+                <div class="col-xl-3 col-lg-4 wow fadeInUp" data-wow-duration="1s">
+                    @include('frontend.home.sidebar')
+                </div>
+                <div class="col-xl-9 col-lg-8 wow fadeInUp" data-wow-duration="1s">
+                    <div class="fp__dashboard_content">
+                        <div class="tab-content" id="v-pills-tabContent">
+
+                            <div class="tab-pane fade show active" >
+                                <div class="fp_dashboard_body">
+
+                                    <div class="fp__dsahboard_overview">
 
 
-                            <div class="col-xl-12">
-                                <div class="active_package shadow p-3 mb-5 bg-white rounded" >
-                                    <h4>Sentiment Analysis Overall</h4>
-                                    <div id="container"></div>
-                                    {{-- <p class="highcharts-description">
-                                        The pie chart titled "Faculty Evaluation Result By Category" presents the performance
-                                        evaluation of faculty members in the BSIT Department, highlighting strengths and areas
-                                        for improvement across key categories: Commitment, Knowledge of Subjects, Management of
-                                        Learning, and Teaching for Independent Learning.
-                                    </p> --}}
+                                          <div id="container"></div>
+                                          <hr>
+                                          <div id="container2"></div>
+                                        <hr>
+
+
+                                    </div>
+                                    <div class="fp_dashboard_body dashboard_review">
+                                        <h3>Comments</h3>
+                                        <div class="fp__review_area">
+                                            <div class="fp__comment pt-0 mt_20">
+                                                @foreach ($sentiments as $sentiment )
+                                                      <div class="fp__single_comment m-1 border-1">
+                                                    <img src="{{ asset('default/Macaco NFT 🐒🔥.jpeg') }}" alt="review" class="img-fluid">
+                                                    <div class="fp__single_comm_text">
+                                                        <h3><a href="#">Unknown Student</a> <span>29 oct 2022 </span>
+                                                        </h3>
+                                                        <span class="rating">
+                                                            <span @if ($sentiment->sentiment === 'positive')
+                                                                 class="status warning"
+                                                            @elseif($sentiment->sentiment === 'negative')
+                                                                  class="status inactive"
+                                                            @elseif($sentiment->sentiment === 'neutral')
+                                                            style="background-color:#ffc107"
+                                                            @endif   class="status"  >{{ $sentiment->sentiment }}</span>
+                                                            <b>(BSIT Student)</b>
+                                                        </span>
+                                                        <p>{{ $sentiment->comments->post_comment }}</p>
+
+                                                    </div>
+                                                </div>
+                                                @endforeach
+
+
+                                                <a href="#" class="load_more">load More</a>
+                                            </div>
+                                        </div>
+                                    </div>
 
                                 </div>
                             </div>
+
+
+
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-12 mt-4">
-              <div class="dashboard_content">
-                  <div class="manage_dashboard">
-                      <div class="row">
-
-
-                          <div class="col-xl-12">
-                              <div class="active_package shadow p-3 mb-5 bg-white rounded" >
-                                  <h4>Word Cloud</h4>
-                                  <div id="container2"></div>
-                                  {{-- <p class="highcharts-description">
-                                      The pie chart titled "Faculty Evaluation Result By Category" presents the performance
-                                      evaluation of faculty members in the BSIT Department, highlighting strengths and areas
-                                      for improvement across key categories: Commitment, Knowledge of Subjects, Management of
-                                      Learning, and Teaching for Independent Learning.
-                                  </p> --}}
-                                  <hr>
-                                  <div class="my_listing">
-
-                                    <h4 style="justify-content: space-between">All Comments
-                                    </h4>
-                                    {{ $dataTable->table() }}
-                                </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-
         </div>
-
     </div>
+</section>
+
     @endauth
 
 
@@ -125,7 +101,29 @@
 <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
 <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
 <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
+
+
 <script>
+     $(document).ready(function() {
+            let reviewsToShow = 3;
+            let totalReviews = $(".fp__single_comment").length;
+
+
+            $(".fp__single_comment").hide().slice(0, reviewsToShow).show();
+
+            $(".load_more").on("click", function(e) {
+                e.preventDefault();
+                reviewsToShow = reviewsToShow + 2;
+                $(".fp__single_comment").slice(0, reviewsToShow).slideDown();
+
+
+                if (reviewsToShow >= totalReviews) {
+                    $(".load_more").fadeOut();
+                }
+            });
+        });
+      document.addEventListener('DOMContentLoaded', function() {
+
 
    const comments = @json($comments);
 
@@ -133,7 +131,7 @@
 
 // List of stop words
 const stopWords = [
-    "i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours",
+    "like","i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours",
     "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself",
     "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which",
     "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be",
@@ -360,6 +358,7 @@ Highcharts.chart("container2", {
           },
         ],
       });
+    });
 </script>
 {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
 

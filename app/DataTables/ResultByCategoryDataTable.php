@@ -24,7 +24,7 @@ class ResultByCategoryDataTable extends DataTable
 
             ->addColumn('action', function($query){
 
-                $view = '<a href="'.route('user.viewPdf.index',['subject' => $query->by_subject,'faculty_id' => $query->faculty_id, 'semester_id' => $query->semester_id]).'" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> View Details</a>';
+                $view = '<a href="'.route('user.viewPdf.index',['subject' => $query->by_subject,'faculty_id' => $query->faculty_id, 'semester_id' => $query->semester_id]).'" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> Review</a>';
                 return $view;
             })
             ->editColumn('faculty_id' , function($query){
@@ -46,14 +46,18 @@ class ResultByCategoryDataTable extends DataTable
 
         ->editColumn('total_score', function ($data) {
             $color = '';
+            $color2 = '';
             if($data->total_score < 60){
                 $color = 'red';
+                $color2 = 'cancel';
             }else if($data->total_score < 80){
                 $color = '#ffc107';
+                $color2 = 'active';
             }else{
                 $color = '#025043';
+                $color2 = 'complete';
             }
-            return '<span style="color:' .$color. ';">' . $data->total_score . ' / 100</span>';
+            return '<span class="'.$color2.'" style="color:' .$color. ';">' . $data->total_score . ' / 100</span>';
         })
         ->rawColumns(['total_score', 'action'])
 
@@ -125,7 +129,7 @@ class ResultByCategoryDataTable extends DataTable
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
-                  ->width(150)
+
                   ->addClass('text-center')
                   ->title('View'),
         ];

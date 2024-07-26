@@ -1,60 +1,142 @@
 @extends('frontend.layouts.master')
-<style>
-    .highcharts-figure,
-    .highcharts-data-table table {
-        min-width: 310px;
-        max-width: 800px;
-        margin: 1em auto;
-    }
 
-    #container {
-        height: 400px;
-    }
-
-    .highcharts-data-table table {
-        font-family: Verdana, sans-serif;
-        border-collapse: collapse;
-        border: 1px solid #ebebeb;
-        margin: 10px auto;
-        text-align: center;
-        width: 100%;
-        max-width: 500px;
-    }
-
-    .highcharts-data-table caption {
-        padding: 1em 0;
-        font-size: 1.2em;
-        color: #555;
-    }
-
-    .highcharts-data-table th {
-        font-weight: 600;
-        padding: 0.5em;
-    }
-
-    .highcharts-data-table td,
-    .highcharts-data-table th,
-    .highcharts-data-table caption {
-        padding: 0.5em;
-    }
-
-    .highcharts-data-table thead tr,
-    .highcharts-data-table tr:nth-child(even) {
-        background: #f8f8f8;
-    }
-
-    .highcharts-data-table tr:hover {
-        background: #f1f7ff;
-    }
-
-
-
-
-</style>
 @section('home')
     @auth
+        <style>
+            .highcharts-figure,
+            .highcharts-data-table table {
+                min-width: 310px;
+                max-width: 800px;
+                margin: 1em auto;
+            }
 
-        <div class="container mt-4">
+
+
+            .highcharts-data-table table {
+                font-family: Verdana, sans-serif;
+                border-collapse: collapse;
+                border: 1px solid #ebebeb;
+                margin: 10px auto;
+                text-align: center;
+                width: 100%;
+                max-width: 500px;
+            }
+
+            .highcharts-data-table caption {
+                padding: 1em 0;
+                font-size: 1.2em;
+                color: #555;
+            }
+
+            .highcharts-data-table th {
+                font-weight: 600;
+                padding: 0.5em;
+            }
+
+            .highcharts-data-table td,
+            .highcharts-data-table th,
+            .highcharts-data-table caption {
+                padding: 0.5em;
+            }
+
+            .highcharts-data-table thead tr,
+            .highcharts-data-table tr:nth-child(even) {
+                background: #f8f8f8;
+            }
+
+            .highcharts-data-table tr:hover {
+                background: #f1f7ff;
+            }
+        </style>
+        <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
+            <div class="fp__breadcrumb_overlay">
+                <div class="container">
+                    <div class="fp__breadcrumb_text">
+                        <h1>user dashboard</h1>
+                        <ul>
+                            <li><a href="index.html">home</a></li>
+                            <li><a href="#">dashboard</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="fp__dashboard mt_70 xs_mt_90 mb_100 xs_mb_70">
+            <div class="container">
+                <div class="fp__dashboard_area">
+                    <div class="row">
+                        <div class="col-xl-3 col-lg-4 wow fadeInUp" data-wow-duration="1s">
+                            @include('frontend.home.sidebar')
+                        </div>
+                        <div class="col-xl-9 col-lg-8 wow fadeInUp" data-wow-duration="1s">
+                            <div class="fp__dashboard_content">
+                                <div class="tab-content" id="v-pills-tabContent">
+
+                                    <div class="tab-pane fade show active">
+                                        <div class="fp_dashboard_body">
+                                            <div class="row">
+                                                <div class="col-xl-4 col-sm-6 col-md-4">
+                                                    <div class="fp__dsahboard_overview_item ">
+                                                        <span class="icon" style="background-color:#007bff"><i class="fas fa-users"></i></span>
+                                                        <h4 style="color:#007bff">Total Student<span style="color:#007bff">(106)</span></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-6 col-md-4">
+                                                    <div class="fp__dsahboard_overview_item green">
+                                                        <span class="icon"><i class="fas fa-user-check"></i></span>
+                                                        <h4>Complete Evaluation<span>(76)</span></h4>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 col-sm-6 col-md-4 mb-4">
+                                                    <div class="fp__dsahboard_overview_item ">
+                                                        <span class="icon"><i class="fas fa-user-clock"></i></span>
+                                                        <h4>Remaining Student <span>(20)</span></h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="fp__dsahboard_overview">
+
+
+
+                                                <div id="container"></div>
+
+
+                                                <hr>
+                                                <div id="container2" class="mt-4"></div>
+
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div id="container3" class="mt-4"></div>
+
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div id="container4" class="mt-4"></div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div id="container5" class="mt-4"></div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div id="container6" class="mt-4"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        {{-- <div class="container mt-4">
             <div class="row">
                 <div class="col-lg-3">
                     @include('frontend.home.sidebar')
@@ -143,19 +225,10 @@
 
                                         <div id="container"></div>
 
-                                {{-- <p class="highcharts-description">
-                                    The pie chart titled "Faculty Evaluation Result By Category" presents the performance
-                                    evaluation of faculty members in the BSIT Department, highlighting strengths and areas
-                                    for improvement across key categories: Commitment, Knowledge of Subjects, Management of
-                                    Learning, and Teaching for Independent Learning.
-                                </p> --}}
+
                                 <hr>
                                 <div id="container2" class="mt-4"></div>
-                                {{-- <p class="highcharts-description">
-                                    Bar chart showing horizontal columns. This chart type is often
-                                    beneficial for smaller screens, as the user can scroll through the data
-                                    vertically, and axis labels are easy to read.
-                                </p> --}}
+
 
                                 <hr>
 
@@ -183,7 +256,7 @@
 
 
             </div>
-        </div>
+        </div> --}}
 
     @endauth
 @endsection

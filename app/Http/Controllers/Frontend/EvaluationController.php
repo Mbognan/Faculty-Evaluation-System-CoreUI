@@ -38,7 +38,43 @@ class EvaluationController extends Controller
 
         $faculties = User::whereIn('id', $facultyIds)->where('user_type', 'faculty')->get();
 
-        return view('frontend.home.evaluation.eval',compact(['facultys','student','faculties','facultyIds','valid','schedule']));
+        $facultiesSubjects  = [];
+
+
+        foreach ($faculties as $faculty) {
+            $user = Auth::user();
+
+
+            $subjects = ClassList::where('student_id', $user->student_id)
+                                ->where('user_id', $faculty->id)
+                                ->pluck('subject');
+
+
+            $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
+            $schedule = ($schedules->count() === 1) ? $schedules->first() : null;
+
+            if ($schedule) {
+
+                $evaluatedSubjects = Tokenform::where('faculty_id', $faculty->id)
+                                            ->where('user_id', $user->id)
+                                            ->where('evaluation_schedules_id', $schedule->id)
+                                            ->pluck('subject');
+            } else {
+                $evaluatedSubjects = collect();
+            }
+
+            $remainingSubjects = $subjects->diff($evaluatedSubjects);
+
+            // Store the subjects and remaining subjects in the array
+            $facultiesSubjects[$faculty->id] = [
+                'subjects' => $subjects,
+                'remaining_subjects' => $remainingSubjects,
+            ];
+        }
+
+
+
+        return view('frontend.home.evaluation.eval',compact(['facultiesSubjects','facultys','student','faculties','facultyIds','valid','schedule']));
     }
 
     public function subject_choose(string $id){
