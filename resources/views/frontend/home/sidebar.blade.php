@@ -48,6 +48,12 @@
                         type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span><i class="fas fa-laugh-beam"></i></span> Sentiment Analysis</button>
                      </div>
                     </a>
+                    <a href="{{ route('faculty.class-list.index') }}">
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <button  @if (Route::currentRouteName() === 'faculty.class-list.index') class="nav-link active"  @endif  class="nav-link" id="v-pills-settings-tab" data-bs-toggle="pill" data-bs-target="#v-pills-settings"
+                            type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span><i class="fas fa-list-ul" aria-hidden="true"></i></span> Class List</button>
+                         </div>
+                        </a>
 
             @else
             <a href="{{ route('user.evaluation.index') }}">

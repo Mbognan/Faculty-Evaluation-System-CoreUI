@@ -64,6 +64,7 @@ class ClassListDataTable extends DataTable
                         Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
+
                     ]);
     }
 
@@ -74,8 +75,8 @@ class ClassListDataTable extends DataTable
     {
         return [
 
-            // Column::make('first_name'),
-            // Column::make('last_name'),
+            Column::make('id'),
+            Column::make('user_id'),
             // Column::make('middle_initials')->width(20),
             Column::make('student_id'),
             Column::make('subject'),

@@ -22,31 +22,32 @@
                     <div class="col-xl-3 col-lg-4 wow fadeInUp" data-wow-duration="1s">
                         @include('frontend.home.sidebar')
                     </div>
-                    @if ($student->status === 0)
-                        <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> Account is
-                            still
-                            pending please wait for further action!</div>
-                    @elseif ($student->status === 2)
-                        <div class="alert alert-danger "><i class="fas fa-skull-crossbones"></i>
-                            Account is rejected please contact
-                            the IT Department for Verification!</div>
-                    @endif
-
-                    @if ($valid === false)
-                        <div class="alert alert-warning text-black">
-                            <h6><i class="fas fa-exclamation-triangle"></i> Faculty Evaluation is not Available right now
-                            </h6>
-                        </div>
-                    @elseif ($valid === false && !empty($faculties) && $student->status === 1)
-                        <div class="alert alert-success text-black">
-                            <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available as of the moment..</h6>
-                        </div>
-                    @else
-                        <div class="col-xl-9 col-lg-8 wow fadeInUp" data-wow-duration="1s">
+                    <div class="col-xl-9 col-lg-8 wow fadeInUp" data-wow-duration="1s">
                             <div class="fp__dashboard_content">
                                 <div class="tab-content" id="v-pills-tabContent">
                                     <div class="fp_dashboard_body">
                                         <h3>to be evaluated </h3>
+                                    @if ($student->status === 0)
+                                        <div class="alert alert-warning text-black"><i class="fas fa-exclamation-triangle"></i> Account is
+                                            still
+                                            pending please wait for further action!</div>
+                                    @elseif ($student->status === 2)
+                                        <div class="alert alert-danger "><i class="fas fa-skull-crossbones"></i>
+                                            Account is rejected please contact
+                                            the IT Department for Verification!</div>
+                                    @endif
+
+                                    @if ($valid === false)
+                                        <div class="alert alert-warning text-black">
+                                            <h6><i class="fas fa-exclamation-triangle"></i> Faculty Evaluation is not Available right now
+                                            </h6>
+                                        </div>
+                                    @elseif (!empty($faculties) && $student->status === 1)
+                                        <div class="alert alert-success text-black">
+                                            <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available as of the moment..</h6>
+                                        </div>
+                                    @else
+
                                         <div class="fp__dashoard_wishlist">
                                             <div class="row">
                                                 @foreach ($faculties as $faculty)
@@ -102,6 +103,7 @@
 
                                         </div>
                                     </div>
+                                    @endif
 
 
 
@@ -110,7 +112,7 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+
                 </div>
             </div>
         </div>

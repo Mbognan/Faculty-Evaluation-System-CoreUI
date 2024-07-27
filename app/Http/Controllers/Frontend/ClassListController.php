@@ -30,6 +30,22 @@ class ClassListController extends Controller
         $facultyId = auth()->id();
         $schedule = EvaluationSchedule::where('evaluation_status', 2)->first('id');
 
+        $request->validate([
+            'users' => 'required|file|mimes:xls,xlsx',
+        ]);
+
+        if (!$request->hasFile('users')) {
+            toastr()->error('File not found in request');
+            return back();
+        }
+
+        $file = $request->file('users');
+        if (!$file->isValid()) {
+            toastr()->error('Invalid file upload');
+            return back();
+        }
+
+
 
 
         Excel::import((new ClassListImport)->withFacultyId($facultyId)->withSchedule($schedule->id), $request->file('users'));

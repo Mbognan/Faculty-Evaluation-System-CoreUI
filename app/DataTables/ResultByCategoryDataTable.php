@@ -71,14 +71,14 @@ class ResultByCategoryDataTable extends DataTable
     {
         $users = Auth::user();
 
-        // Retrieve distinct subjects evaluated by the user from ResultByCategory
+
         $subjects = ResultByCategory::where('user_id', $users->id)
             ->distinct()
             ->pluck('by_subject');
 
-        // Ensure subjects are not empty to avoid issues in the query
+
         if ($subjects->isEmpty()) {
-            // If no subjects found, return an empty query
+
             return $model->newQuery()->whereRaw('0 = 1');
         }
 

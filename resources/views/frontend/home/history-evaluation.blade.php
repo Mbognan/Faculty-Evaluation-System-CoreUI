@@ -7,7 +7,7 @@
 <style>
        .dataTables_filter {
     margin-bottom: 20px;
-}
+    }
 </style>
     <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
         <div class="fp__breadcrumb_overlay">
