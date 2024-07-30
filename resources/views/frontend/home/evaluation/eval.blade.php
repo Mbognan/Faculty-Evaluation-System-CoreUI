@@ -37,71 +37,82 @@
                                             the IT Department for Verification!</div>
                                     @endif
 
-                                    @if ($valid === false)
+                                    @if ($valid === false )
+
+
                                         <div class="alert alert-warning text-black">
                                             <h6><i class="fas fa-exclamation-triangle"></i> Faculty Evaluation is not Available right now
                                             </h6>
                                         </div>
-                                    @elseif (!empty($faculties) && $student->status === 1)
-                                        <div class="alert alert-success text-black">
-                                            <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available as of the moment..</h6>
-                                        </div>
+
+                                    @elseif(empty($evalfaculty))
+                                    <div class="alert alert-success ">
+                                        <h6><i class="far fa-grin-beam-sweat"></i> No Faculty Available fo evaluation for now..
+                                        </h6>
+                                    </div>
+
                                     @else
 
-                                        <div class="fp__dashoard_wishlist">
-                                            <div class="row">
-                                                @foreach ($faculties as $faculty)
-                                                    <div class="col-xl-4 col-sm-6 col-lg-6">
-                                                        <div class="fp__menu_item">
-                                                            <div class="fp__menu_item_img">
-                                                                <img src="{{ $faculty->avatar }}" alt="menu"
-                                                                    class="img-fluid w-100">
-                                                                <a class="category" href="#">BSIT Faculty</a>
-                                                            </div>
-                                                            <div class="fp__menu_item_text">
-                                                                <p class="rating">
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star"></i>
-                                                                    <i class="fas fa-star-half-alt"></i>
-                                                                    <i class="far fa-star"></i>
-                                                                    <span>54</span>
-                                                                </p>
-                                                                <a class="title"
-                                                                    href="menu_details.html">{{ $faculty->first_name }}
-                                                                    {{ $faculty->last_name }}</a>
+                                    <div class="fp__dashoard_wishlist">
+                                        <div class="row">
+                                            @foreach ($faculties as $faculty)
+                                                <div class="col-xl-4 col-sm-6 col-lg-6">
+                                                    <div class="fp__menu_item">
+                                                        <div class="fp__menu_item_img">
+                                                            <img src="{{ $faculty->avatar }}" alt="menu"
+                                                                class="img-fluid w-100">
+                                                            <a class="category" href="#">BSIT Faculty</a>
+                                                        </div>
+                                                        <div class="fp__menu_item_text">
+                                                            <p class="rating">
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star"></i>
+                                                                <i class="fas fa-star-half-alt"></i>
+                                                                <i class="far fa-star"></i>
+                                                                <span>54</span>
+                                                            </p>
+                                                            <a class="title"
+                                                                href="menu_details.html">{{ $faculty->first_name }}
+                                                                {{ $faculty->last_name }}</a>
 
 
-                                                                @if ($facultiesSubjects[$faculty->id]['remaining_subjects']->isEmpty())
-                                                                    <div class="alert alert-success" role="alert">
-                                                                        <h4 class="alert-heading"><i
-                                                                                class="fas fa-thumbs-up"></i> All subjects
-                                                                            evaluated!</h4>
-                                                                        <p>You have completed evaluations for all your
-                                                                            subjects for this faculty.</p>
-                                                                    </div>
-                                                                @else
-                                                                    <p>remeaning subject</p>
-                                                                    <ul class="d-flex flex-wrap justify-content-center">
-                                                                        @foreach ($facultiesSubjects[$faculty->id]['remaining_subjects'] as $remainingSubject)
-                                                                            <li><a
-                                                                                    href="{{ route('user.profile-evaluate', ['id' => $faculty->id, 'subject' => $remainingSubject, 'schedule' => $schedule->id]) }}">{{ $remainingSubject }}</a>
-                                                                            </li>
-                                                                        @endforeach
-                                                                    </ul>
-                                                                @endif
+                                                            @if ($facultiesSubjects[$faculty->id]['remaining_subjects']->isEmpty())
+                                                                <div class="alert alert-success" role="alert">
+                                                                    <h4 class="alert-heading"><i
+                                                                            class="fas fa-thumbs-up"></i> All subjects
+                                                                        evaluated!</h4>
+                                                                    <p>You have completed evaluations for all your
+                                                                        subjects for this faculty.</p>
+                                                                </div>
+                                                            @else
 
-                                                            </div>
+                                                                <p>remaining subject</p>
+
+
+                                                                <ul class="d-flex flex-wrap justify-content-center">
+                                                                    @foreach ($facultiesSubjects[$faculty->id]['remaining_subjects'] as $remainingSubject)
+                                                                        <li><a
+                                                                                href="{{ route('user.profile-evaluate', ['id' => $faculty->id, 'subject' => $remainingSubject, 'schedule' => $schedule->id]) }}">{{ $remainingSubject }}</a>
+                                                                        </li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            @endif
+
                                                         </div>
                                                     </div>
-                                                @endforeach
-
-
-                                            </div>
-
+                                                </div>
+                                            @endforeach
 
 
                                         </div>
+
+
+
+                                    </div>
+
+
+
                                     </div>
                                     @endif
 

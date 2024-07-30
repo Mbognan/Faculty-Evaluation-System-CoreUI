@@ -37,6 +37,7 @@ class EvaluationController extends Controller
         $facultyIds = ClassList::where('student_id', $student->student_id)->pluck('user_id')->toArray();
 
         $faculties = User::whereIn('id', $facultyIds)->where('user_type', 'faculty')->get();
+        $evalfaculty = ClassList::where('student_id', $student->student_id)->first();
 
         $facultiesSubjects  = [];
 
@@ -74,7 +75,7 @@ class EvaluationController extends Controller
 
 
 
-        return view('frontend.home.evaluation.eval',compact(['facultiesSubjects','facultys','student','faculties','facultyIds','valid','schedule']));
+        return view('frontend.home.evaluation.eval',compact(['evalfaculty','facultiesSubjects','facultys','student','faculties','facultyIds','valid','schedule']));
     }
 
     public function subject_choose(string $id){

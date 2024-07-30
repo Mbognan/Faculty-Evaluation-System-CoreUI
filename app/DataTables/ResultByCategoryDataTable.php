@@ -24,7 +24,7 @@ class ResultByCategoryDataTable extends DataTable
 
             ->addColumn('action', function($query){
 
-                $view = '<a href="'.route('user.viewPdf.index',['subject' => $query->by_subject,'faculty_id' => $query->faculty_id, 'semester_id' => $query->semester_id]).'" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> Review</a>';
+                $view = '<a href="'.route('user.viewPdf.index',['subject' => $query->by_subject,'faculty_id' => $query->faculty_id, 'semester_id' => $query->semester_id, 'user_id' =>$query->user_id]).'" class="view-item icon-link icon-link-hover"><i class="fas fa-download fa-lg "></i> Review</a>';
                 return $view;
             })
             ->editColumn('faculty_id' , function($query){

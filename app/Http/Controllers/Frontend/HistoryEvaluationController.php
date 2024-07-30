@@ -20,11 +20,13 @@ class HistoryEvaluationController extends Controller
         return $datatable->render('frontend.home.history-evaluation');
     }
 
-    public function viewPdf(string $subject, int $faculty_id, int $semester_id){
+    public function viewPdf(string $subject, int $faculty_id, int $semester_id, int $userId){
+
 
         $rawdata = RawEvaluationResult::where('faculty_id',$faculty_id)
         ->where('subject',$subject)
         ->where('evaluation_schedules_id',$semester_id)
+        ->where('user_id',$userId)
         ->get();
 
         $faculty = User::findOrFail($faculty_id);

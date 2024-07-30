@@ -74,24 +74,24 @@ class ClassListController extends Controller
 
 
 
+
         $request->validate([
             'StudentId'  => 'required',
             'semester' => 'required',
-            'academic_year' => 'required',
+            'subject' => 'required',
         ]);
+
+
 
         $subject = ClassList::where('subject', $request->subject)->firstOrFail();
 
-        $user = User::where('student_id', $request->StudentId)->get();
+        $user = User::where('student_id', $request->StudentId)->firstOrFail();
 
          $classList = new ClassList();
          $classList->user_id = $faculty->id;
-         $classList->first_name = $user->first_name;
-         $classList->last_name = $user->last_name;
         $classList->subject = $request->subject;
         $classList->student_id = $request->StudentId;
-        $classList->semester = $request->semester;
-        $classList->year = $request->academic_year;
+        $classList->evaluation_schedule_id = $request->semester;
         $classList->save();
 
 

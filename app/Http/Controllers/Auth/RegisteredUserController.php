@@ -36,6 +36,7 @@ class RegisteredUserController extends Controller
     {
 
 
+
         $user = User::create([
             'avatar' => '/default/avatar.png',
             'first_name' => $request->input('name'),
