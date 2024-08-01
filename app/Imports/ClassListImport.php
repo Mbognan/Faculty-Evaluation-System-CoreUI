@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Models\ClassList;
+use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -18,7 +19,8 @@ class ClassListImport implements ToModel,WithHeadingRow
 
     protected $facultyId;
     protected $schedule;
-
+    protected $invalidStudentIds = [];
+    protected $duplicateStudentIds = [];
     public function withSchedule($schedule){
         $this->schedule = $schedule;
 
@@ -36,6 +38,20 @@ class ClassListImport implements ToModel,WithHeadingRow
 
     $subject = $row['subject'];
     $studentId =  $row['student_id'] ;
+    $existingEnrollment = ClassList::where('subject', $subject)
+    ->where('student_id', $studentId)
+    ->where('user_id', $this->facultyId)
+    ->exists();
+
+    if ($existingEnrollment) {
+    $this->duplicateStudentIds[] = $studentId;
+    return null;
+    }
+
+    if (!User::where('student_id', $studentId)->exists()) {
+        $this->invalidStudentIds[] = $studentId;
+        return null;
+    }
         return new ClassList([
             "subject" => $subject,
             "student_id" => $studentId,
@@ -45,5 +61,13 @@ class ClassListImport implements ToModel,WithHeadingRow
 
 
 
+    }
+    public function getInvalidStudentIds()
+    {
+        return $this->invalidStudentIds;
+    }
+
+    public function duplicateStudentIds(){
+        return $this->duplicateStudentIds;
     }
 }

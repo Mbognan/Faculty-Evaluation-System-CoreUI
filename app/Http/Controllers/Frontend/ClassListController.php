@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\DataTables\ClassListDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClassListRequest;
 use App\Imports\ClassListImport;
 use App\Models\ClassList;
 use App\Models\EvaluationSchedule;
@@ -26,13 +27,16 @@ class ClassListController extends Controller
     public function import():View{
         return view('frontend.home.import');
     }
-    public function uploadData(Request $request){
+    public function uploadData(Request $request)
+    {
         $facultyId = auth()->id();
         $schedule = EvaluationSchedule::where('evaluation_status', 2)->first('id');
+
 
         $request->validate([
             'users' => 'required|file|mimes:xls,xlsx',
         ]);
+
 
         if (!$request->hasFile('users')) {
             toastr()->error('File not found in request');
@@ -45,13 +49,32 @@ class ClassListController extends Controller
             return back();
         }
 
+        try {
+
+            $import = new ClassListImport();
+            $import->withFacultyId($facultyId)->withSchedule($schedule->id);
 
 
+            Excel::import($import, $file);
 
-        Excel::import((new ClassListImport)->withFacultyId($facultyId)->withSchedule($schedule->id), $request->file('users'));
-        toastr()->success('Successfully imported!');
-        return to_route('faculty.class-list.index');
+            $duplicateStudentIds = $import->duplicateStudentIds();
+            if(!empty($duplicateStudentIds)){
+                return to_route('faculty.class-list.index')->with('warning','Some of the students have already been added to the class list');
+            }
+            $invalidStudentIds = $import->getInvalidStudentIds();
+            if (!empty($invalidStudentIds)) {
+                return to_route('faculty.class-list.index')->with( 'warning','The following student IDs do not exist and were not added: ' . implode(', ', $invalidStudentIds));
+
+            }
+
+            return to_route('faculty.class-list.index')
+            ->with('success', 'Students added successfully!');
+        } catch (\Exception $e) {
+            toastr()->error('An error occurred during file import: ' . $e->getMessage());
+            return back();
+        }
     }
+
 
     public function addStudent():View{
         $facultyId = auth()->id();
@@ -60,46 +83,51 @@ class ClassListController extends Controller
         return view('frontend.home.facultyadd',compact(['schedule','subjects']));
     }
 
-    public function store(Request $request){
-        $faculty =  Auth::user();
+    public function store(ClassListRequest $request){
+       $faculty =  Auth::user();
 
-        if (ClassList::where('subject', $request->subject)
-                 ->where('student_id', $request->StudentId)->where('user_id', $faculty->faculty_id)
-                 ->exists()) {
-
-        return redirect()->back()->with('warning',  'Student is already enrolled in this subject!');
-    }
-
-    try {
+        try {
 
 
+            $studentIds = is_array($request->StudentId) ? $request->StudentId : [$request->StudentId];
+
+            $invalidStudentIds = array_diff($studentIds, User::pluck('student_id')->toArray());
+
+            if (!empty($invalidStudentIds)) {
+                return redirect()->back()->with('warning', 'The following student IDs do not exist: ' . implode(', ', $invalidStudentIds));
+            }
+
+            $existingEnrollments = ClassList::where('subject', $request->subject)
+                                            ->whereIn('student_id', $studentIds)
+                                            ->where('user_id', $faculty->faculty_id)
+                                            ->pluck('student_id')
+                                            ->toArray();
+
+            if (!empty($existingEnrollments)) {
+                return redirect()->back()->with('warning', 'the  students are already enrolled in this subject: ' . implode(', ', $existingEnrollments));
+            }
 
 
-        $request->validate([
-            'StudentId'  => 'required',
-            'semester' => 'required',
-            'subject' => 'required',
-        ]);
+            $classListData = [];
+            foreach ($studentIds as $studentId) {
+                $classListData[] = [
+                    'user_id' => $faculty->id,
+                    'subject' => $request->subject,
+                    'student_id' => $studentId,
+                    'evaluation_schedule_id' => $request->semester,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
 
+            ClassList::insert($classListData);
 
-
-        $subject = ClassList::where('subject', $request->subject)->firstOrFail();
-
-        $user = User::where('student_id', $request->StudentId)->firstOrFail();
-
-         $classList = new ClassList();
-         $classList->user_id = $faculty->id;
-        $classList->subject = $request->subject;
-        $classList->student_id = $request->StudentId;
-        $classList->evaluation_schedule_id = $request->semester;
-        $classList->save();
-
-
-        return to_route('faculty.class-list.index')->with('success',  'Student added successfully!');
-    } catch (ModelNotFoundException $e) {
-
-        return redirect()->back()->with('warning','All field is required!');
-    }
+            return to_route('faculty.class-list.index')->with('success', 'Students added successfully!');
+        } catch (ModelNotFoundException $e) {
+            return redirect()->back()->with('warning', 'All fields are required!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
+        }
 
     }
 

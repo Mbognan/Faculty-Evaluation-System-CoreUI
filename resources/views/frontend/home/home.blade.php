@@ -36,8 +36,8 @@
                                 </div>
                                 <div class="col-xl-5 col-md-7 col-lg-6">
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
-                                        <h1 class="text-white">Different spice for a Different taste</h1>
-                                        <h4 class="text-white">Fast Food & Restaurants</h4>
+                                        <h1 class="text-white">Lorem ipsom trying to test</h1>
+                                        <h4 class="text-white">Palompon Institute of Technology</h4>
                                         <p class="text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum fugit minima
                                             et debitis ut distinctio optio qui voluptate natus.</p>
                                         <ul class="d-flex flex-wrap">

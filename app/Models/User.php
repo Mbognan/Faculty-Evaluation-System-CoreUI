@@ -27,6 +27,10 @@ class User extends Authenticatable
         'password',
         'department_id'
     ];
+    public function tokenform()
+    {
+        return $this->hasMany(Tokenform::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
