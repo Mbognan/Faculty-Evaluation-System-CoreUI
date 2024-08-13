@@ -54,7 +54,7 @@ class EvaluationFormController extends Controller
         $facultyId = $request->input('faculty_id');
         $subject = $request->input('subject');
         $schedule = $request->input('schedule');
-         $comment = $request->input('comment'); // If you want to use this, uncomment it
+         $comment = $request->input('comment');
 
          $userDepartment = User::findOrFail($userId);
          $department_id = $userDepartment->department_id;
