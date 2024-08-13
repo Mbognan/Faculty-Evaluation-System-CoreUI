@@ -35,7 +35,7 @@ class StoreEvaluationJob implements ShouldQueue
         $facultyId = $this->requestData['faculty_id'];
         $subject = $this->requestData['subject'];
         $schedule = $this->requestData['schedule'];
-        $comment = $this->requestData['comment'];
+        // $comment = $this->requestData['comment'];
 
         $userDepartment = User::findOrFail($userId);
         $department_id = $userDepartment->department_id;
@@ -90,15 +90,7 @@ class StoreEvaluationJob implements ShouldQueue
         }
         ResultByCategory::insert($resultByCategory);
 
-           // Comment store raw
-           $commentStore = Comments::create([
-            'user_id' => $userId,
-            'faculty_id' => $facultyId,
-            'post_comment' => $comment,
-            'evaluation_schedules_id' => $schedule,
-            'department_id' => $department_id,
-        ]);
-        AnalyzeSentimentJob::dispatch($commentStore->id);
+
 
 
     }

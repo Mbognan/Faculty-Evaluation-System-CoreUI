@@ -42,10 +42,30 @@ class EvaluationFormController extends Controller
 
     public function store(Request $request)
     {
-
         StoreEvaluationJob::dispatch($request->all());
         toastr()->success('Form Submitted Successfully!');
         return response()->json(['status' => 'success', 'message' => 'Evaluation submitted successfully']);
+
+    }
+
+    public function feedbackStore(Request $request){
+
+        $userId = $request->input('user_id');
+        $facultyId = $request->input('faculty_id');
+        $subject = $request->input('subject');
+        $schedule = $request->input('schedule');
+         $comment = $request->input('comment'); // If you want to use this, uncomment it
+
+         $userDepartment = User::findOrFail($userId);
+         $department_id = $userDepartment->department_id;
+           $commentStore = Comments::create([
+            'user_id' => $userId,
+            'faculty_id' => $facultyId,
+            'post_comment' => $comment,
+            'evaluation_schedules_id' => $schedule,
+            'department_id' => $department_id,
+        ]);
+        AnalyzeSentimentJob::dispatch($commentStore->id);
 
     }
 

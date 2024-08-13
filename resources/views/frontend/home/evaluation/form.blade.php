@@ -12,6 +12,9 @@
     body{
         background-color: #ffff;
     }
+    .btn_primary{
+        background: var(--colorPrimary);
+    }
 </style>
 <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
     <div class="fp__breadcrumb_overlay">
@@ -138,17 +141,17 @@
                                                                         </div>
                                                                     </div>
                                                                 </li>
-                                                                <li class="form-line" data-type="control_textarea" id="id_24">
+                                                                {{-- <li class="form-line" data-type="control_textarea" id="id_24">
                                                                     <h2>Comment</h2>
                                                                     <label class="form-label form-label-top form-label-auto" id="label_24" for="input_24" aria-hidden="false">
-                                                                    <span class="danger-span"><i class="fal fa-asterisk"></i>(Please be mindful of the words you use, its recommended to use english language)</span>
+                                                                    <span class="danger"><i class="fal fa-asterisk"></i>(Please be mindful of the words you use, its recommended to use english language)</span>
                                                                     </label>
                                                                     <div id="cid_24" class="form-input-wide" data-layout="full">
                                                                         <textarea id="input_24" class="form-textarea custom-hint-group form-custom-hint" name="comment"
                                                                             style="width:648px;height:163px" data-component="textarea" aria-labelledby="label_24" data-customhint="Type here..."
                                                                             customhinted="true" placeholder="Type here..." spellcheck="false"></textarea>
                                                                     </div>
-                                                                </li>
+                                                                </li> --}}
                                                             @endif
 
                                                             </ul>
@@ -174,6 +177,60 @@
     </div>
 </section>
 
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog mx-0 mx-sm-auto">
+      <div class="modal-content">
+        <div class="modal-header " style="background-color: var(--colorPrimary)">
+          <h5 class="modal-title text-white " id="exampleModalLabel" style="background-color: var(--colorPrimary)">Feedback request</h5>
+
+        </div>
+        <div class="modal-body">
+            <div class="comment_input  wow fadeInUp" data-wow-duration="1s">
+                <h4>Leave A Comment</h4>
+                <p>Your email address will not be published. Required fields are marked *</p>
+                <form class="feedbackForm">
+                    <div class="row">
+                        <input type="hidden" name="faculty_id" value="">
+                        <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                        <input type="hidden" name="subject" value="{{ $subject }}">
+                        <input type="hidden" name="schedule" value="{{ $schedule }}">
+                        <div class="col-xl-6 col-md-6">
+                            <label>Student ID</label>
+                            <div class="fp__contact_form_input">
+                                <span><i class="fal fa-user-alt"></i></span>
+                                <input type="text" placeholder="Name">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
+                            <label>email</label>
+                            <div class="fp__contact_form_input">
+                                <span><i class="fal fa-user-alt"></i></span>
+                                <input type="email" placeholder="Mail">
+                            </div>
+                        </div>
+                        <div class="col-xl-12">
+
+                            <label>comment</label>
+                            <div class="fp__contact_form_input textarea">
+                                <span><i class="fal fa-user-alt"></i></span>
+                                <textarea name="comment" rows="5" placeholder="Your Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary" data-mdb-dismiss="modal">
+            Close
+          </button>
+          <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn  btn-primary" style="background-color: var(--colorPrimary)" >Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 @endsection
 
 @push('scripts')
@@ -193,118 +250,181 @@
             }
         }
 
-        function submitEvaluation() {
-            document.getElementById('btnFinish').disabled = true;
-            document.getElementById('btnText').innerText = 'Submitting...';
+
+
+        $('body').on('click', '.submit_btn', function(e) {
+            e.preventDefault();
 
             var facultyId = getFacultyIdFromUrl();
-            if (!facultyId) {
-                alert('Error: Faculty ID not found in URL');
+             if (!facultyId) {
+                 alert('Error: Faculty ID not found in URL');
                 return;
-            }
+             }
 
-            $('input[name="faculty_id"]').val(facultyId);
-            var subject = $('input[name="subject"]').val();
+             $('input[name="faculty_id"]').val(facultyId);
+             var subject = $('input[name="subject"]').val();
             var schedule = $('input[name="schedule"]').val();
 
-            var formData = $('.evaluationForm').serialize();
-            formData += '&subject=' + subject;
+             var formData = $('.evaluationForm').serialize();
+             formData += '&subject=' + subject;
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Please review your form before submitting!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#025043',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        method: 'POST',
+                        url: "{{ route('user.evaluation-submit') }}",
+                        data: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
 
-            $.ajax({
-                method: 'POST',
-                url: "{{ route('user.evaluation-submit') }}",
-                data: formData,
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        window.location.href = "{{ route('user.evaluation-success') }}";
-                    } else if (response.status === 'error') {
-                        alert('Error: ' + response.message);
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Error occurred while submitting data:", error);
+                            if (response.status === 'success') {
+                                Swal.fire(
+                                    'Submitted!',
+                                    response.message,
+                                    'success',
+
+                                ).then(() => {
+
+                                     $('#exampleModal').modal({
+                                        backdrop: 'static',
+                                         keyboard: false
+                                     }).modal('show');
+                                })
+
+                            } else if (response.status === 'error') {
+                                Swal.fire(
+                                    'Something wen\'t wrong!',
+                                    response.message,
+                                    'error'
+                                );
+                            }
+
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(error);
+                        }
+                    });
                 }
-            });
-        }
-
-        $(document).ready(function() {
-            $('#smartwizard').smartWizard({
-                selected: 0,
-                theme: 'dots',
-                transition: {
-                    animation: 'slideHorizontal'
-                },
-                toolbar: {
-                    showNextButton: true,
-                    showPreviousButton: true,
-                    showSubmitButton: true,
-                    position: 'bottom',
-                    extraHtml: `<button class="read_btn" id="btnFinish" disabled onclick="submitEvaluation()"><span id="btnText">Submit</span></button>`,
-                },
-                anchor: {
-                    enableNavigation: true,
-                    enableNavigationAlways: false,
-                    enableDoneState: true,
-                    markPreviousStepsAsDone: true,
-                    unDoneOnBackNavigation: true,
-                    enableDoneStateNavigation: true
-                }
-            });
-
-            $('form').each(function() {
-                $(this).validate({
-                    errorPlacement: function(error, element) {
-                        var formLine = element.closest('.form-line');
-                        error.text("Please select an option.");
-                        error.appendTo(formLine);
-                    },
-                    highlight: function(element) {
-                        $(element).closest('.form-line').find('.form-radio').addClass('error');
-                    },
-                    unhighlight: function(element) {
-                        $(element).closest('.form-line').find('.form-radio').removeClass('error');
-                    },
-                    messages: {
-                        required: "Please select an option."
-                    }
-                });
-            });
-
-            // Validate form before moving to the next step
-            $('#smartwizard').on('leaveStep', function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
-                var form = $('#smartwizard').find('.tab-pane:eq(' + currentStepIndex + ') form');
-                if (stepDirection === 'forward' && form.length && !form.valid()) {
-                    return false;
-                }
-                return true;
-            });
-
-            $('#smartwizard').on('showStep', function(e, anchorObject, stepIndex, direction, stepPosition) {
-                var totalSteps = $('#smartwizard').smartWizard('getTotalSteps');
-                if (stepIndex === totalSteps - 1) {
-                    $('#smartwizard').smartWizard("disableButton", 'next');
-                } else {
-                    $('#smartwizard').smartWizard("enableButton", 'next');
-                }
-                let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
-                $("#sw-current-step").text(stepInfo.currentStep + 1);
-                $("#sw-total-step").text(stepInfo.totalSteps);
-
-                if (stepPosition == 'last') {
-                    $("#btnFinish").prop('disabled', false);
-                } else {
-                    $("#btnFinish").prop('disabled', true);
-                }
-            });
-
-            $('#finishBtn').on('click', function() {
-                alert('Form completed!');
-                // You can submit the form here if needed
-                // $('form').submit();
             });
         });
+
+
+
+
+                    $(document).ready(function() {
+                            $('#smartwizard').smartWizard({
+                                selected: 0,
+                                theme: 'dots',
+                                transition: {
+                                    animation: 'slideHorizontal'
+                                },
+                                toolbar: {
+                                    showNextButton: true,
+                                    showPreviousButton: true,
+                                    showSubmitButton: true,
+                                    position: 'bottom',
+                                    extraHtml: `<button class="read_btn submit_btn" id="btnFinish" disabled"><span id="btnText">Submit</span></button>`,
+                                },
+                                anchor: {
+                                    enableNavigation: true,
+                                    enableNavigationAlways: false,
+                                    enableDoneState: true,
+                                    markPreviousStepsAsDone: true,
+                                    unDoneOnBackNavigation: true,
+                                    enableDoneStateNavigation: true
+                                }
+                            });
+
+                            $('form').each(function() {
+                                $(this).validate({
+                                    errorPlacement: function(error, element) {
+                                        var formLine = element.closest('.form-line');
+                                        error.text("Please select an option.");
+                                        error.appendTo(formLine);
+                                    },
+                                    highlight: function(element) {
+                                        $(element).closest('.form-line').find('.form-radio').addClass('error');
+                                    },
+                                    unhighlight: function(element) {
+                                        $(element).closest('.form-line').find('.form-radio').removeClass('error');
+                                    },
+                                    messages: {
+                                        required: "Please select an option."
+                                    }
+                                });
+                            });
+
+                            // Validate form before moving to the next step
+                            $('#smartwizard').on('leaveStep', function(e, anchorObject, currentStepIndex, nextStepIndex, stepDirection) {
+                                var form = $('#smartwizard').find('.tab-pane:eq(' + currentStepIndex + ') form');
+                                if (stepDirection === 'forward' && form.length && !form.valid()) {
+                                    return false;
+                                }
+                                return true;
+                            });
+
+                            $('#smartwizard').on('showStep', function(e, anchorObject, stepIndex, direction, stepPosition) {
+                                var totalSteps = $('#smartwizard').smartWizard('getTotalSteps');
+                                if (stepIndex === totalSteps - 1) {
+                                    $('#smartwizard').smartWizard("disableButton", 'next');
+                                } else {
+                                    $('#smartwizard').smartWizard("enableButton", 'next');
+                                }
+                                let stepInfo = $('#smartwizard').smartWizard("getStepInfo");
+                                $("#sw-current-step").text(stepInfo.currentStep + 1);
+                                $("#sw-total-step").text(stepInfo.totalSteps);
+
+                                if (stepPosition == 'last') {
+                                    $("#btnFinish").prop('disabled', false);
+                                } else {
+                                    $("#btnFinish").prop('disabled', true);
+                                }
+                            });
+
+                            $('#finishBtn').on('click', function() {
+                                alert('Form completed!');
+                                // You can submit the form here if needed
+                                // $('form').submit();
+                            });
+     });
+
+                 $('#exampleModal .btn-primary').on('click', function() {
+                            window.location.href = "{{ route('user.evaluation-success') }}";
+
+                var facultyId = getFacultyIdFromUrl();
+                if (!facultyId) {
+                    alert('Error: Faculty ID not found in URL');
+                    return;
+                }
+
+                $('input[name="faculty_id"]').val(facultyId);
+                var formData = $('.feedbackForm').serialize();
+                $.ajax({
+                    url:"{{ route('user.feedback-success') }}",
+                    type:'POST',
+                    data:formData,
+                    headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            success:function(response) {
+
+                            },
+                            error:function(xhr){
+                                alert(xhr.responseText);
+                            }
+                })
+
+                });
+
+
     </script>
 @endpush

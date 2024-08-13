@@ -86,6 +86,7 @@
   <!-- ex zoom js -->
   <script src="{{ asset('frontend/new/js/jquery.exzoom.js') }}" ></script>
 
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
   <!--main/custom js-->
   <script src="{{ asset('frontend/new/js/main.js') }}" ></script>
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>

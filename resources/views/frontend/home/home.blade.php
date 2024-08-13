@@ -89,8 +89,8 @@
                                 </div>
                                 <div class="col-xl-5 col-md-7 col-lg-6">
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
-                                        <h1 class="text-white">Great food. Tastes good.</h1>
-                                        <h3 class="text-white">Fast Food & Restaurants</h3>
+                                        <h1 class="text-white">Lorem ipsom trying to test</h1>
+                                        <h3 class="text-white">Lorem ipsom trying to test</h3>
                                         <p class="text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum fugit minima
                                             et debitis ut distinctio optio qui voluptate natus.</p>
                                         <ul class="d-flex flex-wrap">
