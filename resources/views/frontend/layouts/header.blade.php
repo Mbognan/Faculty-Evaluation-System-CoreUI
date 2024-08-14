@@ -253,7 +253,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">pages <i class="far fa-angle-down"></i></a>
                         <ul class="droap_menu">
-                            <li><a href="menu_details.html">menu details</a></li>
+
                             <li><a href="blog_details.html">blog details</a></li>
                             <li><a href="cart_view.html">cart view</a></li>
                             <li><a href="faq.html">FAQs</a></li>

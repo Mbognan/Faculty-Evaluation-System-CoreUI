@@ -291,9 +291,19 @@
                             <div class="col">
                                 <div class="card-title fs-4 fw-semibold">Summary Report</div>
                                 <div class="card-subtitle text-secondary mb-4">
-                                    <button id="switch" class="btn btn-info text-white ">
-                                        switch <i class=" cil-loop-circular"></i>
+                                    <button id="switch" class="btn btn-info text-white d-flex align-items-center">
+                                        Switch
+                                        <lord-icon
+                                        src="https://cdn.lordicon.com/qnpnzlkk.json"
+                                        trigger="hover"
+                                        colors="primary:#ffffff"
+                                        style="height: 25px;"
+                                        >
+                                    </lord-icon>
+
                                     </button>
+
+
                                 </div>
                             </div>
                             <div class="col-auto ms-auto">
@@ -368,7 +378,17 @@
                                 </div>
                             </div>
                             <div class="col-xl-3 ">
-                                <h5>About</h5>
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h5>About</h5>
+                                    <a>
+                                        <lord-icon
+                                            src="https://cdn.lordicon.com/lecprnjb.json"
+                                            trigger="hover"
+
+
+                                        ></lord-icon>
+                                    </a>
+                                </div>
                                 <div class="text-italic text-secondary">No brief description, or topic provided.</div>
                                 <div class="mt-4">
                                     <a class="custom-link" href="{{ route('admin.evaluation_schedule.index') }}">
@@ -533,6 +553,7 @@
     <script src="{{ asset('admin/code/modules/export-data.js') }}"></script>
     <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
     <script src="{{ asset('admin/code/modules/wordcloud.js') }}"></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const circle = new CircularProgressBar('pie');
