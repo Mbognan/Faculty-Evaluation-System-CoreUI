@@ -32,7 +32,7 @@
             <label for="upload"><i class="far fa-camera"></i></label>
             <input type="file" id="upload" hidden>
         </div>
-        <h2>hasib ahmed</h2>
+        <h2>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h2>
     </div>
         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
             @if (auth()->check() && auth()->user()->user_type === 'faculty')
@@ -54,7 +54,6 @@
                             type="button" role="tab" aria-controls="v-pills-settings" aria-selected="false"><span><i class="fas fa-list-ul" aria-hidden="true"></i></span> Class List</button>
                          </div>
                         </a>
-
             @else
             <a href="{{ route('user.evaluation.index') }}">
                 <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">

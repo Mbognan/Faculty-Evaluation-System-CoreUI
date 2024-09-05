@@ -33,7 +33,7 @@
 <link rel="stylesheet" href="{{ asset('frontend/new/css/animate.css') }}" >
 <link rel="stylesheet" href="{{ asset('frontend/new/css/jquery.exzoom.css') }}" >
 
-<link rel="stylesheet" href="{{ asset('frontend/new/style.css') }}" >
+<link rel="stylesheet" href="{{ asset('frontend/new/css/style.css') }}" >
 <link rel="stylesheet" href="{{ asset('frontend/new/css/responsive.css') }}" >
 
 </head>

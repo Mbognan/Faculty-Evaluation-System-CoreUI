@@ -54,6 +54,7 @@ class AdminController extends Controller
 
         $categories = Category::all();
 
+
         foreach ($facultyMembers as $faculty) {
             $facultyResults = [
                 'avatar' => $faculty->avatar ?? 'default.jpg',
@@ -103,6 +104,43 @@ class AdminController extends Controller
 
             $facultyData[] = $facultyResults;
         }
+
+
+        $totalDepartmentSum = 0;
+        $totalDepartmentCount = 0;
+
+            foreach ($facultyMembers as $faculty) {
+                $totalSum = 0;
+                $totalCount = 0;
+
+                foreach ($categories as $category) {
+                    $results = ResultByCategory::where('faculty_id', $faculty->id)
+                        ->where('category_id', $category->id)
+                        ->pluck('results_by_category');
+
+                    $sum = $results->map(function ($result) {
+                        return $result ?? 0;
+                    })->sum();
+                    $count = $results->count();
+
+                    $totalSum += $sum;
+                    $totalCount += $count;
+                }
+
+                $totalDepartmentSum += $totalSum;
+                $totalDepartmentCount += $totalCount;
+
+                $totalAverage = $totalCount > 0 ? $totalSum / $totalCount : 0;
+                $totalPercentage = ($totalAverage / 25) * 100;
+
+
+            }
+
+
+            $overallDepartmentAverage = $totalDepartmentCount > 0 ? $totalDepartmentSum / $totalDepartmentCount : 0;
+            $OverallDepartmentPercentage = ($overallDepartmentAverage / 25) * 100;
+            $OverallDepartmentPercentageFormatted = number_format($OverallDepartmentPercentage, 2);
+
 
         $facultyCategoryAverages = [];
         foreach ($facultyMembers as $faculty) {
@@ -180,10 +218,6 @@ class AdminController extends Controller
         $departmentSum = $departmentResults->map(function ($result) {
             return $result ?? 0;
         })->sum();
-        $departmentCount = $departmentResults->count();
-        $departmentAverage = $departmentCount > 0 ? $departmentSum / $departmentCount : 0;
-        $formattedDepartmentAverage = number_format($departmentAverage, 2);
-        $OverallDepartmentPercentage = $formattedDepartmentAverage > 0 ? ($formattedDepartmentAverage / 25 ) * 100: 0;
 
 
             $comments = Comments::where('evaluation_schedules_id', $schedule->id)
@@ -228,7 +262,7 @@ class AdminController extends Controller
             'pending',
             'rejected',
             'facultyData',
-            'OverallDepartmentPercentage',
+            'OverallDepartmentPercentageFormatted',
             'Department',
             'facultybyDepartment',
             'facultyResult',
@@ -261,10 +295,27 @@ class AdminController extends Controller
         $negativeSentimentPercent = $negativeSentiments > 0 ? ($negativeSentiments / $total) * 100 : 0;
 
 
-        // dd($postiveSentimentPercent, $negativeSentimentPercent);
+
         return [
             'positive' => $postiveSentimentPercent,
             'negative' => $negativeSentimentPercent,
         ];
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

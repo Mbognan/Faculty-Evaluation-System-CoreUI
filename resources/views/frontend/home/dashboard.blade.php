@@ -77,7 +77,7 @@
                                         <div class="fp_dashboard_body">
                                             <div class="row">
                                                 <div class="col-xl-4 col-sm-6 col-md-4">
-                                                    <div class="fp__dsahboard_overview_item ">
+                                                    <div class="fp__dsahboard_overview_item   ">
                                                         <span class="icon" style="background-color:#007bff"><i class="fas fa-users"></i></span>
                                                         <h4 style="color:#007bff">Total Student<span style="color:#007bff">(106)</span></h4>
                                                     </div>
@@ -327,51 +327,164 @@
 
 
 
-            Highcharts.chart("container", {
+            // Highcharts.chart("container", {
+            //     chart: {
+            //         type: "pie",
+            //     },
+            //     title: {
+            //         text: "Overall Faculty Performance Evaluation Result By Category",
+            //     },
+            //     tooltip: {
+            //         valueSuffix: "",
+            //     },
+            //     subtitle: {
+            //         text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">BSIT Department</a>',
+            //     },
+            //     plotOptions: {
+            //         series: {
+            //             allowPointSelect: true,
+            //             cursor: "pointer",
+            //             dataLabels: [{
+            //                     enabled: true,
+            //                     distance: 20,
+            //                 },
+            //                 {
+            //                     enabled: true,
+            //                     distance: -40,
+            //                     format: "{point.percentage:.1f}%",
+            //                     style: {
+            //                         fontSize: "1.2em",
+            //                         textOutline: "none",
+            //                         opacity: 0.7,
+            //                     },
+            //                     filter: {
+            //                         operator: ">",
+            //                         property: "percentage",
+            //                         value: 10,
+            //                     },
+            //                 },
+            //             ],
+            //         },
+            //     },
+            //     series: [{
+            //         name: "mean",
+            //         colorByPoint: true,
+            //         data: piedata,
+            //     }, ],
+            // });
+
+
+
+
+
+
+            Highcharts.chart('container', {
                 chart: {
-                    type: "pie",
+                    type: 'pie',
+                    height: 400,
+                    custom: {},
+                    events: {
+                        render() {
+                            const chart = this,
+                                series = chart.series[0];
+                            let customLabel = chart.options.chart.custom.label;
+
+                            if (!customLabel) {
+                                customLabel = chart.options.chart.custom.label =
+                                    chart.renderer.label(
+                                        'Overall<br/>' +
+                                        '<strong>63.31 %</strong>'
+                                    )
+                                    .css({
+                                        color: '#000',
+                                        textAnchor: 'middle'
+                                    })
+                                    .add();
+                            }
+
+                            const x = series.center[0] + chart.plotLeft,
+                                y = series.center[1] + chart.plotTop -
+                                (customLabel.attr('height') / 2);
+
+                            customLabel.attr({
+                                x,
+                                y
+                            });
+                            // Set font size based on chart diameter
+                            customLabel.css({
+                                fontSize: `${series.center[2] / 12}px`
+                            });
+                        }
+                    }
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
                 },
                 title: {
-                    text: "Overall Faculty Performance Evaluation Result By Category",
+                    text: 'BSIT Department Overall Evaluation'
+                },
+
+                subtitle: {
+                    text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">2021-2022 1st Semester</a>'
                 },
                 tooltip: {
-                    valueSuffix: "",
+                    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
                 },
-                subtitle: {
-                    text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">BSIT Department</a>',
+                legend: {
+                    enabled: false
                 },
                 plotOptions: {
                     series: {
                         allowPointSelect: true,
-                        cursor: "pointer",
+                        cursor: 'pointer',
+                        borderRadius: 8,
                         dataLabels: [{
-                                enabled: true,
-                                distance: 20,
-                            },
-                            {
-                                enabled: true,
-                                distance: -40,
-                                format: "{point.percentage:.1f}%",
-                                style: {
-                                    fontSize: "1.2em",
-                                    textOutline: "none",
-                                    opacity: 0.7,
-                                },
-                                filter: {
-                                    operator: ">",
-                                    property: "percentage",
-                                    value: 10,
-                                },
-                            },
-                        ],
-                    },
+                            enabled: true,
+                            distance: 20,
+                            format: '{point.name}'
+                        }, {
+                            enabled: true,
+                            distance: -15,
+                            format: '{point.percentage:.0f}%',
+                            style: {
+                                fontSize: '0.9em'
+                            }
+                        }],
+                        showInLegend: true
+                    }
                 },
                 series: [{
-                    name: "mean",
+                    name: 'Registrations',
                     colorByPoint: true,
-                    data: piedata,
-                }, ],
+                    innerSize: '65%',
+                    data: [{
+                        name: 'Commitment',
+                        y: 23.9
+                    }, {
+                        name: 'Knowledge of the subject',
+                        y: 12.6
+                    }, {
+                        name: 'Management Learning',
+                        y: 37.0
+                    }, {
+                        name: 'Teaching Effectiveness',
+                        y: 26.4
+                    }]
+                }]
             });
+
+
+
+
+
+
+
+
+
+
+            ////////////////////////////////
 
             Highcharts.chart('container2', {
                 chart: {

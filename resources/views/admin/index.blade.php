@@ -290,18 +290,28 @@
                         <div class="row">
                             <div class="col">
                                 <div class="card-title fs-4 fw-semibold">Summary Report</div>
-                                <div class="card-subtitle text-secondary mb-4">
-                                    <button id="switch" class="btn btn-info text-white d-flex align-items-center">
-                                        Switch
-                                        <lord-icon
-                                        src="https://cdn.lordicon.com/qnpnzlkk.json"
-                                        trigger="hover"
-                                        colors="primary:#ffffff"
-                                        style="height: 25px;"
-                                        >
-                                    </lord-icon>
+                                <div class="card-subtitle text-secondary mb-4 d-flex justify-content-between mb-4">
 
-                                    </button>
+
+                                    <div>
+                                        <button id="switch" class="btn btn-info text-white d-flex align-items-center">
+                                            switch
+                                            <lord-icon src="https://cdn.lordicon.com/ogkflacg.json" trigger="hover"
+                                                colors="primary:#ffffff" style="height:25px">
+                                            </lord-icon>
+                                        </button>
+                                    </div>
+
+                                    <!-- Right-aligned Button -->
+                                    {{-- <div>
+                                        <button id="right-switch"
+                                            class="btn btn-info text-white d-flex align-items-center">
+                                            Right Switch
+                                            <lord-icon src="https://cdn.lordicon.com/ogkflacg.json" trigger="hover"
+                                                colors="primary:#ffffff" style="height:25px">
+                                            </lord-icon>
+                                        </button>
+                                    </div> --}}
 
 
                                 </div>
@@ -381,12 +391,8 @@
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <h5>About</h5>
                                     <a>
-                                        <lord-icon
-                                            src="https://cdn.lordicon.com/lecprnjb.json"
-                                            trigger="hover"
-
-
-                                        ></lord-icon>
+                                        <lord-icon src="https://cdn.lordicon.com/lecprnjb.json"
+                                            trigger="hover"></lord-icon>
                                     </a>
                                 </div>
                                 <div class="text-italic text-secondary">No brief description, or topic provided.</div>
@@ -399,7 +405,7 @@
                                 <div class="mt-2 center-container">
                                     <h5>BSIT Department Result</h5>
                                     <div class="pie"
-                                        data-pie='{ "percent": {{ $OverallDepartmentPercentage }}, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }'
+                                        data-pie='{ "percent": {{ $OverallDepartmentPercentageFormatted }}, "colorSlice": "#24ACFE", "colorCircle": "#f1f1f1", "fontWeight": 100 }'
                                         data-pie-index="2" style="width:200px;height:200px;"></div>
                                     <div class="labels">
                                         <li>
@@ -562,49 +568,34 @@
 
             document.getElementById('switch').addEventListener('click', function() {
 
-
-                const tableBody = document.querySelector('#data-table tbody');
-                const isDefaultData = tableBody.dataset.toggle === 'default';
-
-                // Data sets
-                const defaultData = @json($facultyData)
-
-                const alternateData = defaultData.map(faculty => ({
-                    ...faculty,
-                    commitment_avg: faculty.commitment_percent + '%',
-                    knowledge_avg: faculty.knowledge_percent + '%',
-                    teaching_avg: faculty.teaching_percent + '%',
-                    management_avg: faculty.management_percent + '%',
-                    total: faculty.totalPercentage + '%'
-                }))
+    const tableBody = document.querySelector('#data-table tbody');
+    const isDefaultData =  tableBody.dataset.toggle === 'default';
 
 
 
-                const dataToUse = isDefaultData ? alternateData : defaultData;
-                const overallResults = isDefaultData ? {
-                    commitment: '50%',
-                    knowledge: '70%',
-                    teaching: '46%',
-                    management: '68%',
-                    total: '79%'
-                } : {
-                    commitment: '40%',
-                    knowledge: '69%',
-                    teaching: '36%',
-                    management: '58%',
-                    total: '89%'
-                };
+    const defaultData = @json($facultyData)
+
+    const alternateData = defaultData.map(faculty => ({
+        ...faculty,
+        commitment_avg: faculty.commitment_percent + '%',
+        knowledge_avg: faculty.knowledge_percent + '%',
+        teaching_avg: faculty.teaching_percent + '%',
+        management_avg: faculty.management_percent + '%',
+        total: faculty.totalPercentage + '%'
+    }))
 
 
-                tableBody.innerHTML = '';
 
-                // Populate table with data
-                dataToUse.forEach(faculty => {
-                    const row = document.createElement('tr');
-                    row.classList.add('align-middle');
-                    row.innerHTML = `
+    const dataToUse = isDefaultData ? alternateData : defaultData;
 
 
+
+    tableBody.innerHTML = '';
+
+    dataToUse.forEach(faculty => {
+        const row = document.createElement('tr');
+        row.classList.add('align-middle');
+        row.innerHTML = `
             <td class="text-center">
                 <div class="avatar avatar-lg"><img class="avatar-img" src="${faculty.avatar}" alt="${faculty.firstName} ${faculty.lastName}"><span class="avatar-status bg-success"></span></div>
             </td>
@@ -618,12 +609,13 @@
             <td class="" align="right">${faculty.management_avg}</td>
             <td align="right">${faculty.total}</td>
         `;
-                    tableBody.appendChild(row);
-                });
+        tableBody.appendChild(row);
+    });
 
                 // Toggle data attribute
                 tableBody.dataset.toggle = isDefaultData ? 'alternate' : 'default';
-            });
+});
+
 
 
 
@@ -788,103 +780,103 @@
 
 
             Highcharts.chart('container3', {
-    chart: {
-        type: 'pie',
-        height:600,
-        custom: {},
-        events: {
-            render() {
-                const chart = this,
-                    series = chart.series[0];
-                let customLabel = chart.options.chart.custom.label;
+                chart: {
+                    type: 'pie',
+                    height: 600,
+                    custom: {},
+                    events: {
+                        render() {
+                            const chart = this,
+                                series = chart.series[0];
+                            let customLabel = chart.options.chart.custom.label;
 
-                if (!customLabel) {
-                    customLabel = chart.options.chart.custom.label =
-                        chart.renderer.label(
-                            'Overall<br/>' +
-                            '<strong>75.31 %</strong>'
-                        )
-                            .css({
-                                color: '#000',
-                                textAnchor: 'middle'
-                            })
-                            .add();
-                }
+                            if (!customLabel) {
+                                customLabel = chart.options.chart.custom.label =
+                                    chart.renderer.label(
+                                        'Overall<br/>' +
+                                        '<strong>75.31 %</strong>'
+                                    )
+                                    .css({
+                                        color: '#000',
+                                        textAnchor: 'middle'
+                                    })
+                                    .add();
+                            }
 
-                const x = series.center[0] + chart.plotLeft,
-                    y = series.center[1] + chart.plotTop -
-                    (customLabel.attr('height') / 2);
+                            const x = series.center[0] + chart.plotLeft,
+                                y = series.center[1] + chart.plotTop -
+                                (customLabel.attr('height') / 2);
 
-                customLabel.attr({
-                    x,
-                    y
-                });
-                // Set font size based on chart diameter
-                customLabel.css({
-                    fontSize: `${series.center[2] / 12}px`
-                });
-            }
-        }
-    },
-    accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
-    },
-    title: {
-        text: 'BSIT Department Overall Evaluation'
-    },
-    exporting: {
-        enabled:false
-    },
-    subtitle: {
-        text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">2021-2022 1st Semester</a>'
-    },
-    tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
-    },
-    legend: {
-        enabled: false
-    },
-    plotOptions: {
-        series: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            borderRadius: 8,
-            dataLabels: [{
-                enabled: true,
-                distance: 20,
-                format: '{point.name}'
-            }, {
-                enabled: true,
-                distance: -15,
-                format: '{point.percentage:.0f}%',
-                style: {
-                    fontSize: '0.9em'
-                }
-            }],
-            showInLegend: true
-        }
-    },
-    series: [{
-        name: 'Registrations',
-        colorByPoint: true,
-        innerSize: '65%',
-        data: [{
-            name: 'Commitment',
-            y: 23.9
-        }, {
-            name: 'Knowledge of the subject',
-            y: 12.6
-        }, {
-            name: 'Management Learning',
-            y: 37.0
-        }, {
-            name: 'Teaching Effectiveness',
-            y: 26.4
-        }]
-    }]
-});
+                            customLabel.attr({
+                                x,
+                                y
+                            });
+                            // Set font size based on chart diameter
+                            customLabel.css({
+                                fontSize: `${series.center[2] / 12}px`
+                            });
+                        }
+                    }
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                title: {
+                    text: 'BSIT Department Overall Evaluation'
+                },
+                exporting: {
+                    enabled: false
+                },
+                subtitle: {
+                    text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">2021-2022 1st Semester</a>'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
+                },
+                legend: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        borderRadius: 8,
+                        dataLabels: [{
+                            enabled: true,
+                            distance: 20,
+                            format: '{point.name}'
+                        }, {
+                            enabled: true,
+                            distance: -15,
+                            format: '{point.percentage:.0f}%',
+                            style: {
+                                fontSize: '0.9em'
+                            }
+                        }],
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Registrations',
+                    colorByPoint: true,
+                    innerSize: '65%',
+                    data: [{
+                        name: 'Commitment',
+                        y: 23.9
+                    }, {
+                        name: 'Knowledge of the subject',
+                        y: 12.6
+                    }, {
+                        name: 'Management Learning',
+                        y: 37.0
+                    }, {
+                        name: 'Teaching Effectiveness',
+                        y: 26.4
+                    }]
+                }]
+            });
 
 
 

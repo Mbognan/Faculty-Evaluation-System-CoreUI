@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\EvaluationSchedule;
 use App\Models\Question;
 use App\Models\RawEvaluationResult;
+use App\Models\ResultByCategory;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\View\View;
@@ -29,6 +30,14 @@ class HistoryEvaluationController extends Controller
         ->where('user_id',$userId)
         ->get();
 
+        $rawdataTotal = ResultByCategory::where('faculty_id',$faculty_id)
+        ->where('by_subject',$subject)
+        ->where('semester_id',$semester_id)
+        ->where('user_id',$userId)
+        ->get();
+
+
+
         $faculty = User::findOrFail($faculty_id);
         $year = EvaluationSchedule::findOrFail($semester_id);
         $academicpart = explode('-', $year->academic_year);
@@ -39,9 +48,11 @@ class HistoryEvaluationController extends Controller
 
 
 
+
+
         $questions = Question::orderBy('position', 'asc')->get();
         $categories = Category::all();
-        $pdf = Pdf::loadView('frontend.home.generate_history', ['questions' => $questions, 'categories' => $categories,'rawdata' => $rawdata, 'faculty' => $faculty, 'sy' => $sy, 'to' => $to, 'year' => $year])
+        $pdf = Pdf::loadView('frontend.home.generate_history', ['questions' => $questions, 'categories' => $categories,'rawdata' => $rawdata, 'faculty' => $faculty, 'sy' => $sy, 'to' => $to, 'year' => $year, 'rawdataTotal' => $rawdataTotal])
         ->setPaper([0, 0,  8.5 * 72, 14.25 * 72], 'portrait');
         return $pdf->stream();
     }

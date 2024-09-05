@@ -36,10 +36,9 @@
                                 </div>
                                 <div class="col-xl-5 col-md-7 col-lg-6">
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
-                                        <h1 class="text-white">Lorem ipsom trying to test</h1>
-                                        <h4 class="text-white">Palompon Institute of Technology</h4>
-                                        <p class="text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum fugit minima
-                                            et debitis ut distinctio optio qui voluptate natus.</p>
+                                        <h1 class="text-white">Tatak Evsunista Award to Dr. Norberto C. Olavides</h1>
+                                        <h4 class="text-white">- Palompon Institute of Technology</h4>
+                                        <p class="text-white">In appreciation of his remarkable achievements and unwavering commitment in elevating the field of higher education.</p>
                                         <ul class="d-flex flex-wrap">
                                             {{-- <li><a class="common_btn " href="#">shop now</a></li> --}}
                                         </ul>
@@ -65,9 +64,11 @@
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
                                         <h1 class="text-white">PIT's 7th President</h1>
 
-                                        <p class="text-white">We are pleased to officially announce Dr. Dennis Anota Mapa Del Pilar as the 7th President of PIT.</p>
+                                        <p class="text-white">We are pleased to officially announce Dr. Dennis Anota Mapa Del Pilar as the 7th President of PIT.<br>
+                                             With a distinguished career and a commitment to excellence, Dr. Del Pilar is set to lead PIT into a future of innovation and growth.
+                                        </p>
                                         {{-- <ul class="d-flex flex-wrap">
-                                            <li><a class="common_btn" href="#">shop now</a></li>
+                                            <li><a class="common_btn_2" href="#">Read
                                         </ul> --}}
                                     </div>
                                 </div>
@@ -110,5 +111,5 @@
     {{-- @include('frontend.home-components.endsection') --}}
 @endsection
 @push('scripts')
-
+<script src="https://cdn.lordicon.com/lordicon.js"></script>
 @endpush

@@ -355,7 +355,7 @@
     <p style="text-indent: 0pt;text-align: left;"><br></p>
     <table style="border-collapse:collapse;margin-left:20pt" cellspacing="0">
         <tbody>
-            @foreach ($categories as $category)
+            @foreach ($categories as $category )
                 <tr style="height:14pt">
                     <td style="width:465pt;border:1pt solid;">
                         <p class="s5" style="padding-left: 5pt;text-indent: 0pt;line-height: 12pt;text-align: left;">
@@ -386,7 +386,10 @@
                         <p class="s5" style="padding-right: 4pt;text-indent: 0pt;line-height: 13pt;text-align: right;">Total Score</p>
                     </td>
                     <td style="width:102pt;border:1pt solid;" colspan="5">
-                        <p style="text-indent: 0pt;text-align: left;"><br></p>
+                        @php
+                            $categoryTotal = $rawdataTotal->firstWhere('category_id', $category->id)->results_by_category ?? 'N/A';
+                        @endphp
+                        <p style="text-indent: 0pt;text-align: left; ">&nbsp;{{ $categoryTotal }}<br></p>
                     </td>
                 </tr>
             @endforeach
