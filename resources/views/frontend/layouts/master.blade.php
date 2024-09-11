@@ -23,7 +23,6 @@
 
 
 
-
 <link rel="stylesheet" href="{{ asset('frontend/new/css/all.min.css') }}" >
 <link rel="stylesheet" href="{{ asset('frontend/new/css/bootstrap.min.css') }}" >
 <link rel="stylesheet" href="{{ asset('frontend/new/css/spacing.css') }}" >
@@ -86,16 +85,17 @@
   <!-- ex zoom js -->
   <script src="{{ asset('frontend/new/js/jquery.exzoom.js') }}" ></script>
 
+
   <script src="https://cdn.lordicon.com/lordicon.js"></script>
   <!--main/custom js-->
   <script src="{{ asset('frontend/new/js/main.js') }}" ></script>
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script>
-        // Function to toggle logo based on screen size
+
         function toggleLogo() {
             var desktopLogo = document.querySelector('.desktop-logo');
             var mobileLogo = document.querySelector('.mobile-logo');
-            if (window.innerWidth <= 1202) { // Check if screen size is mobile
+            if (window.innerWidth <= 1202) {
                 desktopLogo.style.display = 'none';
                 mobileLogo.style.display = 'block';
             } else {
@@ -104,19 +104,15 @@
             }
         }
 
-        // Call the function initially
         toggleLogo();
 
-        // Listen for window resize event to toggle logo
         window.addEventListener('resize', toggleLogo);
 
 
-
         function updateDateTime() {
-        // Get the current date and time
+
         var currentDate = new Date();
 
-        // Format the date and time
         var dateTimeString = currentDate.toLocaleString('en-US', {
             weekday: 'long',
             year: 'numeric',

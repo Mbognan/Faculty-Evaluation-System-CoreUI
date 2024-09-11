@@ -26,8 +26,60 @@ class FacultyController extends Controller
     $allCategories = Category::all();
     $category = Category::pluck('title')->toArray();
     $results = EvaluationResult::where('user_id', $userId)->pluck('results_by_category')->toArray();
-
+    $distinctSubject = ResultByCategory::where('faculty_id', $userId)
+    ->distinct()
+    ->pluck('by_subject');
+    $maxPointsPerEvaluation = 25;
     $resultsByCategory = [];
+    $overallPercentageBySubject = [];
+
+    $totalResultsByCategory = [];
+    $totalPossibleSumForAllSubjects = 0;
+    $totalScoreForAllSubjects = 0;
+    foreach ($distinctSubject as $subjectSchedule) {
+
+        $resultsByCategory = ResultByCategory::where('faculty_id', $userId)
+            ->where('by_subject', $subjectSchedule)
+            ->select('category_id', DB::raw('SUM(results_by_category) as total'))
+            ->groupBy('category_id')
+            ->get();
+
+        $resultsByCategoryArray = $resultsByCategory->pluck('total', 'category_id')->toArray();
+
+        $totalScore = array_sum($resultsByCategoryArray);
+        $totalScoreForAllSubjects += $totalScore;
+
+
+        $numEvaluationsForSubject = ResultByCategory::where('faculty_id', $userId)
+            ->where('by_subject', $subjectSchedule)
+            ->select(DB::raw('COUNT(DISTINCT id) as num_students'))
+            ->first();
+
+        if ($numEvaluationsForSubject && $numEvaluationsForSubject->num_students > 0) {
+            $maxPossibleSumForSubject = $numEvaluationsForSubject->num_students * $maxPointsPerEvaluation;
+            $totalPossibleSumForAllSubjects += $maxPossibleSumForSubject;
+
+            $percentagesByCategory = [];
+            foreach ($resultsByCategoryArray as $categoryId => $total) {
+                $percentage = ($total / $maxPossibleSumForSubject) * 100;
+                $categoryTitle = $categoryTitles[$categoryId] ?? 'Unknown Category';
+                $percentagesByCategory[$categoryTitle] = $percentage;
+
+                if (!isset($totalResultsByCategory[$categoryId])) {
+                    $totalResultsByCategory[$categoryId] = 0;
+                }
+                $totalResultsByCategory[$categoryId] += $total;
+            }
+            $overallPercentage = ($totalScore / $maxPossibleSumForSubject) * 100;
+            $percentagesBySubjectAndCategory[$subjectSchedule] = $percentagesByCategory;
+            $totalScoresBySubject[$subjectSchedule] = $totalScore;
+            $overallPercentageBySubject[$subjectSchedule] = $overallPercentage;
+        } else {
+            $percentagesBySubjectAndCategory[$subjectSchedule] = [];
+            $totalScoresBySubject[$subjectSchedule] = 0;
+            $overallPercentageBySubject[$subjectSchedule] = 0;
+        }
+    }
 
     foreach ($results as $key => $result) {
         if (isset($category[$key])) {
@@ -244,7 +296,7 @@ foreach ($categoryTitles as $categoryId => $categoryTitle) {
 
 
 
-        return view('frontend.home.dashboard', compact(['category','totalStudent','totalFeedback', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData','OveralltotalMeanByCategory']));
+        return view('frontend.home.dashboard', compact(['category','totalStudent','totalFeedback', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData','OveralltotalMeanByCategory','overallPercentageBySubject']));
     }
 
     public function profile():View{

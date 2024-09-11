@@ -83,17 +83,16 @@
                                 <div class="col-xl-5 col-md-5 col-lg-5">
                                     <div class="fp__banner_img wow fadeInLeft" data-wow-duration="1s">
                                         <div class="img">
-                                            <img src="images/slider_img_3.png" alt="food item" class="img-fluid w-100">
+                                            <img src="{{ asset('uploads/lisence.jpg') }}" alt="food item" class="img-fluid w-100">
 
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-xl-5 col-md-7 col-lg-6">
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
-                                        <h1 class="text-white">Lorem ipsom trying to test</h1>
-                                        <h3 class="text-white">Lorem ipsom trying to test</h3>
-                                        <p class="text-white">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsum fugit minima
-                                            et debitis ut distinctio optio qui voluptate natus.</p>
+                                        <h1 class="text-white">PIT's Newly Licensed Electrical Engineers and Master Electricians</h1>
+
+                                        <p class="text-white">We extend our hearfelt congratulations once more to our newly registered Electrical Engineers! PIT will forever take pride in all your achievements. Best wishes as you embark on this new chapter!</p>
                                         <ul class="d-flex flex-wrap">
                                             {{-- <li><a class="common_btn" href="#">shop now</a></li> --}}
                                         </ul>

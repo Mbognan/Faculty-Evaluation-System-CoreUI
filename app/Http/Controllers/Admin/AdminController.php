@@ -16,11 +16,12 @@ use function PHPUnit\Framework\isEmpty;
 
 class AdminController extends Controller
 {
+
     public function index(): View
     {
 
         $departmentHead = Auth::user();
-        $schedule =  EvaluationSchedule::where('evaluation_status', 2)->first();
+        $schedule =  EvaluationSchedule::where('evaluation_status', 2)->firstOrNew();
 
         // Fetch faculty members
         $facultyMembers = User::where('user_type', 'faculty')
@@ -34,7 +35,7 @@ class AdminController extends Controller
         $overallSentimentAnalysisByFaculty = []; // Initialize overall sentiment analysis
 
         foreach ($facultyMembers as $faculty) {
-            $results = ResultByCategory::where('faculty_id', $faculty->id)->pluck('results_by_category');
+            $results = ResultByCategory::where('faculty_id', $faculty->id)->where('semester_id', $schedule->id)->pluck('results_by_category');
 
             $sum = $results->map(function ($result) {
                 return $result ?? 0;
@@ -68,6 +69,7 @@ class AdminController extends Controller
             foreach ($categories as $category) {
                 $results = ResultByCategory::where('faculty_id', $faculty->id)
                     ->where('category_id', $category->id)
+                    ->where('semester_id', $schedule->id)
                     ->pluck('results_by_category');
 
                 $sum = $results->map(function ($result) {
@@ -115,6 +117,7 @@ class AdminController extends Controller
 
                 foreach ($categories as $category) {
                     $results = ResultByCategory::where('faculty_id', $faculty->id)
+                        ->where('semester_id', $schedule->id)
                         ->where('category_id', $category->id)
                         ->pluck('results_by_category');
 
@@ -148,6 +151,7 @@ class AdminController extends Controller
             foreach ($categories as $category) {
                 $results = ResultByCategory::where('faculty_id', $faculty->id)
                     ->where('category_id', $category->id)
+                    ->where('semester_id', $schedule->id)
                     ->pluck('results_by_category');
 
                 $sum = $results->map(function ($result) {
@@ -203,28 +207,23 @@ class AdminController extends Controller
             ->where('department_id', $departmentHead->department_id)
             ->first();
 
-            $allDataEmpty = !empty($facultyData) &&
-            !empty($facultybyDepartment) &&
-            !empty($totalSudent) &&
-            !empty($facultyCount) &&
-            !empty($facultyAverages) &&
-            !empty($categoryAverages) &&
-            !empty($facultyCategoryAverages) &&
-            !empty($facultyAveragesBarChart) &&
-            !empty($overallCategoryAverages);
 
 
-            $departmentResults = ResultByCategory::whereIn('faculty_id', $facultyMembers->pluck('id'))->pluck('results_by_category');
+
+        $departmentResults = ResultByCategory::where('semester_id',$schedule->id)->whereIn('faculty_id', $facultyMembers->pluck('id'))->pluck('results_by_category');
         $departmentSum = $departmentResults->map(function ($result) {
             return $result ?? 0;
         })->sum();
 
-
+        $comments = [];
+        if ($schedule && $departmentHead) {
             $comments = Comments::where('evaluation_schedules_id', $schedule->id)
-            ->where('status',1)
-            ->where('department_id',$departmentHead->department_id)
-            ->pluck('post_comment')
-            ->toArray();
+                ->where('status', 1)
+                ->where('department_id', $departmentHead->department_id)
+                ->pluck('post_comment')
+                ->toArray();
+        }
+
 
             $status = [
 
@@ -251,7 +250,15 @@ class AdminController extends Controller
             $rejectedper = ($result['rejected'] / $totalSudent) * 100;
 
 
-
+            $allDataEmpty = !empty($facultyData) &&
+            !empty($facultybyDepartment) &&
+            !empty($totalSudent) &&
+            !empty($facultyCount) &&
+            !empty($facultyAverages) &&
+            !empty($categoryAverages) &&
+            !empty($facultyCategoryAverages) &&
+            !empty($facultyAveragesBarChart) &&
+            !empty($overallCategoryAverages);
 
 
         return view('admin.index', compact([
@@ -274,7 +281,7 @@ class AdminController extends Controller
             'facultyCategoryAverages',
             'facultyAveragesBarChart',
             'overallCategoryAverages',
-            'overallSentimentAnalysisByFaculty', // Pass the sentiment analysis data to the view
+            'overallSentimentAnalysisByFaculty',
             'allDataEmpty',
              'comments'
         ]));
@@ -284,8 +291,10 @@ class AdminController extends Controller
 
     private function getSentimentCountsByFaculty($facultyId)
     {
-        $positiveSentiments = Sentiment::where('faculty_id', $facultyId)->where('sentiment', 'positive')->count();
-        $negativeSentiments = Sentiment::where('faculty_id', $facultyId)->where('sentiment', 'negative')->count();
+        $schedule =  EvaluationSchedule::where('evaluation_status', 2)->firstOrNew();
+
+        $positiveSentiments = Sentiment::where('faculty_id', $facultyId)->where('sentiment', 'positive')->where('evaluation_schedules_id',$schedule->id)->count();
+        $negativeSentiments = Sentiment::where('faculty_id', $facultyId)->where('sentiment', 'negative')->where('evaluation_schedules_id',$schedule->id)->count();
 
 
 

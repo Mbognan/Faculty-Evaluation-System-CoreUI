@@ -57,6 +57,7 @@ Route::group([
             /**registration prending route */
             Route::get('/registration-pending', [RegistrationPendingController::class, 'pendingRegistration'])->name('registration.pending');
             Route::post('/registration-import', [RegistrationPendingController::class, 'importPendingRegistration'])->name('registration.import-pending');
+
             Route::put('accepted-account/{id}', [RegistrationPendingController::class, 'store'])->name('accepted.store');
             Route::put('rejected-account/{id}', [RegistrationPendingController::class, 'rejected'])->name('rejected.store');
             /**Verified account route */

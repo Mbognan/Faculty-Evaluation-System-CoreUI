@@ -20,7 +20,7 @@ class SentimentAnalysisController extends Controller
         $comments = Comments::where('faculty_id', $user->id)->where('status',1)->pluck('post_comment')->toArray();
 
         $sentiment = Sentiment::where('faculty_id', $user->id)->pluck('sentiment')->toArray();
-        $schedule = EvaluationSchedule::where('evaluation_status',2)->first();
+        $schedule = EvaluationSchedule::where('evaluation_status',2)->firstOrNew();
         $negativeCount  = count(array_filter($sentiment, fn($sentiment) => $sentiment === 'negative'));
         $positiveCount = count(array_filter($sentiment,fn($sentiment) => $sentiment === 'positive'));
         $neutralCount = count(array_filter($sentiment, fn($sentiment) => $sentiment === 'neutral'));
