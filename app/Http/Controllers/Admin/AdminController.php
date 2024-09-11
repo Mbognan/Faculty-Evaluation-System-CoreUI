@@ -54,6 +54,8 @@ class AdminController extends Controller
         }
 
         $categories = Category::all();
+        $categorz = Category::pluck('title','id');
+
 
 
         foreach ($facultyMembers as $faculty) {
@@ -198,6 +200,8 @@ class AdminController extends Controller
             ->where('department_id', $departmentHead->department_id)
             ->count();
 
+
+
         $facultybyDepartment = User::with('department')
             ->where('user_type', 'faculty')
             ->where('department_id', $departmentHead->department_id)
@@ -245,9 +249,16 @@ class AdminController extends Controller
             $pending = $result['pending'];
             $rejected = $result['rejected'];
 
-            $verifiedper = ($result['verified'] / $totalSudent) * 100;
-            $pendingper = ($result['pending'] / $totalSudent) * 100;
-            $rejectedper = ($result['rejected'] / $totalSudent) * 100;
+            if($totalSudent > 0){
+                $verifiedper = ($result['verified'] / $totalSudent) * 100;
+                $pendingper = ($result['pending'] / $totalSudent) * 100;
+                $rejectedper = ($result['rejected'] / $totalSudent) * 100;
+
+            }else{
+                $verifiedper = 0;
+                $pendingper = 0;
+                $rejectedper = 0;
+            }
 
 
             $allDataEmpty = !empty($facultyData) &&
@@ -283,7 +294,8 @@ class AdminController extends Controller
             'overallCategoryAverages',
             'overallSentimentAnalysisByFaculty',
             'allDataEmpty',
-             'comments'
+             'comments',
+             'categorz'
         ]));
 
 

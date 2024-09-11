@@ -57,8 +57,8 @@ class EvaluationScheduleController extends Controller
     public function update(Request $request, string $id) {
         $schedule = EvaluationSchedule::findOrFail($id);
 
-        if ($schedule->evaluation_status == 1) {
-            Log::info('Redirecting due to ongoing schedule.');
+        if (EvaluationSchedule::where('evaluation_status', 2)->exists() ) {
+
             return redirect()->back()->with('warning', 'Schedule Update is not possible due to an ongoing schedule!');
         } else {
 
@@ -67,8 +67,6 @@ class EvaluationScheduleController extends Controller
                 $schedule->semester = $request->semester;
                 $schedule->evaluation_status = $request->status;
                 $schedule->save();
-
-                Log::info('Schedule updated successfully.');
                 return redirect()->back()->with('success', 'Schedule Successfully Updated.');
 
         }

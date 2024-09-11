@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('by_subject');
             $table->integer('results_by_category');
-            $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('category_id');
+            $table->foreignId('user_id');
             $table->foreignId('faculty_id');
             $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
-            $table->foreignId('semester_id')->constrained('evaluation_schedules');
+            $table->foreignId('semester_id');
             $table->timestamps();
         });
     }

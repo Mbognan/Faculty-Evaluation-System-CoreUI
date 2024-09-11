@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('tokenforms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id');
             $table->foreignId('faculty_id');
             $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
             $table->string('subject');
-            $table->foreignId('evaluation_schedules_id')->constrained('evaluation_schedules');
+            $table->foreignId('evaluation_schedules_id');
             $table->timestamps();
         });
     }

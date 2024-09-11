@@ -40,7 +40,6 @@ class RegistrationPendingController extends Controller
 
     public function importPendingRegistration(Request $request){
 
-        dd($request);
 
         Excel::import(new PendingRegistration, $request->file('import_file'));
 

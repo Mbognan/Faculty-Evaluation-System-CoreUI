@@ -92,6 +92,8 @@ class FacultyController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $id = User::findOrFail($id);
+        $id->delete();
+        return response(['status' => 'success', 'message' =>'Item deleted successfully!']);
     }
 }

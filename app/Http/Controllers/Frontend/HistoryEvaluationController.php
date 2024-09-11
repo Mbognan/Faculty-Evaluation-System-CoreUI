@@ -41,12 +41,8 @@ class HistoryEvaluationController extends Controller
         $faculty = User::findOrFail($faculty_id);
         $year = EvaluationSchedule::findOrFail($semester_id);
         $academicpart = explode('-', $year->academic_year);
-
         $sy = $academicpart[0];
         $to = $academicpart[1];
-
-
-
 
 
 

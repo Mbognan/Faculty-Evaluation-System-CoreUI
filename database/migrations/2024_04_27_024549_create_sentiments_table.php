@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('faculty_id');
             $table->foreign('faculty_id')->references('id')->on('users')->where('user_type', 'faculty');
-            $table->foreignid('comments_id')->constrained('comments');
+            $table->foreignid('comments_id');
             $table->enum('sentiment',['positive','negative','neutral']);
-            $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('evaluation_schedules_id')->constrained('evaluation_schedules')->nullable();
+            $table->foreignId('user_id');
+            $table->foreignId('evaluation_schedules_id')->nullable();
             $table->timestamps();
         });
     }

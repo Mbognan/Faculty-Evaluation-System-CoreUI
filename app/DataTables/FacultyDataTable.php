@@ -33,7 +33,7 @@ class FacultyDataTable extends DataTable
 
             ->addColumn('action', function($query){
 
-                $delete = '<a href="'.route('admin.category.destroy',$query->id).'" class="delete-item btn btn-sm btn-danger ml-2 text-white"><i class="fas fa-trash"></i></a>';
+                $delete = '<a href="'.route('admin.faculty.destroy',$query->id).'" class="delete-item btn btn-sm btn-danger ml-2 text-white"><i class="fas fa-trash"></i></a>';
                 return $delete;
             })
             ->rawColumns(['status','action','is_featured','is_verified','image'])

@@ -616,9 +616,6 @@
                 tableBody.dataset.toggle = isDefaultData ? 'alternate' : 'default';
 });
 
-
-
-
             var Averages = @json($facultyAverages);
             var facultyAverages = @json($categoryAverages);
 
@@ -631,32 +628,20 @@
             }
 
             var facultyCategoryAverages = @json($facultyCategoryAverages);
-
-            let seriesData = [{
-                    name: 'Commitment',
-                    data: []
-                },
-                {
-                    name: 'Knowledge of the subject',
-                    data: []
-                },
-                {
-                    name: 'Teaching effectiveness',
-                    data: []
-                },
-                {
-                    name: 'Management Learning',
-                    data: []
-                }
-            ];
-
+            var categories =  @json($categorz);
             let facultyIds = Object.keys(facultyCategoryAverages);
+            let categoryIDs = Object.keys(categories);
+
+            let seriesData = categoryIDs.map(categoryId => ({
+                    name: categories[categoryId],
+                    data: []
+                }));
 
             facultyIds.forEach(facultyId => {
-                seriesData[0].data.push(parseFloat(facultyCategoryAverages[facultyId][32]));
-                seriesData[1].data.push(parseFloat(facultyCategoryAverages[facultyId][33]));
-                seriesData[2].data.push(parseFloat(facultyCategoryAverages[facultyId][34]));
-                seriesData[3].data.push(parseFloat(facultyCategoryAverages[facultyId][35]));
+                categoryIDs.forEach((categoryId, index) => {
+                    let value = parseFloat(facultyCategoryAverages[facultyId][categoryId]);
+                    seriesData[index].data.push(value);
+                });
             });
 
             //bar and line chart
