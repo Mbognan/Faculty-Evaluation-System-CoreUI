@@ -154,7 +154,7 @@
                     <div class="form-floating mb-3">
                         <select name="category" class="form-select form-select-lg mb-3"
                             aria-label=".form-select-lg example">
-                            <option>Select Evaluation Category</option>
+                            <option value="">Select Evaluation Category</option>
                             @foreach ($categories as $category)
                             <option value="{{ $category->id }}">{{ $category->title }}</option>
                             @endforeach

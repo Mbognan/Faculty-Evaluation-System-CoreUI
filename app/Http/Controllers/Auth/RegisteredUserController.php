@@ -24,6 +24,7 @@ class RegisteredUserController extends Controller
     {
         $departments = Department::all();
 
+
         return view('auth.register',compact(['departments']));
     }
 

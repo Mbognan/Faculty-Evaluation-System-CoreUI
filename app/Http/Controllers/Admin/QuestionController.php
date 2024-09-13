@@ -41,21 +41,29 @@ class QuestionController extends Controller
     }
 
     public function store(Request $request):RedirectResponse{
-        $request->validate([
-            'category' => ['required','max:255'],
-            'question' => ['required','max:255']
-        ]);
-        $maxPosition = Question::where('category_id', $request->category)->max('position');
 
-        $question = new Question();
+        if(empty($request->category)){
+            return redirect()->back()->with(['warning' => 'Category does not  exists']);
+        }else{
+            $request->validate([
+                'category' => ['required','max:255'],
+                'question' => ['required','max:255']
+            ]);
+            $maxPosition = Question::where('category_id', $request->category)->max('position');
 
-        $question->category_id = $request->category;
-        $question->question = $request->question;
-        $question->position = $maxPosition + 1;
-        $question->save();
+            $question = new Question();
 
-        toastr()->success('Created Successfully!');
-        return redirect()->back();
+            $question->category_id = $request->category;
+            $question->question = $request->question;
+            $question->position = $maxPosition + 1;
+            $question->save();
+
+
+
+        }
+
+        return redirect()->back()->with(['success' => 'Successfully created!']);
+
     }
 
     public function edit( string $id):JsonResponse{

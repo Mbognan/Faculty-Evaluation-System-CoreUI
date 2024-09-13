@@ -209,53 +209,53 @@
                                             </h4>
 
                                             <div class="personal_info_text">
-                                                <p><span>Name:</span> {{ $user->first_name }} {{ $user->last_name }}</p>
+                                                <p><span>Name:</span> {{ $user->first_name }} B. {{ $user->last_name }}</p>
                                                 <p><span>Email:</span> {{ $user->email }}</p>
                                                 @if (auth()->user()->user_type === 'user')
                                                 <p><span>Student ID:</span> {{ $user->student_id }}</p>
                                                 @endif
 
-                                                <p><span>Address:</span> 7232 Broadway Suite 308, Jackson Heights,
-                                                    11372, NY, United States </p>
+                                                <p><span>User Type:</span> {{ ucfirst($user->user_type) }} </p>
                                             </div>
                                             {{-- Profile section --}}
                                             <div class="fp_dash_personal_info_edit comment_input p-0">
-                                                <form>
+                                                <form method="POST" action="{{route( 'user.homeProfile.update')}}">
+                                                    @csrf
+                                                    @method('PUT')
+
                                                     <div class="row">
                                                         <div class="col-6">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>first name</label>
-                                                                <input type="text" placeholder="Name">
+                                                                <input type="text" value="{{ $user->first_name }}" name="first_name">
                                                             </div>
                                                         </div>
                                                         <div class="col-6">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>last name</label>
-                                                                <input type="text" placeholder="Name">
+                                                                <input type="text" value="{{ $user->last_name }}" name="last_name">
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-12 col-lg-12">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>email</label>
-                                                                <input type="email" placeholder="Email">
+                                                                <input type="email"  value="{{ $user->email }}" name="email">
                                                             </div>
                                                         </div>
                                                         @if (auth()->user()->user_type === 'user')
                                                         <div class="col-xl-6 col-lg-6">
                                                             <div class="fp__comment_imput_single">
                                                                 <label>Student ID</label>
-                                                                <input type="text" placeholder="Phone">
+                                                                <input type="text" value="{{ $user->student_id }}" name="student_id">
                                                             </div>
                                                         </div>
                                                         @endif
                                                         <div class="col-xl-12">
-                                                            <div class="fp__comment_imput_single">
-                                                                <label>address</label>
-                                                                <textarea rows="4" placeholder="Address"></textarea>
-                                                            </div>
-                                                            <button type="submit" class="common_btn">submit</button>
+
+                                                            <button type="submit" class="common_btn">update</button>
                                                         </div>
                                                     </div>
+                                                    <input type="hidden" value="{{ auth()->user()->user_type }}" name="user_type">
                                                 </form>
                                             </div>
 

@@ -29,9 +29,9 @@ class CategoryDataTable extends DataTable
         })
         ->addColumn('status', function($query){
             if($query->status === 1){
-                return '<span class="badge rounded-pill bg-success  m-b-5">Enable</span>';
+                return '<span class="badge rounded-pill bg-success  m-b-5   ">Enable</span>';
             }else{
-                return '<span class="badge rounded-pill bg-danger  m-b-5">Disable</span>';
+                return '<span class="badge rounded-pill bg-danger  fs-4 px-4 py-2 m-b-5">Disable</span>';
             }
         })
             ->rawColumns(['action','status'])

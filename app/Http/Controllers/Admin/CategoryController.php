@@ -46,8 +46,8 @@ class CategoryController extends Controller
             $category->title = $request->title;
             $category->status = $request->status;
             $category->save();
-            toastr()->success('Category created successfully');
-            return to_route('admin.category.index');
+
+            return redirect()->back()->with(['success' => 'Category created successfully!']);
 
         }
 

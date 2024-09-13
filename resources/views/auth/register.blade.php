@@ -45,7 +45,7 @@
             <x-input-label for="department" :value="__('Department')" />
             <select id="department" name="departmentID" class="block mt-1 w-full form-select">
                 @foreach ($departments as $department )
-                <option value="{{ $department->id }}">{{ $department->departments }}</option>
+                <option value="{{ $department->id }}">{{ $department->Departments }}</option>
                 @endforeach
 
 

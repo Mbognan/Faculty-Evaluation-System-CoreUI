@@ -34,10 +34,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 Route::group(['middleware' => 'auth','user.type:user', 'prefix' => 'user', 'as' => 'user.'], function(){
     Route::get('/dashboard/profile', [HomeController::class,'index'])->name('profile.index');
+    Route::put('update-profile', [HomeController::class, 'update'])->name('homeProfile.update');
     Route::get('/dashboard/Evaluate', [EvaluationController::class, 'index'])->name('evaluation.index');
     Route::get('dashboard/profile/evaluate/{id}/{subject}/{schedule}', [EvaluationFormController::class, 'evaluateFaculty'])->name('profile-evaluate');
     Route::post('dashboard/evaluation-submit', [EvaluationFormController::class, 'store'])->name('evaluation-submit');

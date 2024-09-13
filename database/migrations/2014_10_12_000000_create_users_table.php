@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('password');
             $table->boolean('status')->default(0);
             $table->enum('user_type',['user','admin','faculty'])->default('user');
-            $table->integer('student_id')->nullable();
+            $table->string('student_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
