@@ -14,13 +14,10 @@ return new class extends Migration
         Schema::create('class_lists', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('middle_initial');
+            $table->string('student_id');
             $table->string('subject');
             $table->string('student_id');
-            $table->string('semester');
-            $table->string('year');
+            $table->foreignId('evaluation_schedule_id');
             $table->timestamps();
         });
     }

@@ -199,8 +199,7 @@
             <tr style="height:13pt">
                 <td
                     style="width:324pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt;border-right-style:solid;border-right-width:1pt">
-                    <p class="s4" style="text-indent: 0pt;line-height: 11pt;text-align: center;">COLLEGE OF
-                        TECHNOLOGY AND ENGINEERING</p>
+                    <p class="s4" style="text-indent: 0pt;line-height: 11pt;text-align: center;">{{ strtoupper($college->college) }}</p>
                 </td>
                 <td
                     style="width:47pt;border-top-style:solid;border-top-width:1pt;border-left-style:solid;border-left-width:1pt;border-bottom-style:solid;border-bottom-width:1pt">

@@ -2,7 +2,6 @@
 
 @section('home')
 
-<link rel="stylesheet" href="{{ asset('css/filepond.css') }}">
 <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
     <div class="fp__breadcrumb_overlay">
         <div class="container">
@@ -40,13 +39,7 @@
             </div>
         </div>
     </section>
-    <script src="{{ asset('dist/filepond.js') }}"></script>
-    <script>
-         // Get a reference to the file input element
-        const inputElement = document.querySelector('input[type="file"]');
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement);
-    </script>
+
 
 @endsection
 @push('scripts')

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\DataTables\ResultByCategoryDataTable;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\College;
 use App\Models\EvaluationSchedule;
 use App\Models\Question;
 use App\Models\RawEvaluationResult;
@@ -45,10 +46,14 @@ class HistoryEvaluationController extends Controller
         $to = $academicpart[1];
 
 
+        $temp = $faculty->college_id;
+
+        $college = College::findorFail($temp);
+
 
         $questions = Question::orderBy('position', 'asc')->get();
         $categories = Category::all();
-        $pdf = Pdf::loadView('frontend.home.generate_history', ['questions' => $questions, 'categories' => $categories,'rawdata' => $rawdata, 'faculty' => $faculty, 'sy' => $sy, 'to' => $to, 'year' => $year, 'rawdataTotal' => $rawdataTotal])
+        $pdf = Pdf::loadView('frontend.home.generate_history', ['questions' => $questions, 'categories' => $categories,'rawdata' => $rawdata, 'faculty' => $faculty, 'sy' => $sy, 'to' => $to, 'year' => $year, 'rawdataTotal' => $rawdataTotal,'college' => $college])
         ->setPaper([0, 0,  8.5 * 72, 14.25 * 72], 'portrait');
         return $pdf->stream();
     }

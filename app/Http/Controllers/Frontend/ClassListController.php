@@ -33,46 +33,47 @@ class ClassListController extends Controller
         $schedule = EvaluationSchedule::where('evaluation_status', 2)->first('id');
 
 
-        $request->validate([
-            'users' => 'required|file|mimes:xls,xlsx',
-        ]);
+        if (is_null($schedule)) {
+
+            return redirect()->back()->with(['error' => 'No evaluation schedules available! Please Contact the Department Head for more information.']);
+        } else {
+
+            $request->validate([
+                'users' => 'required|file|mimes:xls,xlsx',
+            ]);
 
 
-        if (!$request->hasFile('users')) {
-            toastr()->error('File not found in request');
-            return back();
-        }
-
-        $file = $request->file('users');
-        if (!$file->isValid()) {
-            toastr()->error('Invalid file upload');
-            return back();
-        }
-
-        try {
-
-            $import = new ClassListImport();
-            $import->withFacultyId($facultyId)->withSchedule($schedule->id);
-
-
-            Excel::import($import, $file);
-
-            $duplicateStudentIds = $import->duplicateStudentIds();
-            if(!empty($duplicateStudentIds)){
-                return to_route('faculty.class-list.index')->with('warning','Some of the students have already been added to the class list');
-            }
-            $invalidStudentIds = $import->getInvalidStudentIds();
-            if (!empty($invalidStudentIds)) {
-                return to_route('faculty.class-list.index')->with( 'warning','The following student IDs do not exist and were not added: ' . implode(', ', $invalidStudentIds));
-
+            if (!$request->hasFile('users')) {
+                toastr()->error('File not found in request');
+                return back();
             }
 
-            return to_route('faculty.class-list.index')
-            ->with('success', 'Students added successfully!');
-        } catch (\Exception $e) {
-            toastr()->error('An error occurred during file import: ' . $e->getMessage());
-            return back();
+            $file = $request->file('users');
+            if (!$file->isValid()) {
+                toastr()->error('Invalid file upload');
+                return back();
+            }
+
+
+                $import = new ClassListImport();
+                $import->withFacultyId($facultyId)->withSchedule($schedule->id);
+                Excel::import($import, $file);
+
+                $duplicateStudentIds = $import->duplicateStudentIds();
+                if(!empty($duplicateStudentIds)){
+                    return to_route('faculty.class-list.index')->with('warning','Some of the students have already been added to the class list');
+                }
+                $invalidStudentIds = $import->getInvalidStudentIds();
+                if (!empty($invalidStudentIds)) {
+                    return to_route('faculty.class-list.index')->with( 'warning','The following student IDs do not exist and were not added: ' . implode(', ', $invalidStudentIds));
+
+                }
+
+                return to_route('faculty.class-list.index')
+                ->with('success', 'Students added successfully!');
         }
+
+
     }
 
 
