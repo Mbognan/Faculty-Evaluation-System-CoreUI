@@ -154,10 +154,10 @@
                                         <div class="fp__dsahboard_overview">
                                             <div class="row">
                                                 @if ( auth()->check() && auth()->user()->user_type === 'faculty')
-                                                <div class="col-xl-4 col-sm-6 col-md-4">
+                                                {{-- <div class="col-xl-4 col-sm-6 col-md-4">
                                                     <div class="fp__dsahboard_overview_item green">
                                                         <span class="icon"><i class="fas fa-user-check"></i></span>
-                                                        <h4>Evaluated Student <span>(76)</span></h4>
+                                                        <h4>Evaluated  <span>(76)</span></h4>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-sm-6 col-md-4">
@@ -165,7 +165,7 @@
                                                         <span class="icon"><i class="fas fa-user-clock"></i></span>
                                                         <h4>Pending Student <span>(20)</span></h4>
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                                 @elseif( auth()->check() && auth()->user()->user_type === 'user')
                                                 <div class="col-xl-4 col-sm-6 col-md-4">
                                                     <div class="fp__dsahboard_overview_item green">

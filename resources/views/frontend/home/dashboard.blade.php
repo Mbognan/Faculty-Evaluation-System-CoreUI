@@ -79,19 +79,19 @@
                                                 <div class="col-xl-4 col-sm-6 col-md-4">
                                                     <div class="fp__dsahboard_overview_item   ">
                                                         <span class="icon" style="background-color:#007bff"><i class="fas fa-users"></i></span>
-                                                        <h4 style="color:#007bff">Total Student<span style="color:#007bff">(106)</span></h4>
+                                                        <h4 style="color:#007bff">Total Student Registered<span style="color:#007bff">({{ $totalStudent }})</span></h4>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-sm-6 col-md-4">
                                                     <div class="fp__dsahboard_overview_item green">
                                                         <span class="icon"><i class="fas fa-user-check"></i></span>
-                                                        <h4>Complete Evaluation<span>(76)</span></h4>
+                                                        <h4>Complete Evaluation<span>({{ $token }})</span></h4>
                                                     </div>
                                                 </div>
                                                 <div class="col-xl-4 col-sm-6 col-md-4 mb-4">
                                                     <div class="fp__dsahboard_overview_item ">
                                                         <span class="icon"><i class="fas fa-user-clock"></i></span>
-                                                        <h4>Remaining Student <span>(20)</span></h4>
+                                                        <h4>Remaining Student <span>({{ $pendingstudenteval }})</span></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -158,6 +158,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            var users = @json($users->first_name.' '.$users->last_name);
 
             // 'pie' is class name div
             const circle = new CircularProgressBar("pie");
@@ -212,53 +213,6 @@
 
 
 
-            // Highcharts.chart("container", {
-            //     chart: {
-            //         type: "pie",
-            //     },
-            //     title: {
-            //         text: "Overall Faculty Performance Evaluation Result By Category",
-            //     },
-            //     tooltip: {
-            //         valueSuffix: "",
-            //     },
-            //     subtitle: {
-            //         text: 'Source:<a href="https://www.mdpi.com/2072-6643/11/3/684/htm" target="_default">BSIT Department</a>',
-            //     },
-            //     plotOptions: {
-            //         series: {
-            //             allowPointSelect: true,
-            //             cursor: "pointer",
-            //             dataLabels: [{
-            //                     enabled: true,
-            //                     distance: 20,
-            //                 },
-            //                 {
-            //                     enabled: true,
-            //                     distance: -40,
-            //                     format: "{point.percentage:.1f}%",
-            //                     style: {
-            //                         fontSize: "1.2em",
-            //                         textOutline: "none",
-            //                         opacity: 0.7,
-            //                     },
-            //                     filter: {
-            //                         operator: ">",
-            //                         property: "percentage",
-            //                         value: 10,
-            //                     },
-            //                 },
-            //             ],
-            //         },
-            //     },
-            //     series: [{
-            //         name: "mean",
-            //         colorByPoint: true,
-            //         data: piedata,
-            //     }, ],
-            // });
-
-
 
 
 
@@ -308,7 +262,7 @@
                     }
                 },
                 title: {
-                    text: 'BSIT Department Overall Evaluation'
+                    text: 'Faculty '+users+' Overall Evaluation'
                 },
 
                 subtitle: {
@@ -369,7 +323,7 @@
 
 
 
-            ////////////////////////////////
+            //
 
             Highcharts.chart('container2', {
                 chart: {
@@ -380,11 +334,14 @@
                 },
                 xAxis: {
                     categories: subjects,
+                    title:{
+                        text:'Subjects'
+                    }
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Goals'
+                        text: 'Means'
                     }
                 },
                 legend: {
@@ -403,10 +360,12 @@
             // histogram chart
             const data2 = @json($histogramData);
             var specificCategoryData = @json($specificCategoryData);
+            console.log(specificCategoryData);
 
             Highcharts.chart('container3', {
                 title: {
-                    text: 'Commitment'
+                    text: 'Commitment',
+
                 },
                 xAxis: {
                     title: {
@@ -483,7 +442,7 @@
                 }, {
                     name: 'Data',
                     type: 'scatter',
-                    data: specificCategoryData['Knowledge of Subjects'] || [],
+                    data: specificCategoryData['Knowledge of the Subject'] || [],
                     id: 's1',
                     visible: false,
                     showInLegend: false
@@ -575,43 +534,20 @@
                     showInLegend: false
                 }]
             });
-
-
                //radar chart
             const chartData = @json($overallPercentageBySubject);
 
             const labelsRadar = Object.keys(chartData);
             const dataRadar = Object.values(chartData);
-
-
             Highcharts.chart("containerRadar", {
                 chart: {
                     polar: true,
                     type: "line",
                 },
 
-                accessibility: {
-                    description: "A spiderweb chart compares the allocated budget " +
-                        "against actual spending within an organization. The spider " +
-                        "chart has six spokes. Each spoke represents one of the 6 " +
-                        "departments within the organization: sales, marketing, " +
-                        "development, customer support, information technology and " +
-                        "administration. The chart is interactive, and each data point " +
-                        "is displayed upon hovering. The chart clearly shows that 4 of " +
-                        "the 6 departments have overspent their budget with Marketing " +
-                        "responsible for the greatest overspend of $20,000. The " +
-                        "allocated budget and actual spending data points for each " +
-                        "department are as follows: Sales. Budget equals $43,000; " +
-                        "spending equals $50,000. Marketing. Budget equals $19,000; " +
-                        "spending equals $39,000. Development. Budget equals $60,000; " +
-                        "spending equals $42,000. Customer support. Budget equals $35," +
-                        "000; spending equals $31,000. Information technology. Budget " +
-                        "equals $17,000; spending equals $26,000. Administration. Budget " +
-                        "equals $10,000; spending equals $14,000.",
-                },
 
                 title: {
-                    text: "Radar Chart",
+                    text: "Differentials of Percentages",
                     x: -80,
                 },
 
@@ -623,6 +559,10 @@
                     categories: labelsRadar,
                     tickmarkPlacement: "on",
                     lineWidth: 0,
+                    title:{
+                        text:'Subject'
+                    },
+
                 },
 
                 yAxis: {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Comments;
+use App\Models\Department;
 use App\Models\EvaluationSchedule;
 use App\Models\ResultByCategory;
 use App\Models\Sentiment;
@@ -260,6 +261,7 @@ class AdminController extends Controller
                 $rejectedper = 0;
             }
 
+            $department = Department::where('id', $departmentHead->department_id)->firstOrNew();
 
             $allDataEmpty = !empty($facultyData) &&
             !empty($facultybyDepartment) &&
@@ -273,6 +275,7 @@ class AdminController extends Controller
 
 
         return view('admin.index', compact([
+            'department',
             'verifiedper',
             'pendingper',
             'rejectedper',

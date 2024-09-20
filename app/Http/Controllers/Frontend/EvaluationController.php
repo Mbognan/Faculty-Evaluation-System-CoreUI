@@ -80,17 +80,19 @@ class EvaluationController extends Controller
 
     public function subject_choose(string $id){
 
+        $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
+        $schedule = ($schedules->count() === 1) ? $schedules->first() : null;
 
 
         $faculty  = User::findOrFail($id);
         $user = Auth::user();
-        $subjects = ClassList::where('student_id', $user->student_id)->where('user_id', $faculty->id)
+        $subjects = ClassList::where('student_id', $user->student_id)
+                        ->where('user_id', $faculty->id)
+                        ->where('evaluation_schedule_id', $schedules)
                          ->get()
                          ->pluck('subject');
 
 
-        $schedules = EvaluationSchedule::where('evaluation_status', '2')->get();
-        $schedule = ($schedules->count() === 1) ? $schedules->first() : null;
 
 
         if ($schedule) {

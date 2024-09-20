@@ -49,6 +49,7 @@ class FacultyController extends Controller
         $user->password = $request->password;
         $user->status = $request->status;
         $user->gender = $request->gender;
+        $user->college_id = $admin->college_id;
         $user->department_id = $admin->department_id;
         $user->user_type = $request->user_type;
 

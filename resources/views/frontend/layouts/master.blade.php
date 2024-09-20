@@ -50,7 +50,7 @@
     @include('frontend.layouts.footer')
 
 
-    <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+
 
     <script type="text/javascript" src="{{ asset('frontend/assets/js/index.bundle.js') }}"></script>
     {{-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script> --}}

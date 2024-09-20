@@ -99,7 +99,7 @@
                         <div class="form-floating">
                             <select id="semester" name="semester" class="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
-                                <option >Select Semester</option>
+                                <option value="">Select Semester</option>
                                 <option value="first_semester">First Semester</option>
                                 <option value="second_semester">Second Semester</option>
 
@@ -153,7 +153,7 @@ $(document).ready(function() {
         var href = $(this).attr('href');
         var scheduleId = href.substring(href.lastIndexOf('/') + 1);
 
-        console.log(scheduleId);
+
         var url = "{{ route('admin.evaluation_schedule.edit', ':id') }}";
         url = url.replace(':id', scheduleId);
         $('#editScheduleModal').modal('show');
@@ -163,7 +163,9 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === '200') {
 
-                    $('#semester').val(response.schedules.semester);
+
+                    $('#semester').append($('<option>').text(response.schedules.semester).attr(
+                        'value', response.schedules.semester));
                     $('#description').val(response.schedules.description);
                     $('#academic_year').val(response.schedules.academic_year);
                     $('#status').val(response.schedules.evaluation_status);

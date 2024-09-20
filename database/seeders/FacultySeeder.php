@@ -17,11 +17,13 @@ class FacultySeeder extends Seeder
     {
         $faker = Faker::create();
 
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             User::create([
                 'avatar'     => '/default/avatar.png',
                 'first_name' => $faker->firstName,
                 'last_name'  => $faker->lastName,
+                'department_id' => 1,
+                'college_id' => 1,
                 'email'      => $faker->unique()->safeEmail,
                 'password'   => Hash::make('password'),
                 'user_type'  => 'faculty',

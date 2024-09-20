@@ -123,7 +123,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="fp__footer_bottom_text d-flex flex-wrap justify-content-between">
-                        <p>Copyright 2022 <b></b></p>
+                        <p>Copyright 2024 <b></b></p>
                         <ul class="d-flex flex-wrap">
                             <li><a href="#">FAQs</a></li>
                             <li><a href="#">payment</a></li>

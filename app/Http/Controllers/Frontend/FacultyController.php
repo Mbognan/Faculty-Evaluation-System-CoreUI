@@ -7,8 +7,11 @@ use App\Http\Requests\FacultyProfileRequest;
 use App\Models\Category;
 use App\Models\ClassList;
 use App\Models\Comments;
+use App\Models\Department;
 use App\Models\EvaluationResult;
+use App\Models\EvaluationSchedule;
 use App\Models\ResultByCategory;
+use App\Models\Tokenform;
 use App\Models\User;
 use App\Traits\FileUploadTrait;
 use Illuminate\Http\RedirectResponse;
@@ -22,8 +25,11 @@ class FacultyController extends Controller
     use FileUploadTrait;
     public function index(): View {
         $userId = Auth::user()->id;
+        $users = User::findOrFail($userId);
+
     $evaluationResults = EvaluationResult::where('user_id', $userId)->get();
     $allCategories = Category::all();
+    $evaluationSchedules = EvaluationSchedule::where('evaluation_status', 2)->firstOrNew();
     $category = Category::pluck('title')->toArray();
     $results = EvaluationResult::where('user_id', $userId)->pluck('results_by_category')->toArray();
     $distinctSubject = ResultByCategory::where('faculty_id', $userId)
@@ -288,15 +294,19 @@ foreach ($categoryTitles as $categoryId => $categoryTitle) {
 
 
     $totalFeedback =  Comments::where('faculty_id', $userId)->count();
-    $totalStudent = ClassList::where('user_id', $userId)->count();
-
-
-    $totalFeedback = $totalFeedback ?? 0;
+    $totalStudent = ClassList::where('user_id', $userId)->where('evaluation_schedule_id', $evaluationSchedules->id)->count();
     $totalStudent = $totalStudent ?? 0;
+    $studentId = User::where('user_type','user')->pluck('id');
 
 
+    $token = Tokenform::where('evaluation_schedules_id', $evaluationSchedules->id)
+                        ->where('faculty_id', $userId)
+                        ->count();
+    $pendingstudenteval = $totalStudent + $token;
 
-        return view('frontend.home.dashboard', compact(['category','totalStudent','totalFeedback', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData','OveralltotalMeanByCategory','overallPercentageBySubject']));
+    $department = Department::where('id', $users->department_id)->firstOrNew();
+
+        return view('frontend.home.dashboard', compact(['users','department','pendingstudenteval','token','category','totalStudent','totalFeedback', 'allCategories', 'resultsByCategory', 'userId', 'evaluationResults','totalSumByCategory','totalMeanByCategory','histogramData','specificCategoryData','OveralltotalMeanByCategory','overallPercentageBySubject']));
     }
 
     public function profile():View{
