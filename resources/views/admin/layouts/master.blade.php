@@ -9,7 +9,7 @@
     <meta name="description" content="Palompon Institute of Technology">
     <meta name="author" content="Łukasz Holeczek">
     <meta name="keyword" content="Palompon Institute of Technology">
-    <title>PIT -Admin</title>
+    <title>Palompon Institute of Techonology </title>
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('default/favicon.ico')}}">
     <link rel="manifest" href="{{ asset('assets/favicon/manifest.json') }}">
 

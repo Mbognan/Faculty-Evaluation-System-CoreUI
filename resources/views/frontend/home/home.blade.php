@@ -37,10 +37,8 @@
                                 <div class="col-xl-5 col-md-7 col-lg-6">
                                     <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
                                         <h1 class="text-white">Tatak Evsunista Award to Dr. Norberto C. Olavides</h1>
-                                        <h4 class="text-white">- Palompon Institute of Technology</h4>
                                         <p class="text-white">In appreciation of his remarkable achievements and unwavering commitment in elevating the field of higher education.</p>
                                         <ul class="d-flex flex-wrap">
-                                            {{-- <li><a class="common_btn " href="#">shop now</a></li> --}}
                                         </ul>
                                     </div>
                                 </div>

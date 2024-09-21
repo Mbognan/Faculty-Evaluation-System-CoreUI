@@ -357,15 +357,13 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <!-- Sentiment Analysis -->
-
                             <div id="containerSentiment"></div>
-                            <hr>
-                            <div id="containerWord"></div>
-
-
-
                         </div>
                         <div class="col-lg-6">
+
+                            <div id="containerWord"></div>
+                        </div>
+                        {{-- <div class="col-lg-6">
                             <div class="card mb-4 bg-info text-white">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
@@ -430,7 +428,7 @@
                                         </svg> ) </small>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -438,7 +436,7 @@
 
 
 
-        <div class="col-md-12 mb-4">
+        {{-- <div class="col-md-12 mb-4">
             <div class="container">
                 <div class="row d-flex justify-content-center">
                     <div class="col-md-12 col-lg-10">
@@ -566,7 +564,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     </div>
 @endsection
@@ -851,11 +849,14 @@
             },
             xAxis: {
                 categories: subjects,
+                title: {
+                    text: 'Subjects'
+                }
             },
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Goals'
+                    text: 'Means'
                 }
             },
             legend: {
@@ -885,6 +886,9 @@
             },
             tooltip: {
                 valueSuffix: '%'
+            },
+            exporting:{
+                enabled: false,
             },
             subtitle: {
                 text: 'Source:<a href="" target="_default">Student Response</a>'

@@ -90,7 +90,7 @@ class StoreEvaluationJob implements ShouldQueue
         }
         ResultByCategory::insert($resultByCategory);
 
-           // Comment store raw
+
 
 
 

@@ -30,6 +30,7 @@
             <x-input-label for="student_ID" :value="__('student_ID')" />
             <x-text-input id="student_ID" class="block mt-1 w-full" type="text" name="student_ID" :value="old('student_ID')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('student_ID')" class="mt-2" />
+                <p class="text-sm text-gray-500 mt-1">*Note: Student ID must be in the format 21-****-***</p>
         </div>
 
         <!-- Email Address -->

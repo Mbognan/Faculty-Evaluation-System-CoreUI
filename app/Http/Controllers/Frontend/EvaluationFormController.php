@@ -42,6 +42,18 @@ class EvaluationFormController extends Controller
 
     public function store(Request $request)
     {
+        $userId = $request->input('user_id');
+        $facultyId = $request->input('faculty_id');
+        $subject = $request->input('subject');
+        $schedule = $request->input('schedule');
+
+        Tokenform::create([
+            'user_id' => $userId,
+            'faculty_id' => $facultyId,
+            'subject' => $subject,
+            'evaluation_schedules_id' => $schedule,
+        ]);
+
         StoreEvaluationJob::dispatch($request->all());
         toastr()->success('Form Submitted Successfully!');
         return response()->json(['status' => 'success', 'message' => 'Evaluation submitted successfully']);
@@ -55,6 +67,7 @@ class EvaluationFormController extends Controller
         $subject = $request->input('subject');
         $schedule = $request->input('schedule');
          $comment = $request->input('comment');
+
 
          $userDepartment = User::findOrFail($userId);
          $department_id = $userDepartment->department_id;

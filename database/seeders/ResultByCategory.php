@@ -13,10 +13,10 @@ class ResultByCategory extends Seeder
      */
     public function run(): void
     {
-        $semesterId = 9;
-        $facultyId = 11;
-        $categories = [32, 33, 34, 35];
-        $subject1 = [ 'Wl_101','AR_201',  'QL_102L','IAS 201', 'IT elec4'];
+        $semesterId = 1;
+        $facultyId = 43;
+        $categories = [3, 4, 5, 6];
+        $subject1 = [ 'IT elec 3','It elec 4',  'Cap 102','IAS 201', 'AS 201'];
 
         $users = DB::table('users')->where('user_type', 'user')->pluck('id');
 
@@ -25,7 +25,7 @@ class ResultByCategory extends Seeder
                     foreach ($categories as $category) {
                         DB::table('result_by_categories')->insert([
                             'by_subject' => $subject,
-                            'results_by_category' => rand(5, 17),
+                            'results_by_category' => rand(5, 25),
                             'category_id' => $category,
                             'user_id' => $user,
                             'faculty_id' => $facultyId,

@@ -180,18 +180,7 @@
                                     <i class="fas fa-user-graduate"></i></span></div>
                             <div>All Student Registered</div>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
-                                    </use>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
-                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
-                                    class="dropdown-item" href="#">Something else here</a></div>
-                        </div>
+
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
                         <canvas class="chart" id="card-chart1" height="70"></canvas>
@@ -207,18 +196,7 @@
                                     <i class="fas fa-chalkboard-teacher"></i></span></div>
                             <div>BSIT Department faculty</div>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
-                                    </use>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
-                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
-                                    class="dropdown-item" href="#">Something else here</a></div>
-                        </div>
+
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
                         <canvas class="chart" id="card-chart2" height="70"></canvas>
@@ -235,18 +213,7 @@
                                 </span></div>
                             <div>Average for this Semester</div>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
-                                    </use>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
-                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
-                                    class="dropdown-item" href="#">Something else here</a></div>
-                        </div>
+
                     </div>
                     <div class="c-chart-wrapper mt-3" style="height:70px;">
                         <canvas class="chart" id="card-chart3" height="70"></canvas>
@@ -261,18 +228,7 @@
                             <div class="fs-4 fw-semibold">44%</span></div>
                             <div>Satisfactory of the Student</div>
                         </div>
-                        <div class="dropdown">
-                            <button class="btn btn-transparent text-white p-0" type="button" data-coreui-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <svg class="icon">
-                                    <use xlink:href="{{ asset('admin/vendors/@coreui/icons/svg/free.svg#cil-options') }}">
-                                    </use>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item"
-                                    href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a
-                                    class="dropdown-item" href="#">Something else here</a></div>
-                        </div>
+
                     </div>
                     <div class="c-chart-wrapper mt-3 mx-3" style="height:70px;">
                         <canvas class="chart" id="card-chart4" height="70"></canvas>
@@ -289,7 +245,7 @@
                         <div id="container2"></div>
                         <div class="row">
                             <div class="col">
-                                <div class="card-title fs-4 fw-semibold">Summary Report</div>
+                                <div class="card-title fs-4 fw-semibold">Summary Result</div>
                                 <div class="card-subtitle text-secondary mb-4 d-flex justify-content-between mb-4">
 
 
@@ -358,11 +314,8 @@
                                                         <div class="small text-body-secondary text-nowrap"><span
                                                                 data-coreui-i18n="new">BSIT</span> | <span
                                                                 data-coreui-i18n="registered">Registered: </span><span
-                                                                data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">Jan
-                                                                10, 2023</span></div>
+                                                                data-coreui-i18n-date="dateShortMonthName, { 'date': '2023, 1, 10'}">First Semester 2023-2024 </span></div>
                                                     </td>
-
-
                                                     <td align="right">
                                                         {{ $faculty['commitment_percent'] }}%
                                                     </td>
@@ -390,15 +343,15 @@
                             <div class="col-xl-3 ">
                                 <div class="d-flex justify-content-between align-items-center mb-4">
                                     <h5>About</h5>
-                                    <a>
+                                    {{-- <a>
                                         <lord-icon src="https://cdn.lordicon.com/lecprnjb.json"
                                             trigger="hover"></lord-icon>
-                                    </a>
+                                    </a> --}}
                                 </div>
                                 <div class="text-italic text-secondary">No brief description, or topic provided.</div>
                                 <div class="mt-4">
                                     <a class="custom-link" href="{{ route('admin.evaluation_schedule.index') }}">
-                                        <i class="icon  cil-star"></i> Evaluation Date: January 1, 2024</a>
+                                        <i class="icon  cil-star"></i> Acdemic Year: First Semester 2023-2024</a>
                                 </div>
 
                                 <hr>
@@ -615,6 +568,7 @@
                 // Toggle data attribute
                 tableBody.dataset.toggle = isDefaultData ? 'alternate' : 'default';
 });
+            var department_name = @json($department->Departments);
 
             var Averages = @json($facultyAverages);
             var facultyAverages = @json($categoryAverages);
@@ -647,11 +601,14 @@
             //bar and line chart
             Highcharts.chart('container2', {
                 title: {
-                    text: 'Average of Each faculty of BSIT Department',
+                    text: 'Average of Each faculty of '+ department_name,
                     align: 'left'
                 },
                 xAxis: {
-                    categories: facultyIds
+                    categories: facultyIds,
+                    title:{
+                        text:'Faculty'
+                    }
                 },
                 yAxis: {
                     title: {
@@ -664,7 +621,7 @@
                     valueSuffix: ' Average'
                 },
                 exporting: {
-                    enabled: false,
+                    enabled: true,
                 },
 
 
@@ -720,7 +677,7 @@
                     height: 600,
                 },
                 title: {
-                    text: 'Top Performace of BSIT Faculty'
+                    text: 'Top Performer of '+ department_name+' Faculty'
                 },
                 xAxis: {
                     categories: faculty_name
@@ -809,7 +766,7 @@
                     }
                 },
                 title: {
-                    text: 'BSIT Department Overall Evaluation'
+                    text: department_name+' Overall Evaluation'
                 },
                 exporting: {
                     enabled: false
@@ -844,7 +801,7 @@
                     }
                 },
                 series: [{
-                    name: 'Registrations',
+                    name: 'Overall Resullt',
                     colorByPoint: true,
                     innerSize: '65%',
                     data: [{
