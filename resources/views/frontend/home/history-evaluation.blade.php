@@ -8,8 +8,12 @@
        .dataTables_filter {
     margin-bottom: 20px;
     }
+
+    .fp__breadcrumb {
+    background-image: url('{{ asset('uploads/back.jpg') }}');
+}
 </style>
-    <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
+    <section class="fp__breadcrumb">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
                 <div class="fp__breadcrumb_text">
@@ -21,7 +25,7 @@
                 </div>
             </div>
         </div>
-    </section>
+</section>
 
     <section class="fp__dashboard mt_70 xs_mt_90 mb_100 xs_mb_70">
         <div class="container">
@@ -35,7 +39,7 @@
                         <div class="fp__dashboard_content">
                             <div class="tab-content" id="v-pills-tabContent">
                                 <div class="fp_dashboard_body">
-                            <h3>order list</h3>
+                            <h3>evaluation history</h3>
                             <div class="fp_dashboard_order">
                                 <div class="table-responsive">
                                     <table class="">

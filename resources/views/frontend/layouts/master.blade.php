@@ -91,6 +91,22 @@
   <script src="{{ asset('frontend/new/js/main.js') }}" ></script>
   <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
     <script>
+//         let timer;
+
+// window.onload = resetTimer;
+// document.onmousemove = resetTimer;
+// document.onkeypress = resetTimer;
+
+// function resetTimer() {
+//     clearTimeout(timer);
+//     // Set the timer to log out the user after 15 minutes (900,000 ms)
+//     timer = setTimeout(logout, 1000);
+// }
+
+// function logout() {
+//     // Make an API call or redirect to logout route
+//     window.location.href = '/logout';
+// }
 
         function toggleLogo() {
             var desktopLogo = document.querySelector('.desktop-logo');

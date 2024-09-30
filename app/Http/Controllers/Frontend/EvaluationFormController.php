@@ -42,17 +42,21 @@ class EvaluationFormController extends Controller
 
     public function store(Request $request)
     {
-        $userId = $request->input('user_id');
-        $facultyId = $request->input('faculty_id');
-        $subject = $request->input('subject');
-        $schedule = $request->input('schedule');
 
+        $userId = $request['user_id'];
+        $facultyId = $request['faculty_id'];
+        $subject = $request['subject'];
+        $schedule = $request['schedule'];
+        $userDepartment = User::findOrFail($userId);
+        // Tokenform
         Tokenform::create([
             'user_id' => $userId,
             'faculty_id' => $facultyId,
             'subject' => $subject,
             'evaluation_schedules_id' => $schedule,
         ]);
+
+
 
         StoreEvaluationJob::dispatch($request->all());
         toastr()->success('Form Submitted Successfully!');

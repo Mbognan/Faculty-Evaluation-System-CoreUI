@@ -28,9 +28,8 @@
 <div class="fp__dashboard_menu">
     <div class="dasboard_header">
         <div class="dasboard_header_img">
-            <img src="{{ asset('default/girl_1.jpg') }}" alt="user" class="img-fluid w-100">
+            <img src="{{ auth()->user()->avatar}}" alt="user" class="img-fluid w-100">
             <label for="upload"><i class="far fa-camera"></i></label>
-            <input type="file" id="upload" hidden>
         </div>
         <h2>{{ auth()->user()->first_name }} {{ auth()->user()->last_name }}</h2>
     </div>

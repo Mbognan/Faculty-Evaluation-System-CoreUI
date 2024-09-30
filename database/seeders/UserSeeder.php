@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('password'),
                 'user_type' => 'admin',
                 'gender' => $faker->randomElement(['male', 'female']),
-                'department_id' => 1,
+                'department_id' => 3,
                 'status' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),

@@ -48,6 +48,8 @@
                 background: #f1f7ff;
             }
         </style>
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
         <section class="fp__breadcrumb" style="background: url('{{ asset('uploads/back.jpg') }}');">
             <div class="fp__breadcrumb_overlay">
                 <div class="container">
@@ -75,20 +77,23 @@
 
                                     <div class="tab-pane fade show active">
                                         <div class="fp_dashboard_body">
+
                                             <div class="row">
-                                                <div class="col-xl-4 col-sm-6 col-md-4">
+                                                <div class="col-xl-4 col-sm-6 col-md-4 mt-4">
                                                     <div class="fp__dsahboard_overview_item   ">
-                                                        <span class="icon" style="background-color:#007bff"><i class="fas fa-users"></i></span>
-                                                        <h4 style="color:#007bff">Total Student Registered<span style="color:#007bff">({{ $totalStudent }})</span></h4>
+                                                        <span class="icon" style="background-color:#007bff"><i
+                                                                class="fas fa-users"></i></span>
+                                                        <h4 style="color:#007bff">Total Student Registered<span
+                                                                style="color:#007bff">({{ $totalStudent }})</span></h4>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-4 col-sm-6 col-md-4">
+                                                <div class="col-xl-4 col-sm-6 col-md-4 mt-4">
                                                     <div class="fp__dsahboard_overview_item green">
                                                         <span class="icon"><i class="fas fa-user-check"></i></span>
                                                         <h4>Complete Evaluation<span>({{ $token }})</span></h4>
                                                     </div>
                                                 </div>
-                                                <div class="col-xl-4 col-sm-6 col-md-4 mb-4">
+                                                <div class="col-xl-4 col-sm-6 col-md-4 mb-4 mt-4">
                                                     <div class="fp__dsahboard_overview_item ">
                                                         <span class="icon"><i class="fas fa-user-clock"></i></span>
                                                         <h4>Remaining Student <span>({{ $pendingstudenteval }})</span></h4>
@@ -97,21 +102,45 @@
                                             </div>
 
                                             <div class="fp__dsahboard_overview">
+                                                <label for="id_label_single">
+                                                    Select to view Evaluation Result History:
+                                                    <select class="js-example-basic-single mb-4" name="state"
+                                                        style="width: 50%" id="dateRange" onchange="updateChart()">
+                                                        @foreach ($allEvaluationSchedules as $schedule)
+                                                        <option value="{{ $schedule->id }}" {{ $schedule->evaluation_status == 2 ? 'selected': '' }}>{{ $schedule->academic_year }} {{ $schedule->semester }}</option>
+
+
+                                                        @endforeach
+
+                                                    </select>
+
+                                                </label>
                                                 <div id="container"></div>
+
 
                                                 <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
                                                     <li class="nav-item" role="presentation">
-                                                      <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">StackBar Chart</button>
+                                                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#home" type="button" role="tab"
+                                                            aria-controls="home" aria-selected="true">StackBar Chart</button>
                                                     </li>
                                                     <li class="nav-item" role="presentation">
-                                                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Radar Chart</button>
+                                                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
+                                                            data-bs-target="#profile" type="button" role="tab"
+                                                            aria-controls="profile" aria-selected="false">Radar Chart</button>
                                                     </li>
 
-                                                  </ul>
-                                                  <div class="tab-content" id="myTabContent">
-                                                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab"><div id="container2" class="mt-4"></div></div>
-                                                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab"><div id="containerRadar"></div> </div>
-                                                  </div>
+                                                </ul>
+                                                <div class="tab-content" id="myTabContent">
+                                                    <div class="tab-pane fade show active" id="home" role="tabpanel"
+                                                        aria-labelledby="home-tab">
+                                                        <div id="container2" class="mt-4"></div>
+                                                    </div>
+                                                    <div class="tab-pane fade" id="profile" role="tabpanel"
+                                                        aria-labelledby="profile-tab">
+                                                        <div id="containerRadar"></div>
+                                                    </div>
+                                                </div>
 
                                                 <hr>
                                                 <div class="row">
@@ -146,6 +175,7 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="{{ asset('admin/code/highcharts.js') }}"></script>
     <script src="{{ asset('admin/code/modules/exporting.js') }}"></script>
     <script src="{{ asset('admin/code/modules/accessibility.js') }}"></script>
@@ -157,66 +187,69 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var users = @json($users->first_name.' '.$users->last_name);
+        const users = @json($users->first_name . ' ' . $users->last_name);
 
-            // 'pie' is class name div
-            const circle = new CircularProgressBar("pie");
-            circle.initial();
-
-            setTimeout(() => {
-                const options = {
-                    // item number you want to update
-                    // read data-pie-index from the element
-                    index: 1,
-                    // update props
-                    percent: 90,
-                    colorSlice: "#fff",
-                    fontColor: "black",
-                    fontSize: "1.2rem",
-                    fontWeight: 600,
-
-                };
-                circle.animationTo(options);
-            }, 500); // after 3s update
-
-            //totall mean by subject
-            var totalMeanByCategory = @json($totalMeanByCategory);
-            var subjects = Object.keys(totalMeanByCategory);
-            var categories = Object.keys(totalMeanByCategory[subjects[0]]);
-            var seriesData = [];
-
-            categories.forEach(function(category) {
-                var data = [];
-                subjects.forEach(function(subject) {
-                    var meanValue = totalMeanByCategory[subject][category] ? totalMeanByCategory[
-                        subject][category].toFixed(2) : 0.00;
-                    data.push(parseFloat(meanValue));
-                })
-                seriesData.push({
-                    name: category,
-                    data: data,
-                });
-
-            });
-
-            //totalSum by category
-            var OveralltotalMeanByCategory = @json($OveralltotalMeanByCategory);
-
-
-            let piedata = Object.keys(OveralltotalMeanByCategory).map(function(category) {
-                return {
-                    name: category,
-                    y: OveralltotalMeanByCategory[category] || [],
-                }
-            })
-
-
-
-
-
+        const dataByDateRange = {
+            1: [{
+                name: 'Commitment',
+                y: 25
+            }, {
+                name: 'Knowledge of the subject',
+                y: 12.6
+            }, {
+                name: 'Management Learning',
+                y: 17
+            }, {
+                name: 'Teaching Effectiveness',
+                y: 19
+            }],
+            3: [{
+                name: 'Commitment',
+                y: 20.9
+            }, {
+                name: 'Knowledge of the subject',
+                y: 15.3
+            }, {
+                name: 'Management Learning',
+                y: 25.
+            }, {
+                name: 'Teaching Effectiveness',
+                y: 9.7
+            }],
+            4: [{
+                name: 'Commitment',
+                y: 25.4
+            }, {
+                name: 'Knowledge of the subject',
+                y: 14.6
+            }, {
+                name: 'Management Learning',
+                y: 6.0
+            }, {
+                name: 'Teaching Effectiveness',
+                y: 24.0
+            }],
+            5: [{
+                name: 'Commitment',
+                y: 22.5
+            }, {
+                name: 'Knowledge of the subject',
+                y: 20
+            }, {
+                name: 'Management Learning',
+                y: 24.8
+            }, {
+                name: 'Teaching Effectiveness',
+                y: 23.3
+            }]
+        };
 
 
+
+
+
+        function updateChart() {
+            const dateRange = document.getElementById('dateRange').value;
             Highcharts.chart('container', {
                 chart: {
                     type: 'pie',
@@ -232,7 +265,8 @@
                                 customLabel = chart.options.chart.custom.label =
                                     chart.renderer.label(
                                         'Overall<br/>' +
-                                        '<strong>63.31 %</strong>'
+                                        '<strong>' + calculateOverallPercentage(dataByDateRange[
+                                            dateRange]) + ' %</strong>'
                                     )
                                     .css({
                                         color: '#000',
@@ -249,7 +283,7 @@
                                 x,
                                 y
                             });
-                            // Set font size based on chart diameter
+
                             customLabel.css({
                                 fontSize: `${series.center[2] / 12}px`
                             });
@@ -262,11 +296,10 @@
                     }
                 },
                 title: {
-                    text: 'Faculty '+users+' Overall Evaluation'
+                    text: 'Overall Evaluation Results for ' + users + ' ' + getSubtitleText(dateRange)
                 },
-
                 subtitle: {
-                    text: 'Source: <a href="https://www.ssb.no/transport-og-reiseliv/faktaside/bil-og-transport">2021-2022 1st Semester</a>'
+                    text: 'Source: ' + getSubtitleText(dateRange)
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.0f}%</b>'
@@ -295,47 +328,37 @@
                     }
                 },
                 series: [{
-                    name: 'Registrations',
+                    name: 'Average / Mean',
                     colorByPoint: true,
                     innerSize: '65%',
-                    data: [{
-                        name: 'Commitment',
-                        y: 23.9
-                    }, {
-                        name: 'Knowledge of the subject',
-                        y: 12.6
-                    }, {
-                        name: 'Management Learning',
-                        y: 37.0
-                    }, {
-                        name: 'Teaching Effectiveness',
-                        y: 26.4
-                    }]
+                    data: dataByDateRange[dateRange] // Set data based on selected date range
                 }]
             });
 
 
 
+            const barstackresult = @json($chartData);
 
+            const subjects = barstackresult[dateRange]?.subject || [];
+            const seriesData = barstackresult[dateRange]?.seriesData || [];
 
+            const formattedSeriesData = seriesData.map(series => ({
+                name: series.name,
+                data: series.data.map(value => parseFloat(value) || 0.0) // Convert to number, default to 0
+            }));
 
-
-
-
-
-            //
-
+            // Redraw the bar chart with updated data
             Highcharts.chart('container2', {
                 chart: {
                     type: 'bar'
                 },
                 title: {
-                    text: 'Average Faculty Performance Evaluation Scores by Subject and Category'
+                    text: 'Average Performance Evaluation Result by Subject of ' + users
                 },
                 xAxis: {
                     categories: subjects,
-                    title:{
-                        text:'Subjects'
+                    title: {
+                        text: 'Subjects'
                     }
                 },
                 yAxis: {
@@ -351,16 +374,64 @@
                     series: {
                         stacking: 'normal',
                         dataLabels: {
-                            enabled: true
+                            enabled: true,
+                            format: '{point.y:.1f}' // Show one decimal place
+
+
                         }
                     }
                 },
                 series: seriesData,
             });
+        }
+
+
+        function calculateOverallPercentage(data) {
+            const total = data.reduce((sum, point) => sum + point.y, 0);
+            return total.toFixed(2);
+        }
+
+
+        function getSubtitleText(dateRange) {
+            const ranges = {
+                1: '2023-2024 1st Semester',
+                3: '2021-2022 2nd Semester',
+                4: '2020-2021 1st Semester',
+                5: '2020-2021 2nd Semester'
+            };
+            return ranges[dateRange] || 'Unknown Date Range';
+        }
+
+        // Initialize chart with default date range
+        updateChart();
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            $(document).ready(function() {
+                $('.js-example-basic-single').select2();
+            });
+
+            const circle = new CircularProgressBar("pie");
+            circle.initial();
+
+            setTimeout(() => {
+                const options = {
+
+                    index: 1,
+                    // update props
+                    percent: 90,
+                    colorSlice: "#fff",
+                    fontColor: "black",
+                    fontSize: "1.2rem",
+                    fontWeight: 600,
+
+                };
+                circle.animationTo(options);
+            }, 500); // after 3s update
+
             // histogram chart
             const data2 = @json($histogramData);
             var specificCategoryData = @json($specificCategoryData);
-            console.log(specificCategoryData);
 
             Highcharts.chart('container3', {
                 title: {
@@ -383,13 +454,16 @@
                 },
                 plotOptions: {
                     histogram: {
-                        binWidth: 1, // Set the bin width to 4
+                        binWidth: 1,
                         accessibility: {
                             point: {
                                 valueDescriptionFormat: '{index}. {point.x:.3f} to {point.x3:.3f}, {point.y}.'
                             }
                         }
                     }
+                },
+                exporting:{
+                    enabled: false,
                 },
                 series: [{
                     name: 'Number of Evaluator',
@@ -434,6 +508,9 @@
                         }
                     }
                 },
+                exporting:{
+                    enabled: false,
+                },
                 series: [{
                     name: 'Number of Evaluator',
                     type: 'histogram',
@@ -476,6 +553,9 @@
                             }
                         }
                     }
+                },
+                exporting:{
+                    enabled: false,
                 },
                 series: [{
                     name: 'Number of Evaluator',
@@ -520,6 +600,9 @@
                         }
                     }
                 },
+                exporting:{
+                    enabled: false,
+                },
                 series: [{
                     name: 'Number of Evaluator',
                     type: 'histogram',
@@ -534,9 +617,11 @@
                     showInLegend: false
                 }]
             });
-               //radar chart
+
+            //radar chart
             const chartData = @json($overallPercentageBySubject);
 
+            console.log(chartData);
             const labelsRadar = Object.keys(chartData);
             const dataRadar = Object.values(chartData);
             Highcharts.chart("containerRadar", {
@@ -559,8 +644,8 @@
                     categories: labelsRadar,
                     tickmarkPlacement: "on",
                     lineWidth: 0,
-                    title:{
-                        text:'Subject'
+                    title: {
+                        text: 'Subject'
                     },
 
                 },
@@ -612,9 +697,5 @@
             });
 
         });
-
-
-
-
     </script>
 @endpush

@@ -100,9 +100,8 @@
                             <select id="semester" name="semester" class="form-select form-select-lg mb-3"
                                 aria-label=".form-select-lg example">
                                 <option value="">Select Semester</option>
-                                <option value="first_semester">First Semester</option>
-                                <option value="second_semester">Second Semester</option>
-
+                                <option value="First Semester">First Semester</option>
+                                <option value="Second Semester">Second Semester</option>
                             </select>
                         </div>
                         <div class="form-floating">
@@ -164,8 +163,8 @@ $(document).ready(function() {
                 if (response.status === '200') {
 
 
-                    $('#semester').append($('<option>').text(response.schedules.semester).attr(
-                        'value', response.schedules.semester));
+                    // Pre-select the correct semester based on the value from the response
+                    $('#semester').val(response.schedules.semester);
                     $('#description').val(response.schedules.description);
                     $('#academic_year').val(response.schedules.academic_year);
                     $('#status').val(response.schedules.evaluation_status);

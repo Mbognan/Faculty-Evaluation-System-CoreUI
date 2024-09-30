@@ -14,9 +14,9 @@ class ResultByCategory extends Seeder
     public function run(): void
     {
         $semesterId = 1;
-        $facultyId = 43;
+        $facultyId = 42;
         $categories = [3, 4, 5, 6];
-        $subject1 = [ 'IT elec 3','It elec 4',  'Cap 102','IAS 201', 'AS 201'];
+        $subject1 = [ 'It elec 4',  'Cap 102','IAS 201', 'Ac 101', "Net 102"];
 
         $users = DB::table('users')->where('user_type', 'user')->pluck('id');
 

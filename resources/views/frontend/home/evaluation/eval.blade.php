@@ -61,16 +61,11 @@
                                                         <div class="fp__menu_item_img">
                                                             <img src="{{ $faculty->avatar }}" alt="menu"
                                                                 class="img-fluid w-100">
-                                                            <a class="category" href="#">BSIT Faculty</a>
+                                                            <a class="category" href="#">COTE</a>
                                                         </div>
                                                         <div class="fp__menu_item_text">
                                                             <p class="rating">
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star"></i>
-                                                                <i class="fas fa-star-half-alt"></i>
-                                                                <i class="far fa-star"></i>
-                                                                <span>54</span>
+                                                                BSIT Faculty
                                                             </p>
                                                             <a class="title"
                                                                 href="menu_details.html">{{ $faculty->first_name }}
@@ -87,7 +82,7 @@
                                                                 </div>
                                                             @else
 
-                                                                <p>remaining subject</p>
+                                                                <p>Remaining Subjects</p>
 
 
                                                                 <ul class="d-flex flex-wrap justify-content-center">

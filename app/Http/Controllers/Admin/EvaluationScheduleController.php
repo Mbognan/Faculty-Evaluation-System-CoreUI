@@ -55,22 +55,29 @@ class EvaluationScheduleController extends Controller
 
 
     public function update(Request $request, string $id) {
+
         $schedule = EvaluationSchedule::findOrFail($id);
 
-        if (EvaluationSchedule::where('evaluation_status', 2)->exists() ) {
+        $ongoingScheduleExists = EvaluationSchedule::where('evaluation_status', 2)
+                                    ->where('id', '!=', $id)
+                                    ->exists();
 
-            return redirect()->back()->with('warning', 'Schedule Update is not possible due to an ongoing schedule!');
+        if ($ongoingScheduleExists) {
+            return redirect()->back()->with('warning', 'Schedule Update is not possible due to another ongoing schedule!');
+        }
+        $schedule->description = $request->description;
+        $schedule->academic_year = $request->academic_year;
+        $schedule->semester = $request->semester;
+        $schedule->evaluation_status = $request->status;
+
+
+        if ($schedule->save()) {
+            return redirect()->back()->with('success', 'Schedule Successfully Updated.');
         } else {
-
-                $schedule->description = $request->description;
-                $schedule->academic_year = $request->academic_year;
-                $schedule->semester = $request->semester;
-                $schedule->evaluation_status = $request->status;
-                $schedule->save();
-                return redirect()->back()->with('success', 'Schedule Successfully Updated.');
-
+            return redirect()->back()->with('error', 'Failed to update schedule. Please try again.');
         }
     }
+
 
 
 }
