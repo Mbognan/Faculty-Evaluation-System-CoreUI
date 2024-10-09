@@ -24,12 +24,8 @@ class ClassListDataTable extends DataTable
     {
         return (new EloquentDataTable($query))
             ->addColumn('action', function ($query) {
+                    return '<span class="complete">Certified</span>';
 
-                $isEvaluated = in_array($query->student_id,$this->valid->toArray());
-
-                return $isEvaluated
-                    ? '<span class="complete">Complete</span>'
-                    : '<span class="cancel">Ongoing</span>';
             })
             ->editColumn('evaluation_schedule_id', function ($query) {
                 if ($query->evaluationSchedule) {

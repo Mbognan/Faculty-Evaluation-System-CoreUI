@@ -113,7 +113,7 @@
                                             <button class="btn btn-primary px-4" type="submit">{{ __('Log in') }} </button>
                                         </div>
                                         <div class="col-6 text-end">
-                                            <button class="btn btn-link px-0" type="button">Forgot password?</button>
+                                            <a href="{{ route('password.request') }}">Forgot Password ?</a>
                                         </div>
                                     </div>
                                 </form>
@@ -122,11 +122,11 @@
                         <div class="card col-md-5 text-white bg-primary py-5">
                             <div class="card-body text-center">
                                 <div>
-                                    <h2>Sign up</h2>
+                                    <h2>Welcome</h2>
                                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
                                         incididunt ut labore et dolore magna aliqua.</p>
-                                    <button class="btn btn-lg btn-outline-light mt-3" type="button">Register
-                                        Now!</button>
+                                    {{-- <button class="btn btn-lg btn-outline-light mt-3" type="button">Register
+                                        Now!</button> --}}
                                 </div>
                             </div>
                         </div>

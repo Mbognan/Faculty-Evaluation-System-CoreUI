@@ -56,8 +56,6 @@ class EvaluationFormController extends Controller
             'evaluation_schedules_id' => $schedule,
         ]);
 
-
-
         StoreEvaluationJob::dispatch($request->all());
         toastr()->success('Form Submitted Successfully!');
         return response()->json(['status' => 'success', 'message' => 'Evaluation submitted successfully']);

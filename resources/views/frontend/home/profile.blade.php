@@ -209,13 +209,17 @@
                                             </h4>
 
                                             <div class="personal_info_text">
-                                                <p><span>Name:</span> {{ $user->first_name }} B. {{ $user->last_name }}</p>
+                                                <p><span>Name:</span> {{ $user->first_name }} {{ substr($user->middle_initials ?? '', 0, 1) }}. {{ $user->last_name }}</p>
                                                 <p><span>Email:</span> {{ $user->email }}</p>
                                                 @if (auth()->user()->user_type === 'user')
                                                 <p><span>Student ID:</span> {{ $user->student_id }}</p>
                                                 @endif
+                                                @if (  $user->user_type == 'user' )
+                                                <p><span>User Type:</span>Student</p>
+                                                @elseif ($user->user_type === 'faculty')
+                                                <p><span>User Type:</span>Faculty</p>
+                                                @endif
 
-                                                <p><span>User Type:</span> {{ ucfirst($user->user_type) }} </p>
                                             </div>
                                             {{-- Profile section --}}
                                             <div class="fp_dash_personal_info_edit comment_input p-0">
@@ -228,6 +232,13 @@
                                                             <div class="fp__comment_imput_single">
                                                                 <label>first name</label>
                                                                 <input type="text" value="{{ $user->first_name }}" name="first_name">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6">
+                                                            <div class="fp__comment_imput_single">
+                                                                <label>Middle Initials</label>
+                                                                <input type="text" value="{{ old('middle_initials', $user->middle_initials ?? '') }}" name="middle_initials">
+
                                                             </div>
                                                         </div>
                                                         <div class="col-6">

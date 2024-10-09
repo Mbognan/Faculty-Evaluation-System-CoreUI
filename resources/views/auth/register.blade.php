@@ -19,6 +19,11 @@
                 <x-input-error :messages="$errors->get('name')" class="mt-2" />
             </div>
             <div>
+                <x-input-label for="middle" :value="__('Middle initial')" />
+                <x-text-input id="middle_initial" class="block mt-1 w-full" type="text" name="middle_initial" :value="old('middle_initial')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('middle_initial')" class="mt-2" />
+            </div>
+            <div>
                 <x-input-label for="last_name" :value="__('Last Name')" />
                 <x-text-input id="last_name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
@@ -42,7 +47,7 @@
 
         </div>
 
-        <div>
+        {{-- <div>
             <x-input-label for="department" :value="__('Department')" />
             <select id="department" name="departmentID" class="block mt-1 w-full form-select">
                 @foreach ($departments as $department )
@@ -51,7 +56,8 @@
 
 
             </select>
-        </div>
+        </div> --}}
+        <input type="hidden" name="departmentID" value="1">
 
         <!-- Password -->
         <div class="mt-4">

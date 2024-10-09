@@ -43,7 +43,7 @@
 
 
                                     </div>
-                                    <div class="fp_dashboard_body dashboard_review">
+                                    {{-- <div class="fp_dashboard_body dashboard_review">
                                         <h3>Comments</h3>
                                         <div class="fp__review_area">
                                             <div class="fp__comment pt-0 mt_20">
@@ -73,7 +73,7 @@
                                                 <a href="#" class="load_more">load More</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>
@@ -127,7 +127,7 @@
 
    const comments = @json($comments);
 
-   const text =  comments.join(" ");
+   const text = comments.map(comment => comment.toLowerCase()).join(" ");
 
    console.log(comments);
 // List of stop words
@@ -150,7 +150,7 @@ const data = filteredLines.reduce((arr, word) => {
     } else {
         obj = {
             name: word,
-            weight: 1,
+            weight: 2,
         };
         arr.push(obj);
     }

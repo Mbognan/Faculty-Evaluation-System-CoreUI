@@ -12,7 +12,7 @@ use App\Http\Controllers\Frontend\FacultyController as FrontendFacultyController
 use App\Http\Controllers\Frontend\HistoryEvaluationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\SentimentAnalysisController;
-use App\Http\Controllers\Frontned\EvaluationHistoryController;
+use App\Http\Controllers\Frontend\EvaluationHistoryController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 

@@ -41,15 +41,6 @@ class StoreEvaluationJob implements ShouldQueue
         $department_id = $userDepartment->department_id;
 
 
-        // Tokenform
-        Tokenform::create([
-            'user_id' => $userId,
-            'faculty_id' => $facultyId,
-            'subject' => $subject,
-            'evaluation_schedules_id' => $schedule,
-        ]);
-
-
         // Evaluation result
         $categoryTotal = [];
         $rawEvaluationResults = [];

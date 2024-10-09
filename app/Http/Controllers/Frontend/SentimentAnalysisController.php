@@ -17,7 +17,7 @@ class SentimentAnalysisController extends Controller
 {
     public function sentimentAnalysis(CommentsDataTable $datatable):View | JsonResponse{
         $user = Auth::user();
-        $comments = Comments::where('faculty_id', $user->id)->where('status',1)->pluck('post_comment')->toArray();
+        $comments = Comments::where('faculty_id', $user->id)->where('status',0)->pluck('post_comment')->toArray();
 
         $sentiment = Sentiment::where('faculty_id', $user->id)->pluck('sentiment')->toArray();
         $schedule = EvaluationSchedule::where('evaluation_status',2)->firstOrNew();

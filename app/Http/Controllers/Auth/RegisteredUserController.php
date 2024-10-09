@@ -41,6 +41,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'avatar' => '/default/avatar.png',
             'first_name' => $request->input('name'),
+            'middle_initials' => $request->input('middle_initial'),
             'last_name' => $request->input('last_name'),
             'email' => $request->input('email'),
             'student_id' => $request->input('student_ID'),

@@ -59,6 +59,7 @@ class HomeController extends Controller
              $validatedData = $request->validate([
                 'first_name' => [ 'string', 'max:255'],
                 'last_name' => [ 'string', 'max:255'],
+                'middle_initials' => [ 'string', 'max:255'],
                 'email' => [ 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore(Auth::user()->id)],
             ]);
 
@@ -70,6 +71,7 @@ class HomeController extends Controller
                $validatedData = $request->validate([
                 'first_name' => [ 'string', 'max:255'],
                 'last_name' => [ 'string', 'max:255'],
+                'middle_initials' => [ 'string', 'max:255'],
                 'student_id' => ['max:255', Rule::unique(User::class)->ignore(Auth::user()->id)],
                 'email' => [ 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore(Auth::user()->id)],
             ]);

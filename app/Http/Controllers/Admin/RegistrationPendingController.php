@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\UserDataTable;
 use App\Http\Controllers\Controller;
 use App\Imports\PendingRegistration;
+use App\Mail\AccountVerifiedMail;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -24,7 +26,7 @@ class RegistrationPendingController extends Controller
 
         $user->status = 1;
         $user->save();
-
+        Mail::to($user->email)->send(new AccountVerifiedMail($user));
         toastr()->success('Account Verified Successfully!');
         return response(['status' => 'success','message' =>'Student Verified!']);
     }
@@ -35,7 +37,9 @@ class RegistrationPendingController extends Controller
         $user->save();
 
         toastr()->success('Account Rejected Successfully!');
+
         return response(['status' => 'success','message' =>'Student Verified!']);
+
     }
 
     public function importPendingRegistration(Request $request){

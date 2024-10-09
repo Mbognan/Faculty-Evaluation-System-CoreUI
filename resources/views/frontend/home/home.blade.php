@@ -29,30 +29,6 @@
                                 <div class="col-xl-5 col-md-5 col-lg-5">
                                     <div class="fp__banner_img wow fadeInLeft" data-wow-duration="1s">
                                         <div class="img">
-                                            <img src="{{ asset('uploads/newsIntroImage (1).jpg') }}" alt="food item" class="img-fluid w-100">
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-5 col-md-7 col-lg-6">
-                                    <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
-                                        <h1 class="text-white">Tatak Evsunista Award to Dr. Norberto C. Olavides</h1>
-                                        <p class="text-white">In appreciation of his remarkable achievements and unwavering commitment in elevating the field of higher education.</p>
-                                        <ul class="d-flex flex-wrap">
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="fp__banner_slider">
-                        <div class=" container">
-                            <div class="row">
-                                <div class="col-xl-5 col-md-5 col-lg-5">
-                                    <div class="fp__banner_img wow fadeInLeft" data-wow-duration="1s">
-                                        <div class="img">
                                             <img src="{{ asset('uploads/newsIntroImage.jpg') }}" alt="food item" class="img-fluid w-100">
 
                                         </div>
@@ -74,6 +50,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-12">
+                    <div class="fp__banner_slider">
+                        <div class=" container">
+                            <div class="row">
+                                <div class="col-xl-5 col-md-5 col-lg-5">
+                                    <div class="fp__banner_img wow fadeInLeft" data-wow-duration="1s">
+                                        <div class="img">
+                                            <img src="https://pit.edu.ph/storage/slider/327/newsIntroImage.jpg?1582345220" alt="food item" class="img-fluid w-100">
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-5 col-md-7 col-lg-6">
+                                    <div class="fp__banner_text wow fadeInRight" data-wow-duration="1s">
+                                        <h1 class="text-white">Congratulations Mr Uboda</h1>
+                                        <p class="text-white">The Palompon Institute of Technology proudly congratulates Mr. Rogelio G. Urboda, Jr., an Instructor from Information Technology program and the institute's web developer, on being honored with the “𝙑𝘼𝙉𝙂𝙐𝘼𝙍𝘿 𝘼𝙒𝘼𝙍𝘿” during the recent 𝑪𝒚𝒃𝒆𝒓 𝑹𝒂𝒏𝒈𝒆 𝑬𝒙𝒆𝒓𝒄𝒊𝒔𝒆𝒔.</p>
+                                        <ul class="d-flex flex-wrap">
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col-12">
                     <div class="fp__banner_slider">
                         <div class=" container">
@@ -103,7 +104,7 @@
             </div>
         </div>
     </section>
-    <section class="fp__why_choose mt_60 xs_mt_70 mb-4">
+    {{-- <section class="fp__why_choose mt_60 xs_mt_70 mb-4">
         <div class="container">
             <div class="row wow fadeInUp" data-wow-duration="1s">
                 <div class="col-md-8 col-lg-7 col-xl-6 m-auto text-center">
@@ -155,7 +156,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     {{-- @include('frontend.home-components.endsection') --}}

@@ -44,6 +44,7 @@ class FacultyController extends Controller
         $user = new User();
         $user->avatar = $imagePath;
         $user->first_name = $request->first_name;
+        $user->middle_initials = $request->middle_initials;
         $user->last_name = $request->last_name;
         $user->email = $request->email;
         $user->password = $request->password;

@@ -39,11 +39,15 @@
                                     </div>
                                 </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                           <label for="inputEmail4" class="form-label">First Name</label>
                           <input type="text" name="first_name" class="form-control" id="inputEmail4">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <label for="inputEmail4" class="form-label">Middle Initials</label>
+                            <input type="text" name="middle_initials" class="form-control" id="inputEmail4">
+                          </div>
+                        <div class="col-md-4">
                           <label for="inputPassword4" class="form-label">Last Name</label>
                           <input type="text" name="last_name" class="form-control" id="inputPassword4">
                         </div>

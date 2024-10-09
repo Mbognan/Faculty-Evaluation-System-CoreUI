@@ -95,20 +95,20 @@
                             <div class="col">
                                 <label for="exampleFormControlInput1" class="form-label text-danger">Old Password</label>
                                 <input type="password" name="current_password" class="form-control"
-                                    id="exampleFormControlInput1" placeholder="Email">
+                                    id="exampleFormControlInput1" placeholder="">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col">
                                 <label for="exampleFormControlInput1" class="form-label text-danger">New Password </label>
-                                <input type="password" name="password" class="form-control" placeholder="First name"
-                                    aria-label="First name">
+                                <input type="password" name="password" class="form-control" placeholder=""
+                                    aria-label="">
                             </div>
                             <div class="col">
                                 <label for="exampleFormControlInput1" class="form-label text-danger">Confirm Password
                                 </label>
                                 <input type="password" name="password_confirmation" class="form-control"
-                                    placeholder="Last name" aria-label="Last name">
+                                    placeholder="" aria-label="">
                             </div>
 
 
